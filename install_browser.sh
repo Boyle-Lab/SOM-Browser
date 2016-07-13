@@ -10,6 +10,12 @@ BROWSER_PATH=/data/mouseENCODE.new/browser/MouseSOM
 #docker build -t adadiehl/browser .
 
 # Set up the database container
+echo "Unzipping datafiles..."
+WD=$(pwd)
+cd MouseSOM/sql
+tar -xzf sql_data.tgz
+cd $WD
+echo "Setting up database container..."
 docker run -d --name db -e MYSQL_ROOT_PASSWORD=my-secret-pw -v $BROWSER_PATH/sql/:/data/sql mysql:5.7.13
 docker run -it --link db -v $BROWSER_PATH/sql/:/data/sql --rm mysql sh -c 'exec mysql -h 172.18.0.2 -P 3306 -uroot -pmy-secret-pw </data/sql/MouseSOM.sql'
 docker run -it --link db -v $BROWSER_PATH/sql/:/data/sql --rm mysql sh -c 'exec mysql -h 172.18.0.2 -P 3306 -uroot -pmy-secret-pw mousesom </data/sql/MouseSOM_DB_DATA.sql'
@@ -21,4 +27,7 @@ docker run -it --link db -v $BROWSER_PATH/sql/:/data/sql --rm mysql sh -c 'exec 
 # Set up the browser container. -p 3000:3000 is for the test browser: MouseSOM/script/mousesom_server.pl
 # -p 5000:80 is for the production server. Change the outward-facing port (5000) to match your local
 # configuration.
+echo "Setting up MouseSOM Browser container..."
 docker run -t --name="MouseSOM" --link db -v $BROWSER_PATH/:/var/www/MouseSOM/ -d -p 3000:3000 -p 5000:80 adadiehl/browser
+
+echo "Done!"

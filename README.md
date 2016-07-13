@@ -13,7 +13,7 @@ INSTALLATION
 To streamline the installation process, we have provided the "install_browser.sh"
 script, which automates all the steps to initialize the Docker containers.
 Before running this, you will need to make some minor edits to it and some other
-files in the SOM-Browser directory and unzip the browser SQL datafiles:
+files in the SOM-Browser directory:
 
 1) Edit the "BROWSER_PATH" variable at the head of "install_browser.sh" to match
    the absolute path to the browser files on your machine.
@@ -21,13 +21,7 @@ files in the SOM-Browser directory and unzip the browser SQL datafiles:
 2) Edit the "server name" variable in "nginx.conf" to match the name and port
    number of the host machine. 
 
-3) Unzip the browser SQL datafiles:
-
-   `cd MouseSOM/sql`
-   `tar -xvzf sql_data.tgz`
-   `cd ../../`
-
-4) (Optional) Set a root password for mysql in MouseSOM/sql/Users.sql. This can
+3) (Optional) Set a root password for mysql in MouseSOM/sql/Users.sql. This can
    also be done directly on the db container after the fact, if you prefer. To
    manually change the password, first finish browser installation and then log
    in to the db container with the command:
