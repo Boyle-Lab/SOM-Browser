@@ -41,8 +41,8 @@ STARTING AND STOPPING THE BROWSER
 
 Shell scripts are provided to easily start and stop the browser:
 
-./start_browser.sh
-./stop_browser.sh
+`./start_browser.sh`
+`./stop_browser.sh`
 
 
 UNINSTALLING THE BROWSER
