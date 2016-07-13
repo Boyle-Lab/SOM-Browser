@@ -1,0 +1,15 @@
+<p>
+    This tab shows various measures of selection on module sequences. Most are based on data retrieved from the UCSC Genome Browser.
+</p>
+<p>
+    <span class="italic">PhastCons Coverage/Avg/Max/Min</span><br>
+    <a href="http://www.ncbi.nlm.nih.gov/pubmed/16024819" target="_blank">PhastCons</a> scores estimate the degree of conservation on a sequence, presumably reflecting the degree of purifying selection the sequence has experienced over evolutionary time. PhastCons scores range from 0-1, with 0 indicating no evidence for conservation and 1 indicating strong evidence for conservation. <span class="italic">Coverage</span> indicates the percentage of nucleotides within a module overlap PhastCons elements. <span class="italic">Avg</span> indicates the average of the PhastCons scores within a module. <span class="italic">Max</span> is the maximum PhastCons score observed within a module. <span class="italic">Min</span> indicates the minimum PhastCons score observed within a module.
+</p>
+<p>
+    <span class="italic">PhyloP Avg/Max/Min</span><br>
+    <a href="http://genome.cshlp.org/content/20/1/110.abstract?ijkey=e4526d5973ff3f97028708ae93ac162222f45c6b&keytype2=tf_ipsecsha" target="_blank">PhyloP</a> scores are base-wise scores expressing the rate of subsititution relative to the rate expected under neutral drift. Positive scores indicate observed substitution rates lower than expected under neutrality (conservation/purifying selection) while negative scores indicated observed substitution rates higher than expected under neutrality (acceleration/positive selection). <span class="italic">Avg</span> indicates the average of all PhyloP scores within a module. <span class="italic">Max</span> is the maximum PhyloP score observed within a module, which can be interpreted as being the single nucleotide position under the strongest degree of purifying selection (assuming a score > 0). <span class="italic">Min</span> indicates the minimum PhyloP score observed within a module, and can be interpreted as the single nucleotide position under the strongest degree of positive selection (assuming a score < 0).
+</p>
+<p>
+    <span class="italic">Selected Sites</span><br>
+    This score is an estimate of the fraction of sites under selection within a module, based on the method described by <a href="http://www.ncbi.nlm.nih.gov/pubmed/15338624" target="_blank">Chiaramonte et al.</a>
+</p>

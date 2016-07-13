@@ -1,0 +1,6 @@
+<p class="bold">[% title %]</p>
+[% PROCESS $info %]
+<p class="bold">Dot Plots</p>
+<p>Dot plots show the significant GO term enrichments discovered by the Chipenrich algorithm after clustering by similarity with the REVIGO utility. The size of each dot corresponds to the number of subterms a given GO term encompasses and the color corresponds to the log10 P-value of the enrichment, as reported by Chipenrich. The "Send Results to REVIGO" button will send results directly to the REVIGO web interface, with all necessary options preset on the submission page. Clicking "Start Revigo" from there will bring up the results in REVIGO's interactive data browser for further exploration.</p> 
+<p class="bold">Results Tables</p>
+<p>These tables describe the significant GO terms remaining in the dataset after clustering with REVIGO. The ID numbers in the GO ID column may be clicked to view the descriptive information on each term within the AmiGO 2 browser at geneontology.org.</p>

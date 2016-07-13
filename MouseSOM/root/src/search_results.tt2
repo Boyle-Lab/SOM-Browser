@@ -1,0 +1,122 @@
+[% META title = 'Boyle Lab Human-Mouse SOM Browser Search Results' %]
+
+<script>
+    [% PROCESS "map_open.js" -%]
+    [% PROCESS "highlight_neuron.js" -%]
+    [% PROCESS "summary_load.js" -%]
+
+    $(document).ready(function() {
+    [% IF results.base_table == "neurons" %]
+        $("#table_1").tablesorter();
+
+    [% ELSE %]
+    	$("#table_2").tablesorter();
+    	$("#table_3").tablesorter();
+    [% END %]
+    })
+
+
+    $(document).on("click", ".neuron_link", function(e){
+	// default to four-cell pattern usage (map 4)
+	var b_link = '<p class="centeredbody"><a href="[% c.uri_for('/maps/neuron/') %]' + 4 + '/' + this.id + '" class="button">Jump to Browser</a></p>';
+	$('#neuronsummary').html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + this.id + '<br/><img src="[% c.uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
+        $.when(loadSummary(this.id, $('#neuronsummary'))).done(function(a) {
+             $('#neuronsummary').append(b_link);
+        });
+        highlightNeuron(this.id, "template");
+    });
+</script>
+
+[% BLOCK table_row %]
+    <tr>
+        [% PROCESS table_cols peak = peak class = class nc = nc -%]
+    </tr>
+[% END -%]
+
+[% BLOCK table_cols -%]
+    [% FOREACH col = peak -%]
+        [% IF class =="header" -%]
+            <th class="[% class %]">[% col %]</th>
+        [% ELSIF loop.count > nc -%]
+	    [% IF loop.count == link_col -%]
+	        <td class="[% class %]"><a href="[% c.uri_for('/maps/neuron/4', col) %]">[% col %]</a></td>
+	    [% ELSE -%]
+                <td class="[% class %]">[% col %]</td>
+	    [% END -%]
+        [% ELSE -%]
+	    [% IF loop.count ==	link_col -%]
+	        <td class="[% class %]" style="background: #ddd"><a href="[% c.uri_for('/maps/neuron/4', col) %]">[% col %]</a></td>
+	    [% ELSE -%]
+                <td class="[% class %]" style="background: #ddd">[% col %]</td>
+	    [% END -%]
+        [% END -%]
+    [% END -%]
+[% END -%]
+
+<!-- Top-Left: Reserved for map image drawn from search results data -->
+<div id="mapblock">
+   <svg id="map" name="map" width=800 height=460>[% results.map_svg %]</svg>
+</div>
+
+<!-- Top-Right: Neuron Summary Table -->
+
+<div id="neuronsummary"></div>
+
+<!-- End Neuron Summary -->
+
+<!-- Search Results Area -->
+
+<div id="neurondetails">
+    <p class="centeredbold">Search Results</p>
+    <p>Base Table: [% results.base_table %]</p>
+    <p>Query Parameters:</p>
+    <table class="peakdata">
+        [% PROCESS table_row peak = results.q_header class = "header" nc = 0 link_col = 0 -%]
+        [% FOREACH row = results.query -%]
+            [% PROCESS table_row peak = row class = "shared" nc = 0 link_col = 0 -%]
+        [% END -%]
+    </table>
+    <p>Found [% results.nrows %] [% results.base_table %]:</p>
+
+[% IF results.base_table == "peaks" -%]
+    <p>Mouse Peaks<br/>
+    <table id="table_2" class="peakdata tablesorter">
+        <thead>
+    	[% PROCESS table_row peak = results.header class = "header" nc = 0 link_col = 0 -%]
+	</thead>
+	<tbody>
+    	[% FOREACH row = results.peaks_mm9 -%]
+            [% PROCESS table_row peak = row  class = "mouse" nc = 2 link_col = 3 -%]
+    	[% END -%]
+	</tbody>
+    </table>
+    </p>
+
+    <p>Human Peaks<br/>
+    <table id="table_3" class="peakdata tablesorter">
+        <thead>
+    	[% PROCESS table_row peak = results.header class = "header" nc = 0 link_col = 0 -%]
+	</thead>
+	<tbody>
+    	[% FOREACH row = results.peaks_hg19 -%]
+            [% PROCESS table_row peak = row  class = "human" nc = 2 link_col = 3 -%]
+        [% END -%]
+	</tbody>
+    </table>
+    </p>
+[% ELSIF results.base_table == "neurons" -%]
+    <p>Neurons<br/>
+    <table id="table_2" class="peakdata tablesorter">
+        <thead>
+       	[% PROCESS table_row peak = results.header class = "header" nc = 0 link_col = 0 -%]
+       	</thead>
+       	<tbody>
+       	[% FOREACH row = results.rows -%]
+            [% PROCESS table_row peak = row  class = "shared" nc = 1 link_col = 1 -%]
+        [% END -%]
+	</tbody>
+    </table>
+    </p>
+[% END -%]
+
+</div>

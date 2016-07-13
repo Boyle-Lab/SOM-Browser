@@ -1,0 +1,51 @@
+    <!-- Tabs -->
+<script>
+    $(function() {
+        $( "#tabs" ).tabs({
+//	    beforeLoad: function( event, ui ) {
+//                ui.jqXHR.fail(function() {
+//                   ui.panel.html("Couldn't load this tab. We'll try to fix this as soon as possible.");
+//                });
+//            }
+	});
+	$( "#tabs" ).tabs( "option", "active", [% activeTab %] );
+    });
+
+</script>
+    <p id="neuron_id" class="centeredbold" name=[% neuron.id %]>Pattern [% neuron.id %] Peak Data</p>
+    <div id="tabs">
+        <ul>
+            [% FOREACH i = [0 .. 8] -%]
+                <li><a href="javascript:void(0);" name="[% c.uri_for('/maps/load_tab', i, neuron.id) %]">
+		    [% IF i == 0 -%]
+		        TF Content
+		    [% ELSIF i == 1 -%]
+		        Orthologs
+                    [% ELSIF i == 2 -%]
+                        Selection
+                    [% ELSIF i == 3 -%]
+                        Gene Expression
+	            [% ELSIF i == 4 -%]
+                        Gene Ontology
+                    [% ELSIF i == 5 -%]
+                        Histone Modifications
+                    [% ELSIF i == 6 -%]
+                        ChromHMM
+                    [% ELSIF i == 7 -%]		    
+                        GWAS
+                    [% ELSIF i == 8 -%]
+		        DNase Hypersensitivity
+                    [% END %]
+                </a></li>
+            [% END -%]
+        </ul>
+
+        [%# FOREACH i = [0 .. 8] -%]
+            <div id="tabs-[% i %]">
+                [% IF neuron.pattern == "Non-Significant Pattern" -%]
+                    <p class="centeredbold">No data for this pattern</p>
+                [% END -%]
+            </div>
+        [%# END -%]
+    </div>
+<!-- End Tabs -->

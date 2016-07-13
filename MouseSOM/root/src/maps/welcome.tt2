@@ -1,0 +1,9 @@
+[% META title = 'Boyle Lab Human-Mouse SOM Browser Welcome' %]
+
+[% # Note That the '-' at the beginning or end of TT code  -%]
+[% # "chomps" the whitespace/newline at that end of the    -%]
+[% # output (use View Source in browser to see the effect) -%]
+
+<div id="welcome">
+<p class="centeredbold">Select a map view from the menus on the left to get started!</p>
+</div>

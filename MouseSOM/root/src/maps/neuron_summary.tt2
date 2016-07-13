@@ -1,0 +1,46 @@
+    <p>
+    <table class="neurondetail">
+        <tr>
+            <td class="cat">Pattern [% neuron.id %]</td>
+            <td class="val">[% neuron.pattern %]</td>
+        </tr>
+        <tr>
+            <td class="cat">TFs</td>
+            <td class="val">[% neuron.tf_count %]</td>
+        </tr>
+        <tr>
+            <td class="cat">Peaks</td>
+            <td class="val">[% neuron.n_peaks %]</td>
+        <tr>
+            <td class="cat">Human Peaks</td>
+            <td class="val">[% neuron.n_human %] ([% neuron.pct_human %]%)</td>
+        </tr>
+        <tr>
+            <td class="cat">Mouse Peaks</td>
+            <td class="val">[% neuron.n_mouse %] ([% neuron.pct_mouse %]%)</td>
+        <tr>
+            <td class="cat">% Human Patterns</td>
+            <td class="val">[% neuron.frac_human %]%</td>
+        </tr>
+        <tr>
+            <td class="cat">% Mouse Patterns</td>
+            <td class="val">[% neuron.frac_mouse %]%</td>
+        </tr>
+        <tr>
+            <td class="cat">Med TSS Dist</td>
+            <td class="val">[% genes.tss_dist_med %]</td>
+        </tr>
+        <tr>
+            <td class="cat">Med TSS Dist Human<br/>(GM12878) (K562)</td>
+            <td class="val">[% genes.tss_dist_med_hg19 %]<br/>([% genes.tss_dist_med_GM12878 %]) ([% genes.tss_dist_med_K562 %])</td>
+        </tr>
+<tr>
+            <td class="cat">Med TSS Dist Mouse<br/>(CH12) (MEL)</td>
+            <td class="val">[% genes.tss_dist_med_mm9 %]<br/>([% genes.tss_dist_med_CH12 %]) ([% genes.tss_dist_med_MEL %])</td>
+        </tr>
+        <tr>
+            <td class="cat">Classification</td>
+            <td class="val">[% neuron.classification %]</td>
+        </tr>
+    </table>
+    </p>

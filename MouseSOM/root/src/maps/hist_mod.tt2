@@ -1,0 +1,182 @@
+[%# Content for the Histone Modifications Tab (using MAX data) -%]
+
+<script>
+    $(document).ready(function() {
+        $("#table_13").tablesorter();
+        $("#table_14").tablesorter({sortList: [[0,0], [1,0]]});
+        $("#table_15").tablesorter({sortList: [[0,0], [1,0]]});
+    })
+</script>
+
+[% BLOCK table_row -%]
+    <tr>
+        [% PROCESS table_cols peak = peak class = class nc = nc table_id = table_id n_peaks = n_peaks peaks = peaks -%]
+    </tr>
+[% END -%]
+
+[% BLOCK table_cols -%]
+    [% FOREACH col = peak -%]
+       	[% IF table_id == "avg" -%]
+
+            [% IF class =="header" -%]
+                <th class="[% class %]">[% col %]</th>
+
+            [% ELSIF class == "shared" -%]
+	        [% IF loop.count == 2 -%]
+                    [% IF (col / n_peaks) >= 0.5 %]
+                        <td style="background: rgba(102,0,204,[% col / n_peaks %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(102,0,204,[% col / n_peaks %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count >= 3 && loop.count <= 9 -%]
+                    [% IF (col / peaks.global_max) >= 0.5 %]
+                        <td style="background: rgba(102,0,204,[% col / peaks.global_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(102,0,204,[% col / peaks.global_max %])">[% col %]</td>
+                    [% END %]
+       	        [% ELSE -%]
+                     <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                [% END -%]
+
+            [% ELSIF class == "mouse" -%]
+
+                [% IF loop.count == 2 -%]
+                    [% IF (col / n_peaks) >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col / n_peaks %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col / n_peaks %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count >= 3 && loop.count <= 9 -%]
+                    [% IF (col / peaks.global_max) >= 0.5 %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.global_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.global_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSE -%]
+                     <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                [% END -%]	    
+
+            [% ELSIF class == "human" -%]
+                [% IF loop.count == 2 -%]
+                    [% IF (col / n_peaks) >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col / n_peaks %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col / n_peaks %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count >= 3 && loop.count <= 9 -%]
+                    [% IF (col / peaks.global_max) >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.global_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.global_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSE -%]
+                    <td class="[% class %]" style="background: #ddd">[% col %]</td>
+		[% END -%]
+		
+            [% END -%]
+
+	[% ELSE -%]
+
+            [% IF class =="header" -%]
+                <th class="[% class %]">[% col %]</th>
+
+	    [% ELSIF class == "mouse" && loop.count > nc -%]
+                [% IF loop.count >= 4 && loop.count <= 10 -%]
+                    [% IF (col / peaks.global_max) >= 0.5 %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.global_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.global_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSE -%]
+                    <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                [% END -%]
+
+            [% ELSIF class == "human" && loop.count > nc -%]
+                [% IF loop.count >= 4 && loop.count <= 10 -%]
+                    [% IF (col / peaks.global_max) >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.global_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.global_max %])">[% col %]</td>
+                    [% END %]
+		[% ELSE -%]
+            	    <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                [% END -%]
+
+            [% ELSE -%]
+                [% IF loop.count == 2 %]
+                    [% IF class == "human" %]
+                        <td class="[% class %]" style="background: #ddd"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=[% col %]" target="_blank">[% col %]</a></td>
+                    [% ELSE %]
+                        <td class="[% class %]" style="background: #ddd"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&position=[% col %]" target="_blank">[% col %]</a></td>
+                    [% END %]
+                [% ELSE %]
+                        <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                [% END %]
+            [% END -%]
+
+        [% END -%]
+    [% END -%]
+[% END -%]
+
+<p style="text-align: right; float: right;">
+    <a class="tab_info" name="3" href="javascript:void(0);" title="About This Tab"><img src="[% c.uri_for('/static/images/info.png') %]" width=25 height=25></a>
+</p>
+
+<p>
+<img class="centered" src= "[% c.uri_for('/static/histMod/') %]mod-use-hist.[% neuron %].png" height=800 width=800>
+</p>
+
+[% PROCESS "row_select.tt2" %]
+
+<p>Average Max Log-2 Histone Modification Score<br/>
+<table id="table_13" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = histone_mod.header_a class = "header" nc = 0 table_id = "avg" n_peaks = histone_mod.n_peaks peaks = histone_mod -%]
+    </thead>
+    <tbody>
+    [% PROCESS table_row peak = histone_mod.total class = "shared" nc = 1 table_id = "avg" n_peaks = histone_mod.n_peaks peaks = histone_mod peaks = histone_mod -%]
+    [% PROCESS table_row peak = histone_mod.total_CH12 class = "mouse" nc = 1 table_id = "avg" n_peaks = histone_mod.n_peaks peaks = histone_mod -%]
+    [% PROCESS table_row peak = histone_mod.total_MEL  class = "mouse" nc = 1 table_id = "avg" n_peaks = histone_mod.n_peaks peaks = histone_mod -%]
+    [% PROCESS table_row peak = histone_mod.total_GM12878  class = "human" nc = 1 table_id = "avg" n_peaks = histone_mod.n_peaks peaks = histone_mod -%]
+    [% PROCESS table_row peak = histone_mod.total_K562 class = "human" nc = 1 table_id = "avg" n_peaks = histone_mod.n_peaks peaks = histone_mod -%]
+    </tbody>
+</table>
+</p>
+
+<p>Mouse Peaks<br/>
+<table id="table_14" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = histone_mod.header_b class = "header" nc = 0 table_id = "peak" peaks = histone_mod -%]
+    </thead>
+    <tbody>
+        <!-- Hidden row to avoid triggering tablesorter empty table bug -->
+        <tr class="hidden"><td>A</td><td>A</td>
+            [% FOREACH i = [3 .. 10] %]
+               <td>0</td>
+            [% END %]
+        </tr>    
+    [% FOREACH row = histone_mod.peaks_mm9 -%]
+        [% PROCESS table_row peak = row  class = "mouse" nc = 3 table_id = "peak" peaks = histone_mod -%]
+    [% END -%]
+    </tbody>
+</table>
+</p>
+
+<p>Human Peaks<br/>
+<table id="table_15" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = histone_mod.header_b class = "header" nc = 0 table_id = "peak" peaks = histone_mod -%]
+    </thead>
+    <tbody>
+        <!-- Hidden row to avoid triggering tablesorter empty table bug -->
+        <tr class="hidden"><td>A</td><td>A</td>
+            [% FOREACH i = [3 .. 10] %]
+               <td>0</td>
+            [% END %]
+        </tr>
+    [% FOREACH row = histone_mod.peaks_hg19 -%]
+        [% PROCESS table_row peak = row  class = "human" nc = 3 table_id = "peak" peaks = histone_mod -%]
+    [% END -%]
+    </tbody>
+</table>
+</p>

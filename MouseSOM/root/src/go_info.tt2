@@ -1,0 +1,9 @@
+<p>
+    This tab describes the Gene Ontology associations that were found to be significantly enriched among the target genes for modules in this pattern. Results are available for Biological Processes, Cellular Components and Molecular Functions, and can be selected using the "Ontology Source" menu.
+</p>
+<p>
+    Dot plots were prepared using the <a href="http://revigo.irb.hr/" target="_blank">REVIGO</a> tool, which groups related GO terms by their semantic similarity. The size of the dots in the plot indicate the number of subterms underneath a term while the colors are scaled to the p-value for enrichment of that term within the module. For clarity, only points with p-values below the midpoint of the observed range are labeled, though all signficant observations are visible in the results table, and by viewing the results directly in REVIGO. To do so, simply click the "Send Results to REVIGO" button below the desired plot, which will open a new window containing the REVIGO submission form. All values are prefilled so all you need to do is click the "Start Revigo" button to open the interactive viewer. 
+</p>
+<p>
+    Results tables show the list of significant GO terms after reduction by REVIGO. Clicking the GO ID associated with each term will open the Gene Ontology page corresponding to that term.
+</p>

@@ -1,0 +1,253 @@
+[%# Content for the Selection Tab -%]
+
+<script>
+    $(document).ready(function() {
+        $("#table_4").tablesorter();
+    	$("#table_5").tablesorter({sortList: [[0,0], [1,0]]});
+    	$("#table_6").tablesorter({sortList: [[0,0], [1,0]]});
+    })
+</script>
+
+[% BLOCK table_row %]
+    <tr>
+        [% PROCESS table_cols peak = peak class = class nc = nc peaks = peaks table_id = table_id n_peaks = n_peaks -%]
+    </tr>
+[% END -%]
+
+[% BLOCK table_cols -%]
+    [% FOREACH col = peak -%]
+
+        [% IF table_id == "avg" -%]
+            [% IF class =="header" -%]
+                <th class="[% class %]">[% col %]</th>
+            [% ELSIF class == "shared" && loop.count > nc -%]
+	        [% IF loop.count == 2 -%]
+	            [% IF (col / n_peaks) >= 0.5 %]
+                        <td style="background: rgba(102,0,204,[% col / n_peaks %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(102,0,204,[% col / n_peaks %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count == 7 -%]
+		    [% IF (col / peaks.ppa_max) >= 0.5 %]
+                        <td style="background: rgba(102,0,204,[% col / peaks.ppa_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(102,0,204,[% col / peaks.ppa_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count == 8 -%]
+		    [% IF (col / peaks.pp_max) >= 0.5 %]
+                        <td style="background: rgba(102,0,204,[% col / peaks.pp_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(102,0,204,[% col / peaks.pp_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count == 9 -%]
+		    [% IF (col / peaks.pp_min) >= 0.5 %]
+                        <td style="background: rgba(102,0,204,[% col / peaks.pp_min %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(102,0,204,[% col / peaks.pp_min %])">[% col %]</td>
+                    [% END %]
+                [% ELSE -%]
+		    [% IF col  >= 0.5 %]
+                        <td style="background: rgba(102,0,204,[% col %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(102,0,204,[% col %])">[% col %]</td>
+                    [% END %]
+                [% END -%]
+            [% ELSIF class == "mouse" && loop.count > nc -%]
+                [% IF loop.count == 2 -%]
+                    [% IF (col / n_peaks) >= 0.5 %]
+                        <td style="background: rgba(255,0,0,[% col / n_peaks %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(255,0,0,[% col / n_peaks %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count == 7 -%]
+                    [% IF (col / peaks.ppa_max) >= 0.5 %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.ppa_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.ppa_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count == 8 -%]
+                    [% IF (col / peaks.pp_max) >= 0.5 %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.pp_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.pp_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count == 9 -%]
+                    [% IF (col / peaks.pp_min) >= 0.5 %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.pp_min %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.pp_min %])">[% col %]</td>
+                    [% END %]
+                [% ELSE -%]
+                    [% IF col >= 0.5 %]
+                        <td style="background: rgba(255,0,0,[% col %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(255,0,0,[% col %])">[% col %]</td>
+                    [% END %]
+                [% END -%]
+            [% ELSIF class == "human" && loop.count > nc -%]
+	        [% IF loop.count == 2 -%]
+                    [% IF (col / n_peaks) >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col / n_peaks %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col / n_peaks %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count == 7 -%]
+                    [% IF (col / peaks.ppa_max) >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.ppa_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.ppa_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count == 8 -%]
+                    [% IF (col / peaks.pp_max) >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.pp_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.pp_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count == 9 -%]
+                    [% IF (col / peaks.pp_min) >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.pp_min %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.pp_min %])">[% col %]</td>
+                    [% END %]
+                [% ELSE -%]
+                    [% IF col >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col %])">[% col %]</td>
+                    [% END %]
+                [% END -%]
+            [% ELSE %]
+                <td class="[% class %]" style="background: #ddd">[% col %]</td>
+            [% END -%]
+
+	[% ELSE -%]
+	    [% IF class =="header" -%]
+                <th class="[% class %]">[% col %]</th>
+            [% ELSIF class == "mouse" && loop.count > nc -%]
+	        [% IF loop.count == 8 -%]
+                    [% IF (col / peaks.ppa_max) >= 0.5 %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.ppa_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.ppa_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count == 9 -%]
+                    [% IF (col / peaks.pp_max) >= 0.5 %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.pp_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.pp_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count == 10 -%]
+                    [% IF (col / peaks.pp_min) >= 0.5 %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.pp_min %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.pp_min %])">[% col %]</td>
+                    [% END %]
+                [% ELSE -%]
+                    [% IF col >= 0.5 %]
+                        <td style="background: rgba(255,0,0,[% col %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(255,0,0,[% col %])">[% col %]</td>
+                    [% END %]
+		[% END -%]
+            [% ELSIF class == "human" && loop.count > nc -%]
+	        [% IF loop.count == 8 -%]
+                    [% IF (col / peaks.ppa_max) >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.ppa_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.ppa_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count == 9 -%]
+                    [% IF (col / peaks.pp_max) >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.pp_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.pp_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count == 10 -%]
+                    [% IF (col / peaks.pp_min) >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.pp_min %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.pp_min %])">[% col %]</td>
+                    [% END %]
+                [% ELSE -%]
+                    [% IF col >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col %])">[% col %]</td>
+                    [% END %]
+		[% END -%]
+            [% ELSE -%]
+                [% IF loop.count == 2 %]
+                    [% IF class == "human" %]
+                        <td class="[% class %]" style="background: #ddd"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=[% col %]" target="_blank">[% col %]</a></td>
+                    [% ELSE %]
+                        <td class="[% class %]" style="background: #ddd"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&position=[% col %]" target="_blank">[% col %]</a></td>
+                    [% END %]
+                [% ELSE %]
+                        <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                [% END %]
+            [% END -%]
+	[% END -%]
+    [% END -%]
+[% END -%]
+
+
+<p style="text-align: right; float: right;">
+    <a class="tab_info" name="3" href="javascript:void(0);" title="About This Tab"><img src="[% c.uri_for('/static/images/info.png') %]" width=25 height=25></a>
+</p>
+
+[% PROCESS "row_select.tt2" %]
+
+<p>Averages<br/>
+<table id="table_4" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = selection.header_a class = "header" nc = 0 table_id = "avg" n_peaks = peaks.n_peaks -%]
+    </thead>
+    <tbody>
+    [% PROCESS table_row peak = selection.total class = "shared" nc = 1 peaks = selection table_id = "avg" n_peaks = selection.n_peaks -%]
+    [% PROCESS table_row peak = selection.total_mm9  class = "mouse" nc = 1 peaks = selection table_id = "avg" n_peaks = selection.n_peaks -%]
+    [% PROCESS table_row peak = selection.total_CH12  class = "mouse" nc = 1 peaks = selection table_id = "avg" n_peaks = selection.n_peaks -%]
+    [% PROCESS table_row peak = selection.total_MEL  class = "mouse" nc = 1 peaks = selection table_id = "avg" n_peaks = selection.n_peaks -%]
+    [% PROCESS table_row peak = selection.total_hg19  class = "human" nc = 1 peaks = selection table_id = "avg" n_peaks = selection.n_peaks -%]
+    [% PROCESS table_row peak = selection.total_GM12878  class = "human" nc = 1 peaks = selection table_id = "avg" n_peaks = selection.n_peaks -%]
+    [% PROCESS table_row peak = selection.total_K562 class = "human" nc = 1 peaks = selection table_id = "avg" n_peaks = selection.n_peaks -%]
+    </tbody>
+</table>
+</p>
+
+<p>Mouse Peaks<br/>
+<table id="table_5" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = selection.header_b class = "header" nc = 0 table_id = "mouse" -%]
+    </thead>
+    <tbody>
+        <!-- Hidden row to avoid triggering tablesorter empty table bug -->
+        <tr class="hidden"><td>A</td><td>A</td>
+            [% FOREACH i = [3 .. 11] %]
+               <td>0</td>
+            [% END %]
+        </tr>
+    [% FOREACH row = selection.peaks_mm9 -%]
+        [% PROCESS table_row peak = row  class = "mouse" nc = 3 peaks = selection table_id = "mouse" -%]
+    [% END -%]
+    </tbody>
+</table>
+</p>
+
+<p>Human Peaks<br/>
+<table id="table_6" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = selection.header_b class = "header" nc = 0 table_id = "human" -%]
+    </thead>
+    <tbody>
+        <!-- Hidden row to avoid triggering tablesorter empty table bug -->
+        <tr class="hidden"><td>A</td><td>A</td>
+	    [% FOREACH i = [3 .. 11] %]
+               <td>0</td>
+            [% END %]
+        </tr>    
+    [% FOREACH row = selection.peaks_hg19 -%]
+        [% PROCESS table_row peak = row  class = "human" nc = 3 peaks = selection table_id = "human" -%]
+    [% END -%]
+    </tbody>
+</table>
+</p>

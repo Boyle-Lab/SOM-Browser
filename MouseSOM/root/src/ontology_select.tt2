@@ -1,0 +1,21 @@
+<form id="ontology_select">
+<p>Ontology Source: <select class="ontology_select">
+[% IF goSource == "bioProc" %]
+    <option selected value="bioProc">Biological Process</option>
+    <option value="cellComp">Cellular Component</option>
+    <option value="molFunc">Molecular Function</option>
+[% ELSIF goSource == "cellComp" %]
+    <option value="bioProc">Biological Process</option>
+    <option selected value="cellComp">Cellular Component</option>
+    <option value="molFunc">Molecular Function</option>
+[% ELSIF goSource == "molFunc" %]
+    <option value="bioProc">Biological Process</option>
+    <option value="cellComp">Cellular Component</option>
+    <option selected value="molFunc">Molecular Function</option>
+[% ELSE %]
+    <option selected value="bioProc">Biological Process</option>
+    <option value="cellComp">Cellular Component</option>
+    <option value="molFunc">Molecular Function</option>
+[% END %]
+</select></p>
+</form>

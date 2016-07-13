@@ -1,0 +1,94 @@
+[%# Content for the GO Data Tabs -%]
+
+[% BLOCK table_row %]
+    <tr>
+        [% PROCESS table_cols peak = peak class = class nc = nc %]
+    </tr>
+[% END -%]
+
+[% BLOCK table_cols -%]
+    [% FOREACH col = peak -%]
+        [% IF col == "NULL" -%]
+            [% IF class == "mouse" -%]
+                <td colspan = 3 style="background: rgba(255,0,0,0.1); text-align: center">No significant enrichments</td>
+            [% ELSE -%]
+                <td colspan = 3 style="background: rgba(0,0,255,0.1); text-align: center">No significant enrichments</td>
+            [% END -%]
+        [% ELSIF class == "header" -%]
+            <th class="[% class %]">[% col %]</th>
+        [% ELSIF class == "mouse" && loop.count > nc -%]
+            [% IF loop.count == 1 -%]
+                <td class="[% class %]" style="background: rgba(255,0,0,0.1)"><a href="http://amigo.geneontology.org/amigo/term/[% col %]" target="_blank">[% col %]</a></td>
+            [% ELSE -%]
+                <td class="[% class %]" style="background: rgba(255,0,0,0.1)">[% col %]</td>
+            [% END -%]
+        [% ELSIF class == "human" && loop.count > nc -%]
+            [% IF loop.count == 1 -%]
+                <td class="[% class %]" style="background: rgba(0,0,255,0.1)"><a href="http://amigo.geneontology.org/amigo/term/[% col %]" target="_blank">[% col %]</a></td>
+            [% ELSE -%]
+                <td class="[% class %]" style="background: rgba(0,0,255,0.1)">[% col %]</td>
+            [% END -%]
+        [% ELSE -%]
+            <td class="[% class %]" style="background: #ddd">[% col %]</td>
+        [% END -%]
+    [% END -%]
+[% END -%]
+
+[% BLOCK revigo_submit -%]
+    <form action="http://revigo.irb.hr/" method="post" target="_blank">
+        <input type="hidden"  name="inputGoList" value="[% INSERT $in_data -%]"/>
+        <input type="hidden" name="isPValue" value="yes"/>
+        [% IF spp == "human" -%]
+            <input type="hidden" name="goSizes" value="Homo sapiens"/>
+        [% ELSE -%]
+            <input type="hidden" name="goSizes" value="Mus musculus"/>
+        [% END -%]
+        <input type="submit" name="startRevigo" value="Send Results to REVIGO" />
+    </form>
+
+[% END -%]
+
+
+<p style="text-align: right; float: right;">
+    <a class="tab_info" name="3" href="javascript:void(0);" title="About This Tab"><img src="[% c.uri_for('/static/images/info.png') %]" width=25 height=25></a>
+</p>
+
+[% PROCESS "ontology_select.tt2" %]
+
+    <div class="mm9_go">
+        <p class="centeredbold">Mouse</p>
+        [% IF go_data.mm9_img == "NULL" -%]
+            <p>&nbsp;</p>
+        [% ELSE -%]
+            <img class="centered" src="[% c.uri_for('/static/revigo/') %][% go_data.mm9_img %]">
+        [% END -%]
+        [% IF go_data.mm9_in != "NULL" -%]
+            <p>[% PROCESS revigo_submit spp = "mouse" in_data = go_data.mm9_in -%]</p>
+        [% END -%]
+
+        <table class="go_data">
+            [% PROCESS table_row peak = go_data.header class = "header" nc = 0 -%]
+            [% FOREACH row = go_data.mm9_data -%]
+                [% PROCESS table_row peak = row  class = "mouse" nc = 0 -%]
+            [% END -%]
+        </table>
+
+    </div>
+    <div class="hg19_go">
+        <p class="centeredbold">Human</p>
+        [% IF go_data.hg19_img == "NULL" -%]
+            <p>&nbsp;</p>
+        [% ELSE -%]
+            <img class="centered" src="[% c.uri_for('/static/revigo/') %][% go_data.hg19_img %]">
+        [% END -%]
+        [% IF go_data.hg19_in != "NULL" -%]
+            <p>[% PROCESS revigo_submit spp = "human" in_data = go_data.hg19_in -%]</p>
+        [% END -%]
+
+        <table class="go_data">
+            [% PROCESS table_row peak = go_data.header class = "header" nc = 0 -%]
+            [% FOREACH row = go_data.hg19_data -%]
+                [% PROCESS table_row peak = row  class = "human" nc = 0 -%]
+            [% END -%]
+        </table>
+    </div>

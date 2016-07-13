@@ -1,0 +1,136 @@
+[% META title = 'Boyle Lab Human-Mouse SOM Browser Help' %]
+
+<div id="mapblock">
+    <p class="bold">Help Topics</p>
+    <p>
+        <ol type="I">
+            <li><a class="help_link" href="javascript:void(0)" name="about" id="about"">About the SOM Browser</a></li>
+       	    <li><a class="help_link" href="javascript:void(0)" name="som_data_prep" id="som_data_prep">SOM Data Preparation</a></li>
+       	    <li><a class="help_link" href="javascript:void(0)" name="annotations" id="annotations">Annotations</a>
+	        <ol type="i">
+		    <li><a class="help_sublink" href="javascript:void(0)" name="data_types" id="data_types">Data Types</a></li>
+		    <li><a class="help_sublink" href="javascript:void(0)" name="data_analysis" id="data_analysis">Analysis Methods</a></li>
+		    <li><a class="help_sublink" href="javascript:void(0)" name="data_sources" id="data_sources">Data Sources</a></li>
+		</ol>
+	    </li>
+       	    <li><a class="help_link" href="javascript:void(0)" name="navigation" id="navigation">Navigating the Browser</a>
+                <ol type="i">
+                    <li><a class="help_sublink" href="javascript:void(0)" name="intro" id="intro">Getting Started</a></li>
+	       	    <li><a class="help_sublink" href="javascript:void(0)" name="sorting" id="sorting">Sorting Data Tables</a></li>
+	       	    <li><a class="help_sublink" href="javascript:void(0)" name="compare" id="compare">Comparing Maps</a></li>
+	       	    <li><a class="help_sublink" href="javascript:void(0)" name="search" id="search">Searching the Browser</a></li>
+	       	    <li><a class="help_sublink" href="javascript:void(0)" name="sharing" id="sharing">Bookmarking/Sharing Browser Pages</a></li>
+	   	</ol>
+       	    </li>
+           <li><a class="help_link" href="javascript:void(0)" name="getting_help" id="getting_help">Getting Help</a></li>
+        </ol>
+    </p>
+
+    <div id="helpcontent">
+        <!-- Help Content Goes Here -->
+    </div>
+
+    <p id="active" class="hidden" name="[% topic %]"></p>
+
+</div>
+
+<script>
+    [% PROCESS "map_open.js" -%]
+
+    $(document).ready(function(e){
+        var topic = $('#active').attr("name");
+	if (topic != null) {
+	    var which = $(document.getElementById(topic));
+	    if ($(which).hasClass("help_link")){
+                $(which)
+                    .removeClass("help_link")
+                    .addClass("disabled");
+            }
+	    $('#helpcontent').load("[% c.uri_for('/help/help_load/') %]" + topic);
+	}
+    });
+
+    $(document).on("click", ".help_link", function(e){
+        var which = $(this);
+
+	var prev = $('#active').attr("name");
+	var prevSel = $(document.getElementById(prev));
+
+	if ($(prevSel).hasClass("disabled")){
+	    $(prevSel)
+                .removeClass("disabled")	
+		.addClass("help_link");
+	}
+
+	$('#active').attr("name", this.name);
+
+	if ($(which).hasClass("help_link")){
+	    $(which)
+	        .removeClass("help_link")
+		.addClass("disabled");
+	}
+
+	var params = '?topic=' + this.name;
+	var urlParts = document.location.href.split(/\?/g);
+	var newUrl = urlParts[0] + params;
+
+	var baseTitle = document.title.split(/:/g);
+        var newTitle = baseTitle[0] + ": " + this.name;
+        document.title = newTitle;
+
+	var state = { url: newUrl, title: newTitle, loadTag: true };
+	window.history.pushState(state, newTitle, newUrl);
+
+	// Load the help content with an ajax call...
+	$('#helpcontent').load("[% c.uri_for('/help/help_load/') %]" + this.name);
+
+    });
+
+    $(document).on("click", ".help_sublink", function(e){
+
+        var topic = this.parentNode.parentNode.parentNode.children[0].name;
+        var prev = $('#active').attr("name");
+
+	if (prev != topic) {
+	    loadContent(topic, prev);
+            $('#active').attr("name", topic);
+
+	    var which = $(document.getElementById(topic));
+	    if ($(which).hasClass("help_link")){
+                $(which)
+                    .removeClass("help_link")
+                    .addClass("disabled");
+            }
+	}
+
+        var anchor = '#' + this.name;
+        var urlParts = document.location.href.split(/\#/g);
+        var newUrl = urlParts[0] + anchor;
+	
+	document.location.href = newUrl;
+
+    });
+
+    loadContent = function(topic, prevTopic) {
+        var prevSel = $(document.getElementById(prevTopic));
+        if ($(prevSel).hasClass("disabled")){
+            $(prevSel)
+                .removeClass("disabled")
+                .addClass("help_link");
+        }
+
+        var params = '?topic=' + topic;
+  	var urlParts = document.location.href.split(/\?/g);
+        var newUrl = urlParts[0] + params;
+
+        var baseTitle = document.title.split(/:/g);
+	var newTitle = baseTitle[0] + ": " + topic;
+        document.title = newTitle;
+
+        var state = { url: newUrl, title: newTitle, loadTag: true };
+        window.history.pushState(state, newTitle, newUrl);
+
+        $('#helpcontent').load("[% c.uri_for('/help/help_load/') %]" + topic);
+    }
+
+</script>

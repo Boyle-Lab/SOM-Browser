@@ -1,0 +1,64 @@
+[% IF no_wrapper -%]
+    [% content %]
+[% ELSE -%]
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" [%#
+    %]"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>[% template.title %]</title>
+<link rel="stylesheet" href="[% c.uri_for('/static/css/main.css') %]" />
+
+<link rel="stylesheet" href="[% c.uri_for('/static/javascript/jquery/jquery-ui.css') %]">
+<link rel="stylesheet" href="[% c.uri_for('/static/javascript/jquery/tablesorter/themes/blue/style.css') %]" type="text/css" media="print, projection, screen" />
+
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script type="text/javascript" src="[% c.uri_for('/static/javascript/jquery/tablesorter/jquery.tablesorter.js') %]"></script>
+
+</head>
+
+<body>
+<div id="main">
+<div id="header">
+    [%# Insert the page title -%]
+    <h1>Boyle Lab Human-Mouse SOM Browser</h1>
+</div>
+ 
+<div id="bodyblock">
+
+    <!-- Menu Section -->
+    <div id="menu">
+        <ul class="menu">
+            <li class="menu"><a href="[% c.uri_for('/') %]">Home</a></li>
+            [% FOREACH menu = menus %]
+            <li class="sub">
+                <a href="#" name="[% menu.name %]">[% menu.name %]</a>
+                <ul>
+                    [% FOREACH map = menu.maps %]
+                    <li class="menu"><a class="map_select" href="javascript:void(0)" name="[% map.id_maps %]">[% map.name %]</a></li>
+                    [% END %]
+                </ul>
+            </li>
+            [% END %]
+	    <li class="menu"><a href="[% c.uri_for('/compare/') %]">Compare Maps</a></li>
+	    <li class="menu"><a href="[% c.uri_for('/search/') %]">Search</a></li>
+            <li class="menu"><a href="[% c.uri_for('/help') %]">Help</a></li>
+        </ul>
+    </div>
+
+    <!-- Content Sections -->
+
+    [% content %]
+
+</div><!-- end bodyblock -->
+
+<!-- Footer --> 
+<div id="footer">Copyright (c) 2016 Boyle Lab</div>
+</div><!-- end main -->
+ 
+</body>
+
+</html>
+[% END -%]

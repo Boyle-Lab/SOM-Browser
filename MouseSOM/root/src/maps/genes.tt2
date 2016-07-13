@@ -1,0 +1,179 @@
+[%# Content for the Genes Tab -%]
+
+<script>
+    $(document).ready(function() {
+        $("#table_30").tablesorter();
+        $("#table_31").tablesorter({sortList: [[0,0], [1,0]]});
+        $("#table_32").tablesorter({sortList: [[0,0], [1,0]]});
+    })
+</script>
+
+[% USE Math %]
+
+[% BLOCK table_row %]
+    <tr>
+        [% PROCESS table_cols peak = peak class = class nc = nc table_id = table_id npeaks = npeaks peaks = peaks -%]
+    </tr>
+[% END -%]
+
+[% BLOCK table_cols -%]
+    [% FOREACH col = peak -%]
+
+        [% IF table_id == "avg" -%]
+
+            [% IF class =="header" -%]
+                <th class="[% class %]">[% col %]</th>
+
+            [% ELSIF class == "shared" -%]
+	        [% IF loop.count <= nc -%] 
+		    <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                [% ELSIF loop.count == 2 -%]
+                    <td class="[% class %]" style="background: rgba(102,0,204,[% col / npeaks %])">[% col %]</td>
+                [% ELSIF loop.count == 3 -%]
+                    <td class="[% class %]" style="background: rgba(102,0,204,[% Math.abs(col) / peaks.tss_max %])">[% col %]</td>
+                [% ELSE -%]
+		    <td class="[% class %]" style="background: rgba(102,0,204,[% col / peaks.fpkm_max %])">[% col %]</td>
+                [% END -%]
+
+            [% ELSIF class == "mouse" -%]
+                [% IF loop.count <= nc -%]
+                    <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                [% ELSIF loop.count == 2 -%]
+                    <td class="[% class %]" style="background: rgba(255,0,0,[% col / npeaks %])">[% col %]</td>
+                [% ELSIF loop.count == 3 -%]
+                    <td class="[% class %]" style="background: rgba(255,0,0,[% Math.abs(col) / peaks.tss_max %])">[% col %]</td>
+                [% ELSE -%]
+                    <td class="[% class %]" style="background: rgba(255,0,0,[% col / peaks.fpkm_max %])">[% col %]</td>
+                [% END -%]
+
+            [% ELSIF class == "human" -%]
+                [% IF loop.count <= nc -%]
+                    <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                [% ELSIF loop.count == 2 -%]
+                    <td class="[% class %]" style="background: rgba(0,0,255,[% col / npeaks %])">[% col %]</td>
+                [% ELSIF loop.count == 3 -%]
+                    <td class="[% class %]" style="background: rgba(0,0,255,[% Math.abs(col) / peaks.tss_max %])">[% col %]</td>
+                [% ELSE -%]
+                    <td class="[% class %]" style="background: rgba(0,0,255,[% col / peaks.fpkm_max %])">[% col %]</td>
+                [% END -%]
+
+            [% ELSE -%]
+                <td class="[% class %]" style="background: #ddd">[% col %]</td>
+
+            [% END -%]
+
+        [% ELSE -%]
+
+            [% IF class =="header" -%]
+                <th class="[% class %]">[% col %]</th>
+
+            [% ELSIF class == "mouse" -%]
+	        [% IF loop.count <= nc -%]
+                    [% IF loop.count == 2 %]
+                        <td class="[% class %]" style="background: #ddd"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&position=[% col %]" target="_blank">[% col %]</a></td>
+                    [% ELSIF loop.count == 3 -%]
+                        <td class="[% class %]" style="background: #ddd""><a href="http://www.genecards.org/cgi-bin/carddisp.pl?gene=[% col %]" target="_blank">[% col %]</a></td>
+                    [% ELSE %]
+                        <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                    [% END %]
+	        [% ELSIF loop.count == 4 -%]
+		    <td class="[% class %]" style="background: rgba(255,0,0,[% Math.abs(col) / peaks.tss_max %])">[% col %]</td>
+		[% ELSIF loop.count == 5 || loop.count == 6 -%]
+                    <td class="[% class %]" style="background: rgba(0,0,255,[% col / peaks.fpkm_max %])">[% col %]</td>
+   	  	[% ELSIF loop.count == 9 -%]
+                    <td class="[% class %]" style="background: rgba(0,0,255,[% Math.abs(col) / peaks.fc_max %])">[% col %]</td>
+	    	[% ELSIF loop.count == 10 -%]
+                    <td class="[% class %]" style="background: rgba(255,0,0,[% Math.abs(col) / peaks.fc_max %])">[% col %]</td>
+                [% ELSIF loop.count >= 11 -%]
+                    <td class="[% class %]" style="background: rgba(102,0,204,[% Math.abs(col) / peaks.fc_max %])">[% col %]</td>
+		[% ELSE -%]
+                    <td class="[% class %]" style="background: rgba(255,0,0,[% col / peaks.fpkm_max %])">[% col %]</td>
+		[% END -%]
+
+            [% ELSIF class == "human" -%]
+                [% IF loop.count <= nc -%]
+                    [% IF loop.count == 2 %]
+                        <td class="[% class %]" style="background: #ddd"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=[% col %]" target="_blank">[% col %]</a></td>
+                    [% ELSIF loop.count == 3 -%]
+		       <td class="[% class %]" style="background: #ddd""><a href="http://www.genecards.org/cgi-bin/carddisp.pl?gene=[% col %]" target="_blank">[% col %]</a></td>
+		    [% ELSE %]
+                        <td class="[% class %]" style="background: #ddd">[% col %]</td>
+		    [% END %]
+                [% ELSIF loop.count == 4 -%]
+                    <td class="[% class %]" style="background: rgba(0,0,255,[% Math.abs(col) / peaks.tss_max %])">[% col %]</td>
+		[% ELSIF loop.count == 7 || loop.count == 8 -%]
+                    <td class="[% class %]" style="background: rgba(255,0,0,[% col / peaks.fpkm_max %])">[% col %]</td>
+                [% ELSIF loop.count == 9 -%]
+                    <td class="[% class %]" style="background: rgba(0,0,255,[% Math.abs(col) / peaks.fc_max %])">[% col %]</td>
+                [% ELSIF loop.count == 10 -%]
+                    <td class="[% class %]" style="background: rgba(255,0,0,[% Math.abs(col) / peaks.fc_max %])">[% col %]</td>
+                [% ELSIF loop.count >= 11 -%]
+                    <td class="[% class %]" style="background: rgba(102,0,204,[% Math.abs(col) / peaks.fc_max %])">[% col %]</td>
+                [% ELSE -%]
+                    <td class="[% class %]" style="background: rgba(0,0,255,[% col / peaks.fpkm_max %])">[% col %]</td>
+		[% END -%]
+
+            [% ELSE -%]
+                <td class="[% class %]" style="background: #ddd">[% col %]</td>
+            [% END -%]
+
+        [% END -%]
+    [% END -%]
+[% END -%]
+
+[% PROCESS "row_select.tt2" %]
+
+<p>Averages<br/>
+<table id="table_30" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = genes_bnorm.header class = "header" nc = 0 table_id = "avg" npeaks = genes_bnorm.npeaks peaks = genes_bnorm -%]
+    </thead>
+    <tbody>
+    [% PROCESS table_row peak = genes_bnorm.total  class = "shared" nc = 1 table_id = "avg" npeaks = genes_bnorm.npeaks peaks = genes_bnorm -%]
+    [% PROCESS table_row peak = genes_bnorm.total_mm9  class = "mouse" nc = 1 table_id = "avg" npeaks = genes_bnorm.npeaks peaks = genes_bnorm -%]
+    [% PROCESS table_row peak = genes_bnorm.total_CH12  class = "mouse" nc = 1 table_id = "avg" npeaks = genes_bnorm.npeaks peaks = genes_bnorm -%]
+    [% PROCESS table_row peak = genes_bnorm.total_MEL  class = "mouse" nc = 1 table_id = "avg" npeaks = genes_bnorm.npeaks peaks = genes_bnorm -%]
+    [% PROCESS table_row peak = genes_bnrom.total_hg19  class = "human" nc = 1 table_id = "avg" npeaks = genes_bnorm.npeaks peaks = genes_bnorm -%]
+    [% PROCESS table_row peak = genes_bnorm.total_GM12878  class = "human" nc = 1 table_id = "avg" npeaks = genes_bnorm.npeaks peaks = genes_bnorm -%]
+    [% PROCESS table_row peak = genes_bnorm.total_K562  class = "human" nc = 1 table_id = "avg" npeaks = genes_bnorm.npeaks peaks = genes_bnorm -%]
+    </tbody>
+</table>
+</p>
+
+<p>Mouse Peaks<br/>
+<table id="table_31" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = genes_bnorm.header_1 class = "header" nc = 0 table_id = "peaks" -%]
+    </thead>
+    <tbody>
+        <!-- Hidden row to avoid triggering tablesorter empty table bug -->
+        <tr class="hidden"><td>A</td><td>A</td><td>A</td>
+            [% FOREACH i = [4 .. 12] %]
+               <td>0</td>
+            [% END %]
+        </tr>
+    [% FOREACH row = genes_bnorm.peaks_mm9 -%]
+        [% PROCESS table_row peak = row  class = "mouse" nc = 3 npeaks = genes_bnorm.npeaks peaks = genes_bnorm table_id = "peaks" -%]
+    [% END -%]
+    </tbody>
+</table>
+</p>
+
+<p>Human Peaks<br/>
+<table id="table_32" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = genes_bnorm.header_1 class = "header" nc = 0 table_id = "peaks" -%]
+    </thead>
+    <tbody>
+        <!-- Hidden row to avoid triggering tablesorter empty table bug -->
+        <tr class="hidden"><td>A</td><td>A</td><td>A</td>
+            [% FOREACH i = [4 .. 12] %]
+               <td>0</td>
+            [% END %]
+        </tr>
+    [% FOREACH row = genes_bnorm.peaks_hg19 -%]
+        [% PROCESS table_row peak = row  class = "human" nc = 3 npeaks = genes_bnorm.npeaks peaks = genes_bnorm table_id = "peaks" -%]
+    [% END -%]
+    </tbody>
+</table>
+</p>

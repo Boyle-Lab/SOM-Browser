@@ -1,0 +1,146 @@
+[%# Content for the Chromatin States Tab -%]
+
+<script>
+    $(document).ready(function() {
+        $("#table_100").tablesorter({sortList: [[0,0], [1,0]]});
+        $("#table_101").tablesorter({sortList: [[0,0], [1,0]]});
+    })
+</script>
+
+[% BLOCK table_row -%]
+    <tr class = "[% class %]">
+        [% PROCESS table_cols peak = peak class = class nc = nc table_id = table_id n_peaks = n_peaks -%]
+    </tr>
+[% END -%]
+
+[% BLOCK table_cols -%]
+    [% FOREACH col = peak -%]
+        [% IF class == "shared" && loop.count > nc -%]
+	    [% IF table_id == "avg" && loop.count == 2 -%]
+                [% IF (col / n_peaks) >= 0.5 %]
+                    <td style="background: rgba(102,0,204,[% col / n_peaks %]); color: white">[% col %]</td>
+                [% ELSE %]
+                    <td style="background: rgba(102,0,204,[% col / n_peaks %])">[% col %]</td>
+                [% END %]
+	    [% ELSE -%]
+                [% IF (col) >= 0.5 %]
+                    <td style="background: rgba(102,0,204,[% col %]); color: white">[% col %]</td>
+                [% ELSE %]
+                    <td style="background: rgba(102,0,204,[% col %])">[% col %]</td>
+                [% END %]
+            [% END -%]
+        [% ELSIF class == "mouse" && loop.count > nc -%]
+            [% IF table_id == "avg" && loop.count == 2 -%]
+                [% IF (col / n_peaks) >= 0.5 %]
+                    <td style="background: rgba(255,0,0,[% col / n_peaks %]); color: white">[% col %]</td>
+                [% ELSE %]
+                    <td style="background: rgba(255,0,0,[% col / n_peaks %])">[% col %]</td>
+                [% END %]
+ 	    [% ELSIF table_id == "avg" -%]
+                [% IF (col) >= 0.5 %]
+                    <td style="background: rgba(255,0,0,[% col %]); color: white">[% col %]</td>
+                [% ELSE %]
+                    <td style="background: rgba(255,0,0,[% col %])">[% col %]</td>
+                [% END %]
+            [% ELSE -%]
+                <td class="[% class %]" style="background: rgb([% col %]); border-style: solid none solid none">&nbsp;</td>
+	    [% END -%]
+        [% ELSIF class == "human" && loop.count > nc -%]
+            [% IF table_id == "avg" && loop.count == 2 -%]
+                [% IF (col / n_peaks) >= 0.5 %]
+                    <td style="background: rgba(0,0,255,[% col / n_peaks %]); color: white">[% col %]</td>
+                [% ELSE %]
+                    <td style="background: rgba(0,0,255,[% col / n_peaks %])">[% col %]</td>
+                [% END %]
+            [% ELSIF table_id == "avg" -%]
+                [% IF (col) >= 0.5 %]
+                    <td style="background: rgba(0,0,255,[% col %]); color: white">[% col %]</td>
+                [% ELSE %]
+                    <td style="background: rgba(0,0,255,[% col %])">[% col %]</td>
+                [% END %]
+	    [% ELSE -%]
+                <td class="[% class %]" style="background: rgb([% col %]); border-style: solid none solid none">&nbsp;</td>
+	    [% END -%]
+        [% ELSIF class =="header" -%]
+	    [% IF table_id == "states" && loop.count == 4 -%]
+ 	        <th class="sorter-false" colspan = 100>[% col %]</th>
+            [% ELSIF table_id == "avg" && loop.count > 2 -%]
+	        [% IF loop.count == 3 -%]
+                    <th class="[% class %]" style="background: rgb(255,0,0)">[% col %]</th>
+		[% ELSIF loop.count == 4 -%]
+		    <th class="[% class %]" style="background: rgb(255,153,0)">[% col %]</th>
+		[% ELSIF loop.count == 5 -%]
+   	     	    <th class="[% class %]" style="background: rgb(255,255,0)">[% col %]</th>
+                [% ELSIF loop.count == 6 -%]
+                    <th class="[% class %]" style="background: rgb(153,204,0)">[% col %]</th>
+                [% ELSIF loop.count == 7 -%]
+                    <th class="[% class %]" style="background: rgb(0,153,102)">[% col %]</th>
+                [% ELSIF loop.count == 8 -%]
+                    <th class="[% class %]" style="background: rgb(155,155,155)">[% col %]</th>
+                [% ELSIF loop.count == 9 -%]
+                    <th class="[% class %]" style="background: rgb(0,0,255); color:white">[% col %]</th>
+                [% END -%]
+	    [% ELSE -%]
+                <th class="[% class %]">[% col %]</th>
+	    [% END -%]
+
+        [% ELSE -%]
+            [% IF loop.count == 2 %]
+                [% IF class == "human" %]
+                    <td class="[% class %]" style="background: #ddd"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=[% col %]" target="_blank">[% col %]</a></td>
+                [% ELSE %]
+                    <td class="[% class %]" style="background: #ddd"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&position=[% col %]" target="_blank">[% col %]</a></td>
+                [% END %]
+            [% ELSE %]
+                    <td class="[% class %]" style="background: #ddd">[% col %]</td>
+            [% END %]
+        [% END -%]
+    [% END -%]
+[% END -%]
+
+<p style="text-align: right; float: right;">
+    <a class="tab_info" name="3" href="javascript:void(0);" title="About This Tab"><img src="[% c.uri_for('/static/images/info.png') %]" width=25 height=25></a>
+</p>
+
+[% PROCESS "row_select.tt2" %]
+
+<p>Average Coverage by chromHMM Chromatin States<br/>
+<table class="peakdata">
+    <thead>
+    [% PROCESS table_row peak = chromstate.header_a class = "header" nc = 0 table_id = "avg" n_peaks = chromstate.n_peaks -%]
+    </thead>
+    <tbody>
+    [% PROCESS table_row peak = chromstate.total class = "shared" nc = 1 table_id = "avg" n_peaks = chromstate.n_peaks -%]
+    [% PROCESS table_row peak = chromstate.total_CH12 class = "mouse" nc = 1 table_id = "avg" n_peaks = chromstate.n_peaks -%]
+    [% PROCESS table_row peak = chromstate.total_MEL  class = "mouse" nc = 1 table_id = "avg" n_peaks = chromstate.n_peaks -%]
+    [% PROCESS table_row peak = chromstate.total_GM12878  class = "human" nc = 1 table_id = "avg" n_peaks = chromstate.n_peaks -%]
+    [% PROCESS table_row peak = chromstate.total_K562 class = "human" nc = 1 table_id = "avg" n_peaks = chromstate.n_peaks -%]
+    </tbody>
+</table>
+</p>
+
+<p>Mouse Peaks<br/>
+<table class="peakdata" id="table_100">
+    <thead>
+    [% PROCESS table_row peak = chromstate.header_b class = "header" nc = 0 table_id = "states" n_peaks = chromstate.n_peaks -%]
+    </thead>
+    <tbody>
+    [% FOREACH row = chromstate.peaks_mm9 -%]
+        [% PROCESS table_row peak = row  class = "mouse" nc = 3 table_id = "states" n_peaks = chromstate.n_peaks -%]
+    [% END -%]
+    </tbody>
+</table>
+</p>
+
+<p>Human Peaks<br/>
+<table class="peakdata" id="table_101">
+    <thead>
+    [% PROCESS table_row peak = chromstate.header_b class = "header" nc = 0 table_id = "states" n_peaks = chromstate.n_peaks -%]
+    </thead>
+    <tbody>
+    [% FOREACH row = chromstate.peaks_hg19 -%]
+        [% PROCESS table_row peak = row  class = "human" nc = 3 table_id = "states" n_peaks = chromstate.n_peaks -%]
+    [% END -%]
+    </tbody>
+</table>
+</p>

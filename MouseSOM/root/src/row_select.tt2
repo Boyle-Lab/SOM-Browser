@@ -1,0 +1,25 @@
+<form id="row_select_[% activeTab %]">
+<p> Show Data For: <select class="row_select">
+[% IF show == 0 %]
+    <option value="all">All Peaks</option>
+    <option value="orth-1">1:1 Orthologs</option>
+    <option value="orth-2">1:many Orthologs</option>
+    <option selected value="non-orth">Non-Orthologs</option>
+[% ELSIF show == 1 %]
+    <option value="all">All Peaks</option>
+    <option selected value="orth-1">1:1 Orthologs</option>
+    <option value="orth-2">1:many Orthologs</option>
+    <option value="non-orth">Non-Orthologs</option>
+[% ELSIF show == 2 %]
+    <option value="all">All Peaks</option>
+    <option value="orth-1">1:1 Orthologs</option>
+    <option selected value="orth-2">1:many Orthologs</option>
+    <option value="non-orth">Non-Orthologs</option>
+[% ELSE %]
+    <option selected value="all">All Peaks</option>
+    <option value="orth-1">1:1 Orthologs</option>
+    <option value="orth-2">1:many Orthologs</option>
+    <option value="non-orth">Non-Orthologs</option>
+[% END %]
+</select></p>
+</form>

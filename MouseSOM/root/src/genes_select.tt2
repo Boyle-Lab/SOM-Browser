@@ -1,0 +1,21 @@
+<form id="genes_select">
+<p> Normalization: <select class="genes_select">
+[% IF geneSelect == "tpm" %]
+    <option selected value="tpm">TPM</option>
+    <option value="qnorm">TPM + Quantile</option>
+    <option value="bnorm">Batch-Effect</option>
+[% ELSIF geneSelect == "qnorm" %]
+    <option value="tpm">TPM</option>
+    <option selected value="qnorm">TPM + Quantile</option>
+    <option value="bnorm">Batch-Effiect</option>
+[% ELSIF geneSelect == "bnorm" %]
+    <option value="tpm">TPM</option>
+    <option value="qnorm">TPM + Quantile</option>
+    <option selected value="bnorm">Batch-Effect</option>
+[% ELSE %]
+    <option selected value="tpm">TPM</option>
+    <option value="qnorm">TPM + Quantile</option>
+    <option value="bnorm">Batch-Effect</option>
+[% END %]
+</select></p>
+</form>

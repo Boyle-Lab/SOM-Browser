@@ -1,0 +1,120 @@
+[% META title = 'Boyle Lab Human-Mouse SOM Browser Compare Maps' %]
+
+<script>
+    [% PROCESS "highlight_neuron.js" -%]
+    [% PROCESS "map_load.js" -%]
+    [% PROCESS "summary_load.js" -%]
+
+    $(document).ready(function () {
+
+        document.map_form.n_fields.value = 0;
+
+        $('<div/>', {
+             'class' : 'compBuild', html: GetHtml()
+        }).appendTo('#container');
+    })
+
+    function GetHtml()
+    {
+      var len = document.map_form.n_fields.value;
+      var $html = $('.searchTemplate').clone();
+      $html.find('[name=table]')[0].name = "table_" + len;
+      $html.find('[name=field]')[0].name = "field_" + len;
+      $html.find('[name=map]')[0].id = "map_" + len;
+      $html.find('[name=neuronsummary]')[0].id = "neuronsummary_" + len;
+      return $html.html();
+    }
+
+    $(document).on("click", "#addRow", function() {
+        document.map_form.n_fields.value++;
+	$('<div/>', {
+	    'class' : 'compBuild', html: GetHtml()
+	}).hide().appendTo('#container').slideDown('slow');
+    })
+
+    $(document).on("click",".remove_field", function(e){
+        e.preventDefault(); $(this).parent('div').remove();
+    })
+
+    $(document).on("change", ".table_select", function(e) {
+        var tmp = this.name.split("_");
+        var field = "field_" + tmp[1];
+        $(document.map_form[field]).load("[% c.uri_for('/compare/get_fields/') %]" + $(this).val());
+    })
+    
+    $(document).on("change", ".db_field", function(e) {
+        var tmp = this.name.split("_");
+        var field = "map_" + tmp[1];
+	var target = $(document.getElementById(field));
+	target.attr("type", $(this).val());
+
+        $.when(loadSvgMap($(this).val())).done(function(mapUrl) {
+            $.when(loadSvgContent(mapUrl, target)).done(function(a) {
+	        if (target.attr("name") != "map") {		
+                    var svg = target.children()[0];
+                    var map = svg.id;
+                    highlightNeuron(target.attr("name"), map);
+		}
+            });
+        });
+    })
+
+    $(document).on("click", ".neuron_link", function(e){
+        var target = this.parentNode.parentNode;
+//	console.log(target);
+	var tmp = target.id.split("_");
+	var field = "neuronsummary_" + tmp[1];
+	var summary = $(document.getElementById(field));
+	var b_link = '<p class="centeredbody"><a href="[% c.uri_for('/maps/neuron/') %]' + target.type + '/' + this.id + '" class="button">Jump to Browser</a></p>';
+//	console.log(b_link);
+	summary.html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + this.id + '<br/><img src="[% c.uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
+	$.when(loadSummary(this.id, summary)).done(function(a) {
+	     summary.append(b_link);
+	});
+	var map = this.parentNode.id;
+	highlightNeuron(this.id, map);
+	target.name = this.id;
+    });
+
+</script>
+
+<script>
+    [% PROCESS "map_open.js" -%]
+</script>
+
+<div id="searchform">
+    <p class="bold">Select a map category and map from the menu below to view a map. Click the "Add Another Map" button to add another map. You can add as many maps as you want. Click the "X" beside the selection menu to remove a map. You can click on a neuron on any of the maps to view summary data for that neuron.</p>
+
+    <form method="post" name="map_form" action="javascript:void(0)") %]">
+        <input type="hidden" name="n_fields" value="0">
+        <div class="searchTemplate">
+            Category: <select class="table_select" name="table">
+                <option selected value="base">Choose a map type</option>
+                <option value="1">Maps</option>
+                <option value="2">Transcription Factors</option>
+	        <option value="3">Conservation and Selection</option>
+                <option value="4">Gene Expression (TPM)</option>
+		<option value="45">Gene Expression (Quantile Norm TPM)</option>
+		<option value="46">Gene Expression (Batch Norm TPM)</option>
+		<option value="6">Histone Modification</option>
+		<option value="7">GWAS</option>
+		<option value="8">DNase Sensitivity</option>
+            </select>
+            Field: <select class="db_field" name="field">
+                <option value="NULL"></option>
+            </select>
+            <a href="javascript:void(0)" class="remove_field" name="remove">x</a>
+
+            <object id="map" name="map" class="compBuild" width=800 height=460></object>
+	    <div id="neuronsummary" name="neuronsummary" class="compBuild"></div>
+
+
+        </div>
+
+        <div id="container"></div>
+
+        <a class="field button" href="javascript:void(0)" id="addRow">Add Another Map</a>
+
+    </form>
+    
+</div>

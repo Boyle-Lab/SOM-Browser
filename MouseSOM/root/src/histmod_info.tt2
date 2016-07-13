@@ -1,0 +1,31 @@
+<p>
+    This tab describes the histone modifications contained within each module for seven modifications: H3K9 Acetylation, H3K79 Dimethylation, H3K4 Mono- and Trimethylation, H3K36 Trimethylation, H3K27 Trimethylation and Acetylation. Scores reported indicate the maximum ChIP peak score observed within the module. Histograms indicate the proportion of modules with a maximum score in the given range.
+</p>
+<p>
+    <span class="italic">H3K9ac</span><br>
+    H3 K9 Acetylation is most often associated with promoters of actively-transcribed genes <a href="http://www.biomedcentral.com/1471-2164/13/424" target="_blank>(Karmodiya et al., 2012)</a>.
+</p>
+<p>
+    <span class="italic">H3K79me2</span><br>
+    This histone mark is most often attributed to gene bodies of actively transcribed genes <a href="http://genesdev.cshlp.org/content/18/11/1263" target="_blank">(Schubeler et al., 2004)</a> and <a href="http://www.sciencedirect.com/science/article/pii/S0092867405001868/" target="_blank">(Okada et al., 2005)</a>.
+</p>
+<p>
+    <span class="italic">H3K4me3</span><br>
+    This histone mark is most often associated with transcription start sites of actively-transcribed genes <a href="http://www.sciencedirect.com/science/article/pii/S0092867407006009" target="_blank">(Barski et al., 2007)</a>.
+</p>
+<p>
+    <span class="italic">H3K4me1</span><br>
+    This histone mark is most often associated with poised/weak enhancers, possibly functioning to facilitate nucleosomal mobility to allow transcription factor binding <a href="http://www.sciencedirect.com/science/article/pii/S1097276513001020" target="_blank">(Calo and Wysocka, 2013)</a>.
+</p>
+<p>
+    <span class="italic">H3K36me3</span><br>
+    This histone mark is most often associated with exons of actively-transcribed genes, particularly toward the 5' ends of genes <a href="http://www.sciencedirect.com/science/article/pii/S0092867407006009" target="_blank">(Barski et al., 2007)</a>.
+</p>
+<p>
+    <span class="italic">H3K27me3</span><br>
+    This histone mark is most often associated with promoters of inactive genes, acting in opposition to H3K4me3 <a href="http://www.sciencedirect.com/science/article/pii/S0092867407006009" target="_blank">(Barski et al., 2007)</a>
+</p>
+<p>
+    <span class="italic">H3K27ac</span><br>
+    This histone mark is most often associated with strong/active enhancers, differentiating them from weak/poised enhancers, which contain H3K4me1 alone <a href="http://www.pnas.org/content/107/50/21931.full" target="_blank">(Creyghton et al., 2010)</a>.
+</p>

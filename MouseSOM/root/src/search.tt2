@@ -1,0 +1,218 @@
+[% META title = 'Boyle Lab Human-Mouse SOM Browser Search' %]
+
+<script>
+
+    $(document).ready(function () {
+
+        document.search_form.n_fields.value = 1;
+	document.search_form.n_orders.value = 0;
+
+        $('<div/>', {
+             'class' : 'searchBuild', html: GetSearchHtml()
+        }).appendTo('#container');
+
+	$('<div/>', {
+             'class' : 'orderBuild', html: GetOrderHtml()
+        }).appendTo('#container2');
+
+    })
+
+    function GetSearchHtml()
+    {
+      var len = $('.searchBuild').length;
+      var $html = $('.searchTemplate').clone();
+      $html.find('[name=chain]')[0].name="chain_" + len;
+      $html.find('[name=table]')[0].name="table_" + len;
+      $html.find('[name=field]')[0].name="field_" + len;
+      $html.find('[name=constraint]')[0].name="constraint_" + len;
+      $html.find('[name=value]')[0].name="value_" + len;
+      $html.find('[name=cond_group]')[0].name="cond_group_" + len;
+      if (len == 0) {
+          $html.find('[name=chain_0]')[0].remove();
+          $html.find('[name=remove]')[0].remove();
+	  $html.find('[name=group_cond]')[0].remove();
+      }
+      return $html.html();
+    }
+
+    function GetOrderHtml()
+    {
+      var len = $('.orderBuild').length;
+      var $html = $('.orderTemplate').clone();
+      $html.find('[name=order_by_t]')[0].name="order_by_t_" + len;
+      $html.find('[name=order_by_f]')[0].name="order_by_f_" + len;
+      $html.find('[name=order_by_order]')[0].name="order_by_order_" + len;
+      if (len == 0) {
+          $html.find('[name=order_remove]')[0].remove();
+      }
+      return $html.html();
+    }
+
+    $(document).on("click",".remove_field", function(e){
+        e.preventDefault(); $(this).parent('div').remove();
+        document.search_form.n_fields.value--;
+    })
+
+    $(document).on("click",".remove_order", function(e){
+        e.preventDefault(); $(this).parent('div').remove();
+        document.search_form.n_orders.value--;
+    })
+    
+    $(document).on("change", ".table_select", function(e) {
+        var tmp = this.name.split("_");
+        var field = "field_" + tmp[1];
+        $(document.search_form[field]).load("[% c.uri_for('/search/get_fields/') %]" + $(this).val());
+    })
+
+    $(document).on("change", ".order_select", function(e) {
+        if (document.search_form.n_orders.value == 0) document.search_form.n_orders.value++;
+	var tmp = this.name.split("_");
+        var field = "order_by_f_" + tmp[3];
+        $(document.search_form[field]).load("[% c.uri_for('/search/get_fields/') %]" + $(this).val());
+    })
+
+    $(document).on("change", "#group_by_t", function() {
+        $("#group_by_f").load("[% c.uri_for('/search/get_fields/') %]" + $("#group_by_t").val());
+    })
+
+    $(document).on("click", "#addRow", function () {
+        $('<div/>', {
+        'class' : 'searchBuild', html: GetSearchHtml()
+        }).hide().appendTo('#container').slideDown('slow');
+        document.search_form.n_fields.value++;
+    })
+
+    $(document).on("click", "#addOrderRow", function () {
+        $('<div/>', {
+        'class' : 'orderBuild', html: GetOrderHtml()
+        }).hide().appendTo('#container2').slideDown('slow');
+	document.search_form.n_orders.value++;
+    })
+
+
+</script>
+
+<script>
+    [% PROCESS "map_open.js" -%]
+</script>
+
+<div id="searchform">
+    <p class="bold">Enter your search criteria using the form below.</p>
+
+    <form method="post" name="search_form" action="[% c.uri_for('search_results') %]">
+    <input type="hidden" name="n_fields" value="0">
+    <input type="hidden" name="n_orders" value="0">
+        <p>Base Table: <select class=table_select name="base_table">
+        <option selected value="peaks">Peaks</option>
+        <option value="neurons">Neurons</option>
+    </select>
+    </p>
+
+    <div class="searchTemplate">
+        <select name="chain">
+	    <option selected value="AND">AND</option>
+	    <option value="OR">OR</option>
+	    <option value="NOT">NOT</option>
+	    <option value="XOR">XOR</option>
+        </select>
+        Table: <select class="table_select" name="table">
+            <option selected value="base">Choose a Table</option>
+            <option value="neurons">Neurons</option>
+            <option value="factors">Transcription Factors</option>
+	    <option value="peaks_factors">Peaks_Factors</option>
+            <option value="peaks_genes">Target Genes</option>
+	    <option value="genes">Gene Expression (tpm)</option>
+	    <option value="genes_qnorm">Gene Expression (quant norm tpm)</option>
+	    <option value="genes_bnorm">Gene Expression (batch norm tpm)</option>
+            <option value="peaks">Peaks</option>
+            <option value="peaks_selection">Selection</option>
+            <option value="peaks_histmods">Histone Modification</option>
+	    <option value="go_data">GO Enrichment</option>
+	    <option value="peaks_gwas">Peaks_GWAS</option>
+	    <option value="gwas">GWAS</option>
+	    <option value="peaks_dnase">Peaks_DNase</option>
+	    
+        </select>
+        Field: <select class="db_field" name="field">
+            <option value="NULL"></option>
+        </select>
+        <select class="span2" name="constraint">
+            <option value="=">==</option>
+	    <option value="!=">!=</option>
+            <option value=">">></option>
+            <option value="<"><</option>
+            <option value=">=">>=</option>
+            <option value="<="><=</option>
+            <option value="LIKE">LIKE</option>
+        </select>
+        <input class="span3" placeholder="Value" type="text" name="value">
+	<span name="group_cond">Group with previous<input type="checkbox" name="cond_group" value="1"></span>
+	<input class="remove_field" type="submit" name="remove" value="Remove">
+    </div>
+
+    <div id="container"></div>
+
+    <a class="field button" href="javascript:void(0)" id="addRow">Add More Search Terms</a>
+
+    <div class="orderTemplate" id="orderby">
+        Table: <select class="order_select" name="order_by_t">
+            <option selected value="NULL">Choose a Table</option>
+            <option value="neurons">Neurons</option>
+            <option value="factors">Transcription Factors</option>
+            <option value="peaks_factors">Peaks_Factors</option>
+            <option value="peaks_genes">Target Genes</option>
+            <option value="genes">Gene Expression (tpm)</option>
+            <option value="genes_qnorm">Gene Expression (quant norm tpm)</option>
+            <option value="genes_bnorm">Gene Expression (batch norm tpm)</option>
+	    <option value="peaks">Peaks</option>
+            <option value="peaks_selection">Selection</option>
+            <option value="peaks_histmods">Histone Modification</option>
+            <option value="go_data">GO Enrichment</option>
+            <option value="peaks_gwas">Peaks_GWAS</option>
+            <option value="gwas">GWAS</option>
+            <option value="peaks_dnase">Peaks_DNase</option>
+        </select>
+        Field: <select class="order_field" name="order_by_f">
+            <option value="NULL"></option>
+        </select>
+	<select class="order_order" name = "order_by_order">
+	    <option selected value="ASC">Ascending</option>
+	    <option value="DESC">Descending</option>
+	</select>
+	<input class="remove_order" type="submit" name="order_remove" value="Remove">
+    </div>
+
+    <div id="container2">
+    	 Order Results By:
+    </div>
+
+    <a class="field button" href="javascript:void(0)" id="addOrderRow">Add More Order-By Terms</a>
+
+    <div id="groupsubmit">
+        <p>Group Results By:<br/>
+    	Table: <select id="group_by_t" name="group_by_t">
+            <option selected value="NULL">Choose a Table</option>
+    	    <option value="neurons">Neurons</option>
+    	    <option value="factors">Transcription Factors</option>
+    	    <option value="peaks_factors">Peaks_Factors</option>
+    	    <option value="peaks_genes">Target Genes</option>
+            <option value="genes">Gene Expression (tpm)</option>
+            <option value="genes_qnorm">Gene Expression (quant norm tpm)</option>
+            <option value="genes_bnorm">Gene Expression (batch norm tpm)</option>
+    	    <option value="peaks">Peaks</option>
+    	    <option value="peaks_selection">Selection</option>
+    	    <option value="peaks_histmods">Histone Modification</option>
+    	    <option value="go_data">GO Enrichment</option>
+            <option value="peaks_gwas">Peaks_GWAS</option>
+            <option value="gwas">GWAS</option>
+            <option value="peaks_dnase">Peaks_DNase</option>
+    	</select>
+    	Field: <select id="group_by_f" name="group_by_f">
+            <option value="NULL"></option>
+        </select>
+	</p>
+    </div>
+
+    <p><input class="button" type="submit" name="Submit" value="Search"></p>
+    </form>
+</div>

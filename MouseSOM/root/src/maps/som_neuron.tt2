@@ -1,0 +1,401 @@
+[% META title = 'Human-Mouse SOM Map View' -%]
+<!-- Top-Left Panel: Map Image -->
+<div id="mapblock">
+     <!-- Track the currently selected neuron -->
+
+    [% # SOM Map Image -%]
+    <p>
+        <object id="som_map" class="mapmain" width="800px" height="460px"></object>
+    </p>
+    <p style="text-align: left">
+        <a id="map_info" href="javascript:void(0);" name="25" title="Map Description"><img src="[% c.uri_for('/static/images/info.png') %]" width=20 height=20><span style="position: absolute;">&nbsp;About this map</span></a>
+    </p>
+</div> <!-- End Map Block -->
+
+<!-- Top-Right Panel: Neuron Summary Data -->
+<div id="neuronsummary"></div>
+
+
+<!-- Bottom Panel: Neuron Detail Tabs -->
+<div id="neurondetails">
+
+    [% PROCESS maps/neuron_tabs.tt2 -%]
+
+</div> <!-- End Neuron Details Block -->
+
+<div id="map_info_block" title="Map Description"></div>
+<div id="tab_info_block" title="Tab Description"><p>Information about the active tab...</p></div>
+
+<script>
+
+    [% PROCESS "map_update.js" -%]
+
+    $(document).ready(function(){
+        var mapId = [% map_id %];
+	var neuronId = [% neuron.id %];
+	var activeTab = [% activeTab %];
+	var show = "[% show %]";
+	var geneSelect = "[% geneSelect %]";
+	var goSource = "[% goSource %]";
+
+	$.when(loadSvgMap(mapId)).done(function(mapUrl) {
+//	    console.log(mapUrl);
+	    $.when(loadSvgContent(mapUrl, $("#som_map"))).done(function(a) {
+   	        var svg = $("svg")[0];
+		var map = svg.id;
+//    	        console.log(map);
+		highlightNeuron(neuronId, map);
+	    });
+	});
+
+        $('#neuronsummary').html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + neuronId + '<br/><img src="[% c.uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
+	$('#neuronsummary').load("[% c.uri_for('/maps/update_neuron_summary/') %]" + neuronId);
+	
+	var newUrl = "[% c.uri_for('/maps/neuron/') %]" + mapId + '/' + neuronId + "?activeTab=" + activeTab;
+	if (show) {
+	    newUrl = newUrl + '&show=' + show;
+	}
+	if (geneSelect) {
+	    newUrl = newUrl + '&geneSelect=' + geneSelect;
+	}
+	if (goSource) {
+	    newUrl = newUrl + '&goSource=' + goSource;
+	}
+        var newTitle = document.title + ": Map " + mapId + ", Pattern " + neuronId + ': ' + get_tab_title(activeTab);
+	var state = { url: newUrl, title: newTitle, loadTag: true };
+	document.title = newTitle;
+	window.history.replaceState(state, newTitle, newUrl);
+	
+	$("#map_info_block").load("[% c.uri_for('/maps/get_map_info/') %]" + mapId);
+
+        $("#map_info_block").dialog(
+            {
+	        height: 400,
+		width: 500,
+	        autoOpen: false
+	    }
+        );
+
+        $("#tab_info_block").load("[% c.uri_for('/maps/get_tab_info/') %]" + activeTab);
+
+        $("#tab_info_block").dialog(
+            {
+                height: 400,
+                width: 500,
+                autoOpen: false
+            }
+        );
+    });
+
+    $(document).on("click", "#map_info", function() {
+        $( "#map_info_block" ).dialog( "open" );
+    });
+
+    $(document).on("click", ".tab_info", function() {
+        $( "#tab_info_block" ).dialog( "open" );
+    });
+
+
+    $(window).load(function() {
+    /* Load the default tab. This is a hack to address the need to use a javascript
+     * handler to load tabs and maintain ortholog/non-orth menu persistency, which
+     * breaks the AJAX default tab loading, since the href packaged in the anchor
+     * tags is no longer informative. */
+        var neuronId = [% neuron.id %];
+        var activeTab = [% activeTab %];
+        var show = "[% show %]";
+	var geneSelect = "[% geneSelect %]";
+	var goSource = "[% goSource %]";
+
+	var tabId = activeTab + 1;
+        var targetUrl = "[% c.uri_for('/maps/load_tab/') %]" + activeTab + '/' + neuronId;
+	var params_str = "";
+        if (show) {
+            params_str = '?show=' + show;
+        }
+	if (geneSelect) {
+	    if (params_str.length == 0) {
+	        params_str = params_str + '?geneSelect=' + geneSelect;
+	    } else {
+	        params_str = params_str + '&geneSelect=' + geneSelect;
+	    }
+	}
+	if (goSource) {
+	    if (params_str.length == 0) {
+	        params_str = params_str + '?goSource=' + goSource;
+	    } else {
+	        params_str = params_str + '&goSource=' + goSource;
+	    }
+	}
+	targetUrl = targetUrl + params_str;
+        loadTab(tabId, targetUrl);	
+    })
+
+
+    $(document).on("click", ".neuron_link", function(e){
+    /* Handler for neuron link clicks */
+        var urlParts = document.location.href.split(/[\/\?]+/g);
+        var mapId = urlParts[4].replace(/#/, "");
+        var newUrl = "[% c.uri_for('/maps/neuron/') %]" + mapId + '/' + this.id;
+
+	var baseTitle = document.title.split(/:/g);
+    	var newTitle = baseTitle[0] + ": Map " + mapId + ", Pattern " + this.id;
+    	document.title = newTitle;
+
+	var state = { url: newUrl, title: newTitle, loadTag: true };
+
+	if (typeof urlParts[6] === 'undefined') {
+	    window.history.pushState(state, newTitle, "[% c.uri_for('/maps/neuron/') %]" + mapId + '/' + this.id);
+	} else {
+       	    window.history.pushState(state, newTitle, "[% c.uri_for('/maps/neuron/') %]" + mapId + '/' + this.id + '?' + urlParts[6]);
+	}
+
+	var neuronUrl = "[% c.uri_for('/maps/update_neuron/') %]" + this.id;
+	if (urlParts[6]) {
+	    neuronUrl = neuronUrl + '?' + urlParts[6];
+	}
+	
+        /* Reload the active tab content */
+        var params = urlParts[6].split(/&/g);
+	var activeTab = params[0].split(/\=/g)[1]
+	var tabId = Number(activeTab) + 1;
+        var targetUrl = "[% c.uri_for('/maps/load_tab/') %]" + activeTab + '/' + this.id;
+        if (params[1]) {
+            targetUrl = targetUrl + '?' + params[1];
+        }
+	$("#neuron_id").text("Pattern " + this.id + " Peak Data");
+        loadTab(tabId, targetUrl);
+
+	$('#neuronsummary').html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + this.id + '<br/><img src="[% c.uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
+	$('#neuronsummary').load("[% c.uri_for('/maps/update_neuron_summary/') %]" + this.id);
+
+	// Highlight the current neuron (unighlight default if needed)
+	$def_node = $(document.getElementById("selected_default"));
+	$def_node.attr('d', "");
+	$def_node.attr('style', "fill:none;stroke:none");
+	var map = this.parentNode.id;
+	highlightNeuron(this.id, map);
+	
+	$("#neuron_id").attr("name", this.id);
+    })
+
+    $(document).on("click", ".ui-tabs-anchor", function(e){
+    /* Handler for tab clicks */
+        var tabParts = this.name.split(/\//g);
+	
+//	var tabId = Number(this.id.split(/\-/g)[2]) - 2;
+	var tabId = Number(this.id.split(/\-/g)[2]);
+	var activeTab = tabParts[5];
+	var urlParts = document.location.href.split(/[\?&]+/g);
+	var newUrl = urlParts[0] + '?activeTab=' + activeTab;
+	var tmp	   = urlParts[0].split(/\//g);
+    	var targetUrl = this.name.replace(/\S([^\/]+)$/, "/" + tmp[6]);
+	for (var i = 2; i < urlParts.length; i++) {	    
+	    newUrl = newUrl + '&' + urlParts[i];
+	    if (i == 2) {
+	        targetUrl = targetUrl + '?' + urlParts[2];
+	    } else {
+	        targetUrl = targetUrl + '&' + urlParts[i];
+	    }
+	}
+	var tmp = document.title.split(/\:/g);
+	var newTitle = tmp[0] + ': ' + get_tab_title(activeTab);
+	var state = { url: newUrl, title: newTitle, loadTag: true };
+	window.history.pushState(state, newTitle, newUrl);
+	loadTab(tabId, targetUrl);
+	$("#tab_info_block").load("[% c.uri_for('/maps/get_tab_info/') %]" + activeTab);
+    })
+
+    function loadTab(tabId, targetUrl) {
+        var target = "ui-tabs-" + tabId;
+        $(document.getElementById(target)).html('<p class="centeredbold">Retrieving data<br/><img src="[% c.uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
+	$(document.getElementById(target)).load(targetUrl);
+    }
+
+  function get_tab_title(activeTab) {
+        if (activeTab == 0) {
+            return "TF Usage";
+        } else if (activeTab == 1) {
+            return "Orthologs";
+        } else if (activeTab == 2) {
+            return "Selection";
+        } else if (activeTab == 3) {
+            return "Gene Exp";
+        } else if (activeTab == 4) {
+            return "Norm. Gene Exp";
+        } else if (activeTab == 5) {
+            return "GO Bio Proc";
+        } else if (activeTab == 6) {
+            return "GO Cell Comp";
+        } else if (activeTab == 7) {
+            return "GO Mol Func";
+        } else if (activeTab == 8) {
+            return "Histone Mods";
+        } else if (activeTab == 9) {
+            return "Chromatin State";
+        } else if (activeTab == 10) {
+            return "GWAS";
+        } else if (activeTab == 11) {
+            return "DNase Sens";
+        }
+    }
+
+    $(document).on("change", ".row_select", function(e) {
+        /* Ortholog/Non-Ortholog/All row selection */
+	
+	var tab = 0;
+	var show_set = 0;
+	var params = get_params();
+	for (i = 0; i < params.length; i++) {
+	    if (params[i][0] == "show") {
+	        params[i][1] = this.value;
+		show_set = 1;
+	    } else if (params[i][0] == "activeTab") {
+	        tab = params[i][1];
+	    }
+	}
+	var params_str = build_params_str(params);
+	if (show_set == 0) {
+//	     params_str = params_str + '&show=' + this.value;
+	}
+
+	var selID = '#row_select_' + tab;
+	var parentID = '#' + $(selID).parent().attr('id');
+
+	var urlMain = document.location.href.split(/\?/g);
+	var urlParts = urlMain[0].split(/[\/\?]+/g);
+
+    	var url = "[% c.uri_for('/maps/load_tab/') %]" + tab + '/' + urlParts[5] + params_str;
+
+	var newUrl = urlMain[0] + params_str;
+	var state = { url: newUrl, loadTag: true };
+	window.history.pushState(state, "", newUrl);
+
+       	$(parentID).load(url);
+    })
+
+    $(document).on("change", ".genes_select", function(e) {
+        /* Gene normalization selection */
+	var tab = 0;
+	var genes_set = 0;
+	var params = get_params();
+	for (i = 0; i < params.length; i++) {
+	    if (params[i][0] == "geneSelect") {
+	        params[i][1] = this.value;
+		genes_set = 1;
+	    } else if (params[i][0] == "activeTab") {
+	        tab = params[i][1];
+	    }
+	}
+	var params_str = build_params_str(params);
+	if (genes_set == 0) {
+//	    params_str = params_str + '&geneSelect=' + this.value;
+	}
+
+	var parentID = '#' + $('#genes_select').parent().attr('id');
+
+	var urlMain = document.location.href.split(/\?/g);
+	var urlParts = urlMain[0].split(/[\/\?]+/g);
+
+        var mapId = Number(urlParts[4]);
+	var neuronId = Number(urlParts[5]);
+	if (this.value == "tpm") {
+	    if (mapId >= 800) {
+	        mapId -= 700;
+	    } else if (mapId >= 200) {
+	        mapId -= 100;
+	    }
+        } else if (this.value == "bnorm") {
+	    if (mapId < 200) {
+                mapId += 100;
+	    } else if (mapId >= 800) {
+	        mapId -= 600
+	    }
+        } else if (this.value == "qnorm") {
+	    if (mapId < 200) {
+                mapId += 700;
+	    } else if (mapId < 300) {
+	        mapId += 600;
+	    }
+        }
+
+    	var url = "[% c.uri_for('/maps/load_tab/') %]" + tab + '/' + urlParts[5] + params_str;
+
+	var newUrl = "[% c.uri_for('/maps/neuron/') %]" + mapId + '/' + urlParts[5] + params_str;
+	var state = { url: newUrl, loadTag: true };
+	window.history.pushState(state, "", newUrl);
+
+        $.when(loadSvgMap(mapId)).done(function(mapUrl) {
+            $.when(loadSvgContent(mapUrl, $("#som_map"))).done(function(a) {
+                var svg = $("svg")[0];
+                var map = svg.id;
+                highlightNeuron(neuronId, map);
+            });
+        });
+
+	$("#map_info_block").load("[% c.uri_for('/maps/get_map_info/') %]" + mapId);
+       	$(parentID).load(url);
+    })
+
+     $(document).on("change", ".ontology_select", function(e) {
+        /* Gene Ontology Source selection */
+	var tab = 0;
+	var go_set = 0;
+	var params = get_params();
+	for (i = 0; i < params.length; i++) {
+	    if (params[i][0] == "goSource") {
+	        params[i][1] = this.value;
+		go_set = 1;
+	    } else if (params[i][0] == "activeTab") {
+	        tab = params[i][1];
+	    }
+	}
+	var params_str = build_params_str(params);
+	if (go_set == 0) {
+//	    params_str = params_str + '&goSource=' + this.value;
+	}
+
+	var parentID = '#' + $('#ontology_select').parent().attr('id');
+
+	var urlMain = document.location.href.split(/\?/g);
+	var urlParts = urlMain[0].split(/[\/\?]+/g);
+
+    	var url = "[% c.uri_for('/maps/load_tab/') %]" + tab + '/' + urlParts[5] + params_str;	
+
+	var newUrl = urlMain[0] + params_str;
+	var state = { url: newUrl, loadTag: true };
+	window.history.pushState(state, "", newUrl);
+	
+       	$(parentID).load(url);
+    })    
+
+    function build_params_str(params) {
+        var params_str = "";
+	for (var i = 0; i < params.length; i++) {
+	    if (i == 0) {
+	        params_str = '?' + params[i][0] + '=' + params[i][1];
+	    } else {
+	        params_str = params_str + '&' + params[i][0] + '=' + params[i][1];
+	    }
+	}
+	return params_str;
+    }
+    
+    function get_params() {
+        var urlParts = document.location.href.split(/[\/\?]+/g);
+	var tmp = urlParts[6].split(/&+/g);
+	
+	var params = new Array(tmp.length);
+
+	for (var i = 0; i < tmp.length; i++) {
+	    params[i] = new Array(2);
+	    p = tmp[i].split(/\=/g);
+	    params[i][0] = p[0];
+	    params[i][1] = p[1];
+	}
+
+	return params;
+    }
+
+</script>
+

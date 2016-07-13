@@ -1,0 +1,10 @@
+<p>This tab shows RNA-seq gene expression data for target genes assigned to each module. Target gene assignments are made based on the nearest TSS to the midpoint of each module, regardless of strand. Three modes of normalization are available:</p>
+
+<p>
+    <span class="italic">Transcripts Per Million (TPM)</span><br>
+    Abundances are normalized for read depth and effective gene length within each cell type separately. These values are not normalized for technical variation between experiments and are thus not reliable for cross-cell comparison.
+</p>
+<p>
+    <span class="italic">TPM + Quantile</span><br>
+    Raw TPM values across all four cell types have been adjusted using a simple quantile normalization procedure. This should reduce non-biological variance between cells, making the values more reliable for comparisons, but is not likely to address non-biological batch effects that may exist between the datasets.</p><p><span class="italic">Batch-Effect</span><br>Raw counts have been adjusted following the procedures described <a href="http://www.ncbi.nlm.nih.gov/pubmed/26236466" target="_blank">here</a> before conversion to TPM. This is a fairly aggressive normalization intended to correct for non-biological batch effects, but may have the side-effect of significantly dilluting true biological effects since the ENCODE study design does not allow the effects of species and lab-of-origin to be reliably separated.
+</p>

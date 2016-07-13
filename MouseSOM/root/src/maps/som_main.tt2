@@ -1,0 +1,89 @@
+[% # This is a TT comment. -%]
+ 
+[%- # Provide a title -%]
+[% META title = 'Human-Mouse SOM Map View' %]
+
+ 
+[% # Note That the '-' at the beginning or end of TT code  -%]
+[% # "chomps" the whitespace/newline at that end of the    -%]
+[% # output (use View Source in browser to see the effect) -%]
+
+<script>
+    [% PROCESS "map_update.js" -%]
+
+    $(document).ready(function(){
+        var mapId = [% map_id %];
+	
+        $.when(loadSvgMap(mapId)).done(function(mapUrl) {
+            $.when(loadSvgContent(mapUrl, $("#som_map"))).done(function(a) {
+//                var svg = $("svg")[0];
+//                var map = svg.id;
+//                highlightNeuron(neuronId, map);
+            });
+        });
+
+
+	var newTitle = document.title +	": Map " + mapId;
+	var state = { url: document.location.href, title: newTitle, loadTag: true };
+	document.title = newTitle;
+	window.history.replaceState(state, newTitle, document.location.href);
+
+	$("#map_info_block").load("[% c.uri_for('/maps/get_map_info/') %]" + mapId);
+
+        $("#map_info_block").dialog(
+            {
+	        height: 400,
+                width: 500,
+                autoOpen: false
+            }
+        );
+    })
+
+    $(document).on("click", "#map_info", function() {
+        $( "#map_info_block" ).dialog( "open" );
+    });
+
+    $(document).on("click",".neuron_link", function(e){
+        var urlParts = document.location.href.split(/\/+/g);
+        var mapId = urlParts[4].replace(/#/, "");
+        window.location.assign("[% c.uri_for('/maps/neuron/') %]" + mapId + '/' + this.id);
+    })
+</script>
+
+<!-- Top-Left Panel: Map Image -->
+<div id="mapblock">
+
+    [% # SOM Map Image -%]
+    <p>
+        <svg id="som_map" class="mapmain" width="800px" height="460px"></svg>
+    </p>
+    <p id="map_info" style="text-align: left">
+        <a href="javascript:void(0);" name="25" title="Map Description"><img src="[% c.uri_for('/static/images/info.png') %]" width=20 height=20><span style="position: absolute;">&nbsp;About this map</span></a>
+    </p>
+
+</div> <!-- End Map Block -->
+
+<!-- Top-Right Panel: Neuron Summary Data -->
+<div id="neuronsummary">
+
+    <p class="centeredbold">Neuron Summary</p>
+
+    <p class="centeredbody">
+    Click a location on the map!
+    </p>
+
+</div> <!-- End Neuron Summary Block -->
+
+
+<!-- Bottom Panel: Neuron Detail Tabs -->
+<div id="neurondetails">
+
+     <p class="centeredbold">
+     Click a location on the map for detailed pattern data!
+     </p>
+
+     [% # PROCESS maps/neuron_tabs.tt2 -%]
+
+</div> <!-- End Neuron Details Block -->
+
+<div id="map_info_block" title="Map Description"></div>

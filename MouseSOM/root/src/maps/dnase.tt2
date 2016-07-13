@@ -1,0 +1,188 @@
+[%# Content for the DNase Hypersensitivity Tab -%]
+
+<script>
+    $(document).ready(function() {
+        $("#table_110").tablesorter();
+        $("#table_111").tablesorter({sortList: [[0,0], [1,0]]});
+        $("#table_112").tablesorter({sortList: [[0,0], [1,0]]});
+    })
+</script>
+
+[% BLOCK table_row -%]
+    <tr>
+        [% PROCESS table_cols peak = peak class = class nc = nc table_id = table_id n_peaks = n_peaks peaks = peaks -%]
+    </tr>
+[% END -%]
+
+[% BLOCK table_cols -%]
+    [% FOREACH col = peak -%]
+       	[% IF table_id == "avg" -%]
+
+            [% IF class =="header" -%]
+                <th class="[% class %]">[% col %]</th>
+
+            [% ELSIF class == "shared" -%]
+	        [% IF loop.count == 2 -%]
+                    [% IF (col / n_peaks) >= 0.5 %]
+                        <td style="background: rgba(102,0,204,[% col / n_peaks %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(102,0,204,[% col / n_peaks %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count >= 3 && loop.count <= 6 -%]
+                    [% IF (col / peaks.global_max) >= 0.5 %]
+                        <td style="background: rgba(102,0,204,[% col / peaks.global_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(102,0,204,[% col / peaks.global_max %])">[% col %]</td>
+                    [% END %]
+       	        [% ELSE -%]
+                     <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                [% END -%]
+
+            [% ELSIF class == "mouse" -%]
+
+                [% IF loop.count == 2 -%]
+                    [% IF (col / n_peaks) >= 0.5 %]
+                        <td style="background: rgba(255,0,0,[% col / n_peaks %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(255,0,0,[% col / n_peaks %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count >= 3 && loop.count <= 6 -%]
+                    [% IF (col / peaks.global_max) >= 0.5 %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.global_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(255,0,0,[% col / peaks.global_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSE -%]
+                     <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                [% END -%]	    
+
+            [% ELSIF class == "human" -%]
+                [% IF loop.count == 2 -%]
+                    [% IF (col / n_peaks) >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col / n_peaks %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col / n_peaks %])">[% col %]</td>
+                    [% END %]
+                [% ELSIF loop.count >= 3 && loop.count <= 6 -%]
+                    [% IF (col / peaks.global_max) >= 0.5 %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.global_max %]); color: white">[% col %]</td>
+                    [% ELSE %]
+                        <td style="background: rgba(0,0,255,[% col / peaks.global_max %])">[% col %]</td>
+                    [% END %]
+                [% ELSE -%]
+                    <td class="[% class %]" style="background: #ddd">[% col %]</td>
+		[% END -%]
+		
+            [% END -%]
+
+	[% ELSE -%]
+
+            [% IF class =="header" -%]
+                <th class="[% class %]">[% col %]</th>
+
+	    [% ELSIF class == "mouse" && loop.count > nc -%]
+	        [% IF col == 'NA' %]
+		    <td class="[% class %]" style="background: rgba(0,0,255,0)">[% col %]</td>
+	    	[% ELSE %]
+                    [% IF loop.count >= 4 && loop.count <= 7 -%]
+                        [% IF (col / peaks.global_max) >= 0.5 %]
+                            <td style="background: rgba(255,0,0,[% col / peaks.global_max %]); color: white">[% col %]</td>
+                        [% ELSE %]
+                            <td style="background: rgba(255,0,0,[% col / peaks.global_max %])">[% col %]</td>
+                        [% END %]
+                    [% ELSE -%]
+                        <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                    [% END -%]
+		[% END %]
+
+            [% ELSIF class == "human" && loop.count > nc -%]
+
+	        [% IF col == 'NA' %]
+		    <td class="[% class %]" style="background: rgba(0,0,255,0)">[% col %]</td>
+	    	[% ELSE %]
+                    [% IF loop.count >= 4 && loop.count <= 7 -%]
+                        [% IF (col / peaks.global_max) >= 0.5 %]
+                            <td style="background: rgba(0,0,255,[% col / peaks.global_max %]); color: white">[% col %]</td>
+                        [% ELSE %]
+                            <td style="background: rgba(0,0,255,[% col / peaks.global_max %])">[% col %]</td>
+                        [% END %]
+	     	    [% ELSE -%]
+            	        <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                    [% END -%]
+
+		[% END %]
+
+            [% ELSE -%]
+                [% IF loop.count == 2 %]
+                    [% IF class == "human" %]
+                        <td class="[% class %]" style="background: #ddd"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=[% col %]" target="_blank">[% col %]</a></td>
+                    [% ELSE %]
+                        <td class="[% class %]" style="background: #ddd"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&position=[% col %]" target="_blank">[% col %]</a></td>
+                    [% END %]
+                [% ELSE %]
+                        <td class="[% class %]" style="background: #ddd">[% col %]</td>
+                [% END %]
+            [% END -%]
+
+        [% END -%]
+    [% END -%]
+[% END -%]
+
+<p style="text-align: right; float: right;">
+    <a class="tab_info" name="3" href="javascript:void(0);" title="About This Tab"><img src="[% c.uri_for('/static/images/info.png') %]" width=25 height=25></a>
+</p>
+
+[% PROCESS "row_select.tt2" %]
+
+<p>Average DNase Hypersensitivity Coverage<br/>
+<table id="table_110" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = dnase.header_a class = "header" nc = 0 table_id = "avg" n_peaks = dnase.n_peaks peaks = dnase -%]
+    </thead>
+    <tbody>
+    [% PROCESS table_row peak = dnase.total class = "shared" nc = 1 table_id = "avg" n_peaks = dnase.n_peaks peaks = dnase -%]
+    [% PROCESS table_row peak = dnase.total_CH12 class = "mouse" nc = 1 table_id = "avg" n_peaks = dnase.n_peaks peaks = dnase -%]
+    [% PROCESS table_row peak = dnase.total_MEL  class = "mouse" nc = 1 table_id = "avg" n_peaks = dnase.n_peaks peaks = dnase -%]
+    [% PROCESS table_row peak = dnase.total_GM12878  class = "human" nc = 1 table_id = "avg" n_peaks = dnase.n_peaks peaks = dnase -%]
+    [% PROCESS table_row peak = dnase.total_K562 class = "human" nc = 1 table_id = "avg" n_peaks = dnase.n_peaks peaks = dnase -%]
+    </tbody>
+</table>
+</p>
+
+<p>Mouse Peaks<br/>
+<table id="table_111" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = dnase.header_b class = "header" nc = 0 table_id = "peak" peaks = dnase -%]
+    </thead>
+    <tbody>
+        <!-- Hidden row to avoid triggering tablesorter empty table bug -->
+        <tr class="hidden"><td>A</td><td>A</td>
+            [% FOREACH i = [3 .. 7] %]
+               <td>0</td>
+            [% END %]
+        </tr>    
+    [% FOREACH row = dnase.peaks_mm9 -%]
+        [% PROCESS table_row peak = row  class = "mouse" nc = 3 table_id = "peak" peaks = dnase -%]
+    [% END -%]
+    </tbody>
+</table>
+</p>
+
+<p>Human Peaks<br/>
+<table id="table_112" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = dnase.header_b class = "header" nc = 0 table_id = "peak" peaks = dnase -%]
+    </thead>
+    <tbody>
+        <!-- Hidden row to avoid triggering tablesorter empty table bug -->
+        <tr class="hidden"><td>A</td><td>A</td>
+            [% FOREACH i = [3 .. 7] %]
+               <td>0</td>
+            [% END %]
+        </tr>
+    [% FOREACH row = dnase.peaks_hg19 -%]
+        [% PROCESS table_row peak = row  class = "human" nc = 3 table_id = "peak" peaks = dnase -%]
+    [% END -%]
+    </tbody>
+</table>
+</p>

@@ -1,0 +1,159 @@
+[%# Content for the Orthologs Tab -%]
+
+<script>
+    $(document).ready(function() {
+        $("#table_24").tablesorter({sortList: [[2,1]]});
+    	$("#table_25").tablesorter({sortList: [[0,0], [1,0]]});
+	$("#table_26").tablesorter({sortList: [[1,1]]});
+        $("#table_27").tablesorter({sortList: [[0,0], [1,0]]});
+    })
+
+</script>
+
+[% BLOCK table_row %]
+    <tr>
+        [% PROCESS table_cols peak = peak class = class nc = nc peaks = peaks table_id = table_id n_peaks = n_peaks -%]
+    </tr>
+[% END -%]
+
+[% BLOCK table_cols -%]
+    [% FOREACH col = peak -%]
+        [% str_idx = loop.count + 1 %]
+
+        [% IF table_id == "avg" -%]
+            [% IF class =="header" -%]
+                <th class="[% class %]">[% col %]</th>
+            [% ELSIF class == "human" && loop.count == 3 -%]
+	        [% IF (col / n_peaks) >= 0.5 %]
+		    <td style="background: rgba(0,0,255,[% col / n_peaks %]); color: white">[% col %]</td>
+		[% ELSE %]
+                    <td style="background: rgba(0,0,255,[% col / n_peaks %])">[% col %]</td>
+		[% END %]
+            [% ELSIF class == "human" && loop.count == 1 %]
+                <td class="[% class %]" style="background: #ddd"><a href="[% peak.2 %]" target="_blank">[% col %]</a></td>
+	    [% ELSIF class == "human" && loop.count == 4 %]
+	        [%# Do nothing -%]
+	    [% ELSE -%]
+	        <td class="[% class %]" style="background: rgba(0,0,255,0.1)">[% col %]</td>
+            [% END -%]
+
+        [% ELSIF table_id == "2" -%]
+            [% IF class =="header" -%]
+                <th class="[% class %]">[% col %]</th>
+            [% ELSIF class == "human" && loop.count > nc -%]
+	        [% IF (col / n_peaks) >= 0.5 %]
+                    <td style="background: rgba(0,0,255,[% col / n_peaks %]); color: white">[% col %]</td>	
+                [% ELSE %]
+                    <td style="background: rgba(0,0,255,[% col / n_peaks %])">[% col %]</td>
+                [% END %]
+            [% ELSIF class == "human" && loop.count == 2 -%]
+	        <td class="[% class %]" style="background: #ddd"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=[% col %]" target="_blank">[% col %]</a></td>
+	    [% ELSE -%]
+	        <td class="[% class %]" style="background: #ddd">[% col %]</td>
+	    [% END -%]
+	[% ELSE -%]
+	    [% IF class =="header" -%]
+                <th class="[% class %]">[% col %]</th>
+            [% ELSIF class == "human" && loop.count > nc -%]
+                [% IF loop.count == 4 -%]
+		    <td class="[% class %]" style="background: rgba(0,0,255,0.1)"><a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=[% col %]" target="_blank">[% col %]</a></td>
+	        [% ELSIF loop.count == 5 -%]
+                    <td class="[% class %]" style="background: rgba(0,0,255,0.1)"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=[% col %]" target="_blank">[% col %]</a></td>
+		[% ELSIF loop.count == 6 -%]
+		    <td class="[% class %]" style="background: rgba(0,0,255,0.1)"><a href="[% peak.6 %]" target="_blank">[% col %]</a></td>
+                [% ELSIF loop.count == 7 -%]
+		    [%# Hidden column -- do nothing -%]
+                [% ELSE -%]
+		    <td class="[% class %]" style="background: rgba(0,0,255,0.1)">[% col %]</td>
+		[% END -%]
+            [% ELSE -%]
+	        [% IF loop.count == 2 %]
+		    [% IF class == "human" %]
+		        <td class="[% class %]" style="background: #ddd"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=[% col %]" target="_blank">[% col %]</a></td>
+		    [% ELSE %]
+		        <td class="[% class %]" style="background: #ddd"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&position=[% col %]" target="_blank">[% col %]</a></td>
+		    [% END %]
+		[% ELSE %]
+		        <td class="[% class %]" style="background: #ddd">[% col %]</td>
+	        [% END %]
+            [% END -%]
+	[% END -%]
+    [% END -%]
+[% END -%]
+
+<p style="text-align: right; float: right;">
+    <a class="tab_info" name="3" href="javascript:void(0);" title="About This Tab"><img src="[% c.uri_for('/static/images/info.png') %]" width=25 height=25></a>
+</p>
+
+[% PROCESS "row_select.tt2" %]
+
+<p>Summary<br/>
+<table id="table_26" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = gwas.header_c class = "header" nc = 0 table_id = "avg" n_peaks = gwas.n_gwas -%]
+    </thead>
+    <tbody>
+        <tr>
+            <td style="background: #ddd">Total Human Peaks</td>
+	    <td style="background: rgba(0,0,255,1); color: white">[% gwas.n_peaks %]</td>
+	</tr>
+      	<tr>
+      	    <td style="background: #ddd">Human GWAS Peaks</td>
+	    [% IF gwas.n_peaks > 0 %]
+	        [% IF (gwas.n_gwas_peaks / gwas.n_peaks) >= 0.5 %]
+		    <td style="background: rgba(0,0,255,[% gwas.n_gwas_peaks / gwas.n_peaks %]); color: white;">[% gwas.n_gwas_peaks %]</td>
+		[% ELSE %]
+                    <td style="background: rgba(0,0,255,[% gwas.n_gwas_peaks / gwas.n_peaks %]">[% gwas.n_gwas_peaks %]</td>
+		[% END %]
+	    [% ELSE %]
+	        <td class="human" style="background: rgba(0,0,255,0)">[% gwas.n_gwas_peaks %]</td>
+	    [% END %]
+        </tr>
+    </tbody>
+</table>
+</p>
+
+<p>Human Peaks<br/>
+<table id="table_27" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = gwas.header_d class = "header" nc = 0 table_id = "2" -%]
+    </thead>
+    <tbody>
+        <!-- Hidden row to avoid triggering tablesorter empty table bug -->
+        <tr class="hidden"><td>A</td><td>A</td><td>0</td><td>A</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    [% FOREACH row = gwas.peaks_sum_hg19 -%]
+        [% PROCESS table_row peak = row  class = "human" nc = 3 peaks = gwas table_id = "2" -%]
+    [% END -%]
+    </tbody>
+</table>
+</p>
+
+<p>GWAS Ontology Terms<br/>
+<table id="table_24" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = gwas.header_a class = "header" nc = 0 table_id = "avg" n_peaks = gwas.n_gwas_peaks -%]
+    </thead>
+    <tbody>
+    <!-- Hidden row to avoid triggering tablesorter empty table bug -->
+        <tr class="hidden"><td>A</td><td>A</td><td>0</td></tr>
+    [% FOREACH row = gwas.terms -%]
+        [% PROCESS table_row peak = row  class = "human" nc = 1 peaks = gwas table_id = "avg" -%]
+    [% END -%]
+    </tbody>
+</table>
+</p>
+
+<p>Peak-Term Associations<br/>
+<table id="table_25" class="peakdata tablesorter">
+    <thead>
+    [% PROCESS table_row peak = gwas.header_b class = "header" nc = 0 table_id = "human" -%]
+    </thead>
+    <tbody>
+	<!-- Hidden row	to avoid triggering tablesorter	empty table bug	-->
+        <tr class="hidden"><td>A</td><td>A</td><td>0</td><td>0</td><td>A</td><td>A</td><td>A</td></tr>
+    [% FOREACH row = gwas.peaks_hg19 -%]
+        [% PROCESS table_row peak = row  class = "human" nc = 3 peaks = gwas table_id = "human" -%]
+    [% END -%]
+    </tbody>
+</table>
+</p>

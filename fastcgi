@@ -1,0 +1,72 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          application-catalyst-mousesom
+# Required-Start:    $local_fs $network
+# Required-Stop:     $local_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Starts the FastCGI app server for the "MouseSOM" site
+# Description:       The FastCGI application server for the "MouseSOM" site
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+SITE_HOME=/var/www/MouseSOM/
+DAEMON=$SITE_HOME/script/mousesom_fastcgi.pl
+OPTS="-l /tmp/MouseSOM.socket -M FCGI::ProcManager::MaxRequests -n 5 -d"
+NAME=catalyst-app-mousesom
+DESC="'MouseSOM' app server"
+USER=www-data
+
+test -f $DAEMON || exit 0
+
+set -e
+set -u
+${DEBIAN_SCRIPT_DEBUG:+ set -v -x}
+
+ERR_LOGGER="logger -p daemon.err -t /etc/init.d/fastcgi -i"
+
+start_daemon()
+{
+ echo -n "$(date): Starting $DESC: $NAME" | $ERR_LOGGER -p daemon.debug
+ export CATALYST_DEBUG=0
+ export PM_MAX_REQUESTS=10
+ $DAEMON $OPTS 2>&1
+ ps -ef | grep fcgi-pm | grep -v "grep" | awk '{print $2}' > /var/run/$NAME.pid
+}
+
+stop_daemon()
+{
+ echo -n "$(date): Stopping $DESC: $NAME" | $ERR_LOGGER -p daemon.debug
+ start-stop-daemon --stop --signal TERM --pidfile /var/run/$NAME.pid
+ rm /var/run/$NAME.pid
+}
+
+reload_daemon()
+{
+ echo -n "$(date): Reloading $DESC: $NAME" | $ERR_LOGGER -p daemon.debug
+ start-stop-daemon --stop --signal HUP --pidfile /var/run/$NAME.pid
+}
+
+case "$1" in
+ start)
+ start_daemon
+ ;;
+ stop)
+ stop_daemon
+ ;;
+ reload)
+ reload_daemon
+ ;;
+ restart|force-reload)
+ stop_daemon
+ sleep 5
+ start_daemon
+ ;;
+ *)
+ N=/etc/init.d/$NAME
+ echo "Usage: $N {start|stop|reload|restart|force-reload}" >&2
+ exit 1
+ ;;
+esac
+
+exit 0

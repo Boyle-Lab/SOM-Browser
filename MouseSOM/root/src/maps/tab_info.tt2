@@ -1,0 +1,9 @@
+<p class="bold">[% title %]</p>
+<!--<p>[% info %]</p>-->
+[% PROCESS $info %]
+<p class="bold">Results Tables</p>
+<p><span class="italic">Averages</span><br/>
+This table describes the data aggregated over the total dataset, each species and each cell type, with columns reflecting the average (or median) value of the corresponding column in the species-specific tables.</p>
+<p><span class="italic">Mouse Peaks / Human Peaks</span><br/>
+These tables describe observations for each individual peak contributing to this pattern from each species. Chromosomal locations are clickable and link to the corresponding region in the UCSC Genome Browser.</p>
+<p>Tables can be sorted by clicking the header of the desired column. It is possible to sort by multiple columns by clicking the desired header(s) while holding down the "shift" key.</p>

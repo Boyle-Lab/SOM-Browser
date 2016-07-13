@@ -1,0 +1,43 @@
+[% META title = 'Boyle Lab Human-Mouse SOM Browser Welcome' %]
+
+[% BLOCK build_map_list -%]
+    [% FOREACH map = maps -%]
+        "[% map %]",
+    [% END -%]
+[% END -%]
+
+<script>
+    [% PROCESS "map_open.js" -%]
+
+    $(document).ready(function() {
+        var map_src = "[% c.uri_for('/static/svg/') %]" + getMap();
+        $("#som_map").attr('src', map_src);
+	setTimeout("changeImage()", 10000);
+    });
+
+    function getMap() {
+        var maps = [[% PROCESS build_map_list maps = maps_list -%]];
+	var idx = Math.floor((Math.random() * maps.length));
+	return maps[idx];
+    }
+
+    function changeImage() {
+        var img = document.getElementById("som_map");
+        var map_src = "[% c.uri_for('/static/svg/') %]" + getMap();;
+        img.src	= map_src;
+        setTimeout("changeImage()", 10000);
+    }
+
+</script>
+
+<div id="welcome">
+[% # SOM Map Image -%]
+<p class="centeredbody">
+    <img id="som_map" class="mapmain" width="800px" height="460px" src="" title="Random SOM Image">
+</p>
+
+<p class="centeredbold" style="font-size: 18pt;">Welcome to the Boyle Lab Human-Mouse SOM Browser!</p>
+<p class="centeredbody">This resource provides various views of the Self-Organizing Map (SOM) data from (reference). Briefly, ENCODE ChIP-Seq data from 27 factors in four cell types: Human GM12878 and Mouse CH12 lymphoblastoid, and Human K562 and Mouse MEL myeloid cells, were organized into modules of co-occupancy, which were categorized into groups of related patterns using a Self-Organizing Map (SOM) algorithm. Patterns are visualized as hexagonal cells on a map, upon which we project various properties and annotations related to each pattern. This resource provides multiple views and methods to explore, visualize and compare maps and annotations within this dataset.</p>
+<p class="centeredbody big_red_bold">Select a map from the menus to get started!</p>
+
+</div>
