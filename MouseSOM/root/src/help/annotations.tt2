@@ -1,2 +1,36 @@
 <p class="centeredbold">Annotations</p>
-<p>Some content...</p>
+<p class="content_main bold" id="data_types">Data Types</p>
+<p class="content_main">Several types of annotations are available in the browser, describing different aspects of selective pressure and functional associations pertinent to each grammatical pattern and CRM:</p>
+<p class="content_main">
+    <ol type="1">
+        <li>Selection and Functional Constraint<ol type="a">
+            <li>PhastCons Coverage/Average/Max/Min</li>
+       	    <li>PhyloP Average/Max/Min</li>
+       	    <li>Selected Sites</li>
+        </ol></li>
+	<li>Gene Expression<ol type="a">
+            <li>...</li>
+	</ol></li>
+	<li>Gene Ontology<ol type="a">
+	    <li>...</li>
+	</ol></li>
+	<li>Histone Modifications<ol type="a">
+	    <li>...</li>
+        </ol></li>
+	<li>ChromHMM<ol type="a">
+	    <li>...</li>
+        </ol></li>
+	<li>DNaseI Hypersensitivity<ol type="a">
+	    <li>...</li>
+        </ol></li>
+	<li>Genome-Wide Association Studies (GWAS)<ol type="a">
+	    <li>...</li>
+        </ol></li>
+    </ol>
+
+
+</p>
+<p class="content_main bold" id="data_analysis">Data Analysis</p>
+<p class="content_main"></p>
+<p class="content_main bold" id="data_sources">Data Sources</p>
+<p class="content_main"></p>

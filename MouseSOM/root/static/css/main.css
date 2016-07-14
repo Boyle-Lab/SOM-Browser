@@ -37,9 +37,9 @@
     margin-right: auto;
     margin-top: 10px;
 }
-#mapblock p {
+/*#mapblock p {
     text-align: center;
-}
+}*/
 #searchform {
     margin-left: 200px;
 }
@@ -172,18 +172,11 @@ div.mapblock {
     height: 460px;
     margin: 0 0 0 10px;
 }
-#mapblock p {
-    text-align: center;
-}
 
 div[id^="neuronsummary"] {
     float: left;
     width: 300px;
     padding-left: 10px;
-}
-
-#help_detail {
-    clear: both;
 }
 
 #neurondetails {
@@ -194,8 +187,7 @@ div[id^="neuronsummary"] {
     margin-left: 120px;
 }
 #helpcontent {
-    margin-left: 120px;
-    text-align: left;
+    margin-left: 50px;
 }
 #welcome {
     margin: 0 150px 0 150px;
@@ -328,4 +320,7 @@ td.mouse {
 a.disabled {
     pointer-events:none;
     color: black;
+}
+.content_main {
+    text-align: left;
 }

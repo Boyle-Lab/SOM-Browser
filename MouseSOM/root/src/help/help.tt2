@@ -1,7 +1,7 @@
 [% META title = 'Boyle Lab Human-Mouse SOM Browser Help' %]
 
 <div id="mapblock">
-    <p class="bold">Help Topics</p>
+    <p class="centeredbold">Help Topics</p>
     <p>
         <ol type="I">
             <li><a class="help_link" href="javascript:void(0)" name="about" id="about"">About the SOM Browser</a></li>
