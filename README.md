@@ -49,8 +49,7 @@ UNINSTALLING THE BROWSER
 To completely remove the browser, issues the following two commands after stopping
 the browser with stop_browser.sh:
 
-docker rm db
-docker rm MouseSOM
+`docker rm db MouseSOM`
 
 If desired, you can now delete the entire MouseSOM directory and its contents.
 
