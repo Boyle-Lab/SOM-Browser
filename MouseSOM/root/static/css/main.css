@@ -54,6 +54,12 @@ table.go_data {
     width: 100%;
     text-align: left;
 }
+
+table.in_text {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
 .mm9_go {
     width: 50%;
     float: left;
@@ -77,7 +83,7 @@ ul {
 ul li {
     list-style-type: none;
     border: 1px solid silver;
-    border-width: 1px 1px 0 3px;
+    border-width: 1px 1px 1px 3px;
     position: relative;
     margin: 0;
     padding: 0;
@@ -133,7 +139,7 @@ ul#menu > li:hover > ul {
     line-height: 1.25em;
 }
 #menu ul ul {
-    border-width: 0 1px 1px 1px;
+    border-width: 1px 1px 1px 1px;
     border-color: gray silver gray gray;
     list-style: none;
 }
@@ -147,14 +153,17 @@ ul#menu > li:hover > ul {
     text-decoration: none;
 }
 #menu li:hover {
-    background-color: #EED;
+    background-color: #E6E6E6;
 }
 #menu li.sub:hover {
-    border: 1px solid gray;
-    background: #DDB;
+//    border: 1px solid gray;
+    background: #E6E6E6;
+}
+#menu li:hover > a {
+    color: #C70039;
 }
 #menu li.sub:hover > a {
-    color: #330;
+    color:  #C70039;
 }
 #menu li.sub:hover > ul {
     background: #FEFEFC;
@@ -318,9 +327,20 @@ td.mouse {
     color: #E63900;
 }
 a.disabled {
-    pointer-events:none;
+    pointer-events: none;
     color: black;
+    text-decoration: none;
+}
+a:hover {
+    color: #C70039;
 }
 .content_main {
     text-align: left;
+}
+p.indented {
+    margin-left: 25px;
+}
+img.help_img {
+    border: 1px solid;
+    float: right;
 }

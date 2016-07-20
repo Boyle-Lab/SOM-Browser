@@ -8,18 +8,17 @@
        	    <li><a class="help_link" href="javascript:void(0)" name="som_data_prep" id="som_data_prep">SOM Data Preparation</a></li>
        	    <li><a class="help_link" href="javascript:void(0)" name="annotations" id="annotations">Annotations</a>
 	        <ol type="i">
-		    <li><a class="help_sublink" href="javascript:void(0)" name="data_types" id="data_types">Data Types</a></li>
-		    <li><a class="help_sublink" href="javascript:void(0)" name="data_analysis" id="data_analysis">Analysis Methods</a></li>
-		    <li><a class="help_sublink" href="javascript:void(0)" name="data_sources" id="data_sources">Data Sources</a></li>
+		    <li><a class="help_sublink" href="javascript:void(0)" name="data_types">Data Types</a></li>
+		    <li><a class="help_sublink" href="javascript:void(0)" name="data_analysis">Analysis Methods</a></li>
+		    <li><a class="help_sublink" href="javascript:void(0)" name="data_sources">Data Sources</a></li>
 		</ol>
 	    </li>
        	    <li><a class="help_link" href="javascript:void(0)" name="navigation" id="navigation">Navigating the Browser</a>
                 <ol type="i">
                     <li><a class="help_sublink" href="javascript:void(0)" name="intro" id="intro">Getting Started</a></li>
-	       	    <li><a class="help_sublink" href="javascript:void(0)" name="sorting" id="sorting">Sorting Data Tables</a></li>
-	       	    <li><a class="help_sublink" href="javascript:void(0)" name="compare" id="compare">Comparing Maps</a></li>
-	       	    <li><a class="help_sublink" href="javascript:void(0)" name="search" id="search">Searching the Browser</a></li>
-	       	    <li><a class="help_sublink" href="javascript:void(0)" name="sharing" id="sharing">Bookmarking/Sharing Browser Pages</a></li>
+	       	    <li><a class="help_sublink" href="javascript:void(0)" name="sorting">Using The SOM Data Browser</a></li>
+	       	    <li><a class="help_sublink" href="javascript:void(0)" name="compare">Comparing Maps</a></li>
+	       	    <li><a class="help_sublink" href="javascript:void(0)" name="search">Searching the Database</a></li>
 	   	</ol>
        	    </li>
            <li><a class="help_link" href="javascript:void(0)" name="getting_help" id="getting_help">Getting Help</a></li>

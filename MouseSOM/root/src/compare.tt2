@@ -103,7 +103,7 @@
             Field: <select class="db_field" name="field">
                 <option value="NULL"></option>
             </select>
-            <a href="javascript:void(0)" class="remove_field" name="remove">x</a>
+	    <input class="remove_field" type="submit" name="remove" value="Remove">
 
             <object id="map" name="map" class="compBuild" width=800 height=460></object>
 	    <div id="neuronsummary" name="neuronsummary" class="compBuild"></div>

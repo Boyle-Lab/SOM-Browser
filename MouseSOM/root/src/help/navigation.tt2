@@ -1,7 +1,67 @@
 <p class="centeredbold">Navigation</p>
-<p id="intro">Getting Started</p>
-<p></p>
-<p id="sorting">Sorting Data Tables.</p>
-<p id="compare">Comparing Maps.</p>
-<p id="search">Search</p>
-<p id="sharing">Sharing and Bookmarking Browser Pages</p>
+<p class="bold" id="intro">Getting Started</p>
+<p>The Boyle Lab Human-Mouse SOM Browser consists of three tools: the SOM Data Browser, the Compare Maps tool, and the Search tool.</p>
+<p><ol type="1">
+    <li>SOM Data Browser
+        <p class="indented">The SOM Data Browser offers an integrated display for grammatical patterns and annotations with three sections:</p>
+	    <p><img src="[% c.uri_for('/static/images/browser_window_small_map.png') %]" class="help_img">
+	    <ol type="i">
+	    <li>A map summarizing annotations across the entire dataset.</li>
+	    <li>A summary table showing the selected pattern's core transcription factors making up the pattern, classification, and statistics on representation in human and mouse, and distance to transcription start sites.</li>
+	    <li>A tabbed section offering detailed annotations with sortable tables summarizing data within species and cell types and within individual CRMs in human and mouse. Data can easily be restricted to 1:1 ortholgous, 1:many orthologous, or non-orthologous CRMs, and tables may be custome-sorted by any number of columns.</li>
+	    </ol></p>
+    </li>
+    <li>Compare Maps
+        <p class="indented">The Compare Maps section offers a way to place maps of different annotations side-by-side for comparison. It offers several unique features:</p>
+	    <p><img src="[% c.uri_for('/static/images/browser_map_compare_small.png') %]" class="help_img">
+            <ol type="i">
+            <li>Independent map display sections to facilitate comparison of different annotations across the entire dataset.</li>
+	    <li>The ability to add as many maps as needed with a button click.</li>
+	    <li>The ability to select, swap and remove maps with simple drop-down menus.</li>
+            <li>Independent summary tables for each map selected displaying key data on the selected pattern, including core transcription factors, representation in human and mouse, distance to the nearest TSS, etc.</li>
+            <li>The ability to jump directly to detailed data on the selected pattern from any map with a simple button click.</li>
+            </ol></p>
+    </li>
+    <li>Search
+        <p class="indented">The Search section offers the ability to construct custom queries against the Browser database. It is highly user configurable, offering the ability to:</p>
+            <p><img src="[% c.uri_for('/static/images/search_preview.png') %]" class="help_img">
+            <ol type="i">
+            <li>Search for CRMs or Patterns.</li>
+            <li>Search for terms in any database table and field, combine search terms with "AND", "OR", "NOT, and "XOR", and specify discrete groups of search terms.</li>
+            <li>Add and remove search terms as many search terms as needed.</li>
+            <li>Specify custom group-by and order clauses.</li>
+            </ol></p>
+    </li>
+</ol></p>
+
+<p class="bold" id="browser">Using The SOM Data Browser</p>
+<p><ol type=1>
+    <li>The SOM Map
+        <p class="indented">Brief description</p>
+        <p><ol type="i">
+	    <img src="[% c.uri_for('/static/images/browser_map_select_menu.png') %]" class="help_img">
+	    <li>Map Selection</li>
+	    <li>Map Interpretation</li>
+	    <li>Pattern Selection</li>
+	    <li>Getting Map Information</li>
+	</ol></p>
+    </li>
+    <li>Pattern Summary
+        <p class="indented">Brief description</p>
+    </li>
+    <li>Pattern Details
+        <p class="indented">Brief description</p>
+	<p><ol type="i">
+	    <li>Tabs Available</li>
+            <li></li>
+            <li>Pattern	Selection</li>
+            <li></li>
+        </ol></p>
+    </li>
+    <li>Bookmarking and Sharing Browser Pages
+        <p class="indented">Brief description</p>
+    </li>
+</ol></p>
+
+<p class="bold" id="compare">Comparing Maps</p>
+<p class="bold" id="search">Searching the Database</p>

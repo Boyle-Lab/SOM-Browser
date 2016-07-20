@@ -22,9 +22,14 @@ files in the SOM-Browser directory:
    number of the host machine. 
 
 3) (Optional) Set a root password for mysql in MouseSOM/sql/Users.sql. This can
-   also be done directly on the db container after the fact, if you prefer. To
-   manually change the password, first finish browser installation and then log
-   in to the db container with the command:
+   also be done directly on the db container after the fact, if you prefer. See
+   step 5 for instructions on how to manually change the password.
+
+4) Run the install_browser.sh script:
+
+   `./install_browser.sh`
+
+5) (Optional) Log in to the db container  with the command:
 
    `docker exec -it db bash`
 

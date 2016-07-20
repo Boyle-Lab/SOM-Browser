@@ -34,7 +34,7 @@
             <li class="menu"><a href="[% c.uri_for('/') %]">Home</a></li>
             [% FOREACH menu = menus %]
             <li class="sub">
-                <a href="#" name="[% menu.name %]">[% menu.name %]</a>
+                <a href="javascript:void(0)" name="[% menu.name %]">[% menu.name %]</a>
                 <ul>
                     [% FOREACH map = menu.maps %]
                     <li class="menu"><a class="map_select" href="javascript:void(0)" name="[% map.id_maps %]">[% map.name %]</a></li>
