@@ -23,13 +23,17 @@ files in the SOM-Browser directory:
 
 3) (Optional) Set a root password for mysql in MouseSOM/sql/Users.sql. This can
    also be done directly on the db container after the fact, if you prefer. See
-   step 5 for instructions on how to manually change the password.
+   step 6 for instructions on how to manually change the password.
 
-4) Run the install_browser.sh script:
+4) (Optional) Enable browser monitoring on the docker container by uncommenting
+   the relevant sections in install_browser.sh and editing the marked sections
+   in monitrc to match your email server and email address.
+
+5) Run the install_browser.sh script:
 
    `./install_browser.sh`
 
-5) (Optional) Log in to the db container  with the command:
+6) (Optional) Log in to the db container  with the command:
 
    `docker exec -it db bash`
 
@@ -42,6 +46,12 @@ Shell scripts are provided to easily start and stop the browser:
 
 `./start_browser.sh`
 `./stop_browser.sh`
+
+If you installed with monit enabled, you may also start the browser using the
+following command. (This will also enable monitoring of an already-running
+browser instance.)
+
+`./monit_browser.sh`
 
 
 UNINSTALLING THE BROWSER

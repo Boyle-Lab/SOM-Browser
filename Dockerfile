@@ -35,6 +35,12 @@ COPY fastcgi /etc/init.d/
 RUN chmod 755 /etc/init.d/fastcgi
 RUN update-rc.d fastcgi defaults
 
+# Install monit
+RUN apt-get wget
+RUN wget https://mmonit.com/monit/dist/binary/5.18/monit-5.18-linux-x64.tar.gz
+RUN tar -xvzf monit-5.18-linux-x64.tar.gz
+RUN cp /monit-5.18/bin/monit /usr/bin/monit
+
 COPY browser_up.sh /usr/bin/
 
 EXPOSE 3000 80 8080

@@ -1,0 +1,24 @@
+set daemon 120
+set logfile /var/log/monit.log
+set eventqueue
+    basedir /var/monit
+    slots 5000
+#set httpd port 2812 address localhost
+#    allow localhost
+
+set mailserver smtp.gmail.com port 587
+    username "GMAIL_ACCT" password "GMAIL_PW"
+    using ssl with timeout 30 seconds
+
+set alert YOUR_EMAIL@HOST.COM with reminder on 15 cycles
+
+check process nginx with pidfile /var/run/nginx.pid
+  start program = "/etc/init.d/nginx start"
+  stop program  = "/etc/init.d/nginx stop"
+  group www-data
+  if failed port 80 with timeout 3 seconds then alert
+
+check process fastcgi with pidfile /var/run/catalyst-app-mousesom.pid
+  start program = "/etc/init.d/fastcgi start"
+  stop program  = "/etc/init.d/fastcgi stop"
+  group root
