@@ -28,10 +28,10 @@ if [ $SS -eq 1 ] && [ $FS -eq 1 ]; then
     docker exec MouseSOM browser_up.sh
 elif [ $SS -eq 1 ]; then
     echo "Starting nginx"
-    docker exec service nginx start
+    docker exec MouseSOM service nginx start
 elif [ $FS -eq 1 ]; then
     echo "Starting fastcgi"
-    docker exec service fastcgi start
+    docker exec MouseSOM service fastcgi start
 else
     echo "Server and fastcgi already running!"
 fi
