@@ -7,9 +7,14 @@ set eventqueue
 #    allow localhost
 
 set mailserver smtp.gmail.com port 587
+    # Edit the line below to reflect your desired gmail account
+    # and password, or edit this line and the 'set mailserver' line
+    # to use a different server.
     username "GMAIL_ACCT" password "GMAIL_PW"
     using ssl with timeout 30 seconds
 
+# Enter the email address where you would like to receive alerts
+# or comment out to disable email notifications.
 set alert YOUR_EMAIL@HOST.COM with reminder on 15 cycles
 
 check process nginx with pidfile /var/run/nginx.pid
