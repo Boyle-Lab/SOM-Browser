@@ -32,6 +32,10 @@ docker exec -i MouseSOM sh -c 'cat > /etc/nginx/nginx.conf' <nginx.conf
 #docker exec -i MouseSOM sh -c 'cat > /etc/monitrc' <monitrc
 #docker exec -i MouseSOM sh -c 'chmod 0700 /etc/monitrc'
 
+# For some reason the db container isn't available right away. Wait a minute
+# to let it catch up!
+sleep 60
+
 # Load the database data
 docker run -it --link db -v $BROWSER_PATH/sql/:/data/sql --rm mysql sh -c 'exec mysql -h 172.18.0.2 -P 3306 -uroot -pmy-secret-pw </data/sql/MouseSOM.sql'
 docker run -it --link db -v $BROWSER_PATH/sql/:/data/sql --rm mysql sh -c 'exec mysql -h 172.18.0.2 -P 3306 -uroot -pmy-secret-pw mousesom </data/sql/MouseSOM_DB_DATA.sql'
