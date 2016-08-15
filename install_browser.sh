@@ -5,10 +5,6 @@
 # local directory holding the SOM Browser files before running.
 BROWSER_PATH=/data/mouseENCODE.new/browser/MouseSOM
 
-# Build the browser container image (Not necessary in most
-# cases, since the image should pull directly from Docker Hub)
-#docker build -t adadiehl/browser .
-
 # Set up the database container
 echo "Unzipping datafiles..."
 WD=$(pwd)
@@ -22,7 +18,7 @@ docker run -d --name db -e MYSQL_ROOT_PASSWORD=my-secret-pw -v $BROWSER_PATH/sql
 # -p 5000:80 is for the production server. Change the outward-facing port (5000) to match your local
 # configuration.
 echo "Setting up MouseSOM Browser container..."
-docker run -t --name="MouseSOM" --link db -v $BROWSER_PATH/:/var/www/MouseSOM/ -d -p 3000:3000 -p 5000:80 --restart unless-stopped adadiehl/browser
+docker run -t --name="MouseSOM" --link db -v $BROWSER_PATH/:/var/www/MouseSOM/ -d -p 3000:3000 -p 5000:80 --restart unless-stopped adadiehl/som-browser
 docker exec -i MouseSOM sh -c 'cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig'
 docker exec -i MouseSOM sh -c 'cat > /etc/nginx/nginx.conf' <nginx.conf
 
