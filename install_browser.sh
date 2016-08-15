@@ -30,9 +30,11 @@ docker exec -i MouseSOM sh -c 'cat > /etc/nginx/nginx.conf' <nginx.conf
 #docker exec -i MouseSOM sh -c 'cp /etc/nginx/fastcgi_params /etc/nginx/fastcgi_params.orig'
 #docker exec -i MouseSOM sh -c 'cat > /etc/nginx/fastcgi_params' <fastcgi_params
 
-# Optional: set up monit process monitor to keep browser services running
-docker exec -i MouseSOM sh -c 'cat > /etc/monitrc' <monitrc
-docker exec -i MouseSOM sh -c 'chmod 0700 /etc/monitrc'
+## Optional: set up monit process monitor to keep browser services running
+## If using these, edit monitrc to include your email server, username,
+## password and notification address prior to running this script.
+#docker exec -i MouseSOM sh -c 'cat > /etc/monitrc' <monitrc
+#docker exec -i MouseSOM sh -c 'chmod 0700 /etc/monitrc'
 
 # Load the database data
 docker run -it --link db -v $BROWSER_PATH/sql/:/data/sql --rm mysql sh -c 'exec mysql -h 172.18.0.2 -P 3306 -uroot -pmy-secret-pw </data/sql/MouseSOM.sql'
