@@ -1,16 +1,23 @@
 #!/bin/bash
 
 # This file will build and initialize the docker containers needed to
-# run the SOM Browser. Edit the BROWSER_PATH variable to match the
-# local directory holding the SOM Browser files before running.
-BROWSER_PATH=/data/mouseENCODE.new/browser/MouseSOM
+# run the SOM Browser.
+
+# The working directory for the browser defaults to the "MouseSOM" folder
+# within the current directory. Edit the BROWSER_PATH variable to match the
+# local directory holding the SOM Browser to use a different location.
+WD=$(pwd)
+BROWSER_PATH=$WD/MouseSOM
+
+# If browser data files are not already unzipped, do it now.
+if [ ! -e $WD/MouseSOM/sql/MouseSOM.sql ] ; then
+    echo "Unzipping datafiles..."
+    cd $WD/MouseSOM/sql
+    tar -xzf sql_data.tgz
+    cd $WD
+fi
 
 # Set up the database container
-echo "Unzipping datafiles..."
-WD=$(pwd)
-cd MouseSOM/sql
-tar -xzf sql_data.tgz
-cd $WD
 echo "Setting up database container..."
 docker run -d --name db -e MYSQL_ROOT_PASSWORD=my-secret-pw -v $BROWSER_PATH/sql/:/data/sql --restart unless-stopped mysql:5.7.13
 
