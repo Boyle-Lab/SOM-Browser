@@ -22,4 +22,4 @@ fi
 # present in /etc/monitrc. Will enable monitoring on already-running
 # nginx and fastcgi processes, so no need to check for them before
 # running monit.
-monit
+docker exec MouseSOM monit
