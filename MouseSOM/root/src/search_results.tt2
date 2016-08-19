@@ -76,9 +76,9 @@
             [% PROCESS table_row peak = row class = "shared" nc = 0 link_col = 0 -%]
         [% END -%]
     </table>
-    <p>Found [% results.nrows %] [% results.base_table %]:</p>
 
 [% IF results.base_table == "peaks" -%]
+    <p>Found [% results.nrows %] peaks:</p>
     <p>Mouse Peaks<br/>
     <table id="table_2" class="peakdata tablesorter">
         <thead>
@@ -105,7 +105,8 @@
     </table>
     </p>
 [% ELSIF results.base_table == "neurons" -%]
-    <p>Neurons<br/>
+    <p>Found [% results.nrows %] patterns:</p>
+    <p>Patterns<br/>
     <table id="table_2" class="peakdata tablesorter">
         <thead>
        	[% PROCESS table_row peak = results.header class = "header" nc = 0 link_col = 0 -%]

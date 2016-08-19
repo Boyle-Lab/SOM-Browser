@@ -104,7 +104,7 @@
     <input type="hidden" name="n_orders" value="0">
         <p>Base Table: <select class=table_select name="base_table">
         <option selected value="peaks">Peaks</option>
-        <option value="neurons">Neurons</option>
+        <option value="neurons">Patterns</option>
     </select>
     </p>
 
@@ -117,7 +117,7 @@
         </select>
         Table: <select class="table_select" name="table">
             <option selected value="base">Choose a Table</option>
-            <option value="neurons">Neurons</option>
+            <option value="neurons">Patterns</option>
             <option value="factors">Transcription Factors</option>
 	    <option value="peaks_factors">Peaks_Factors</option>
             <option value="peaks_genes">Target Genes</option>
@@ -157,7 +157,7 @@
     <div class="orderTemplate" id="orderby">
         Table: <select class="order_select" name="order_by_t">
             <option selected value="NULL">Choose a Table</option>
-            <option value="neurons">Neurons</option>
+            <option value="neurons">Patterns</option>
             <option value="factors">Transcription Factors</option>
             <option value="peaks_factors">Peaks_Factors</option>
             <option value="peaks_genes">Target Genes</option>
@@ -192,7 +192,7 @@
         <p>Group Results By:<br/>
     	Table: <select id="group_by_t" name="group_by_t">
             <option selected value="NULL">Choose a Table</option>
-    	    <option value="neurons">Neurons</option>
+    	    <option value="neurons">Patterns</option>
     	    <option value="factors">Transcription Factors</option>
     	    <option value="peaks_factors">Peaks_Factors</option>
     	    <option value="peaks_genes">Target Genes</option>

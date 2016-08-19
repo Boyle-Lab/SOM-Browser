@@ -12,6 +12,14 @@
         $('<div/>', {
              'class' : 'compBuild', html: GetHtml()
         }).appendTo('#container');
+
+	$("#map_info_block").dialog(
+            {
+                height: 720,
+                width: 600,
+                autoOpen: false
+            }
+	);
     })
 
     function GetHtml()
@@ -65,7 +73,7 @@
 	var tmp = target.id.split("_");
 	var field = "neuronsummary_" + tmp[1];
 	var summary = $(document.getElementById(field));
-	var b_link = '<p class="centeredbody"><a href="[% c.uri_for('/maps/neuron/') %]' + target.type + '/' + this.id + '" class="button">Jump to Browser</a></p>';
+	var b_link = '<p class="centeredbody"><a href="[% c.uri_for('/maps/neuron/') %]' + target.type + '/' + this.id + '" class="button" target="blank_">Jump to Browser</a></p>';
 //	console.log(b_link);
 	summary.html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + this.id + '<br/><img src="[% c.uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
 	$.when(loadSummary(this.id, summary)).done(function(a) {
@@ -76,6 +84,10 @@
 	target.name = this.id;
     });
 
+    $(document).on("click", "#compare_info", function() {
+        $( "#map_info_block" ).dialog( "open" );
+    });
+
 </script>
 
 <script>
@@ -83,7 +95,11 @@
 </script>
 
 <div id="searchform">
-    <p class="bold">Select a map category and map from the menu below to view a map. Click the "Add Another Map" button to add another map. You can add as many maps as you want. Click the "X" beside the selection menu to remove a map. You can click on a neuron on any of the maps to view summary data for that neuron.</p>
+    <p class="bold">Compare Maps</p>
+
+    <p style="text-align: right">
+        <a id="compare_info" href="javascript:void(0);" name="25" title="Map Description"><img src="[% c.uri_for('/static/images/info.png') %]" width=20 height=20><span style="position: absolute;">&nbsp;Help</span></a>	
+    </p>
 
     <form method="post" name="map_form" action="javascript:void(0)") %]">
         <input type="hidden" name="n_fields" value="0">
@@ -100,7 +116,7 @@
 		<option value="7">GWAS</option>
 		<option value="8">DNase Sensitivity</option>
             </select>
-            Field: <select class="db_field" name="field">
+            Map: <select class="db_field" name="field">
                 <option value="NULL"></option>
             </select>
 	    <input class="remove_field" type="submit" name="remove" value="Remove">
@@ -117,4 +133,32 @@
 
     </form>
     
+</div>
+
+<div id="map_info_block" title="Compare Maps">
+     <p>Compare Maps allows side by side comparison of multiple SOM maps by following the steps below:</p>
+     <ol type="1">
+     <li><p class="bold">Selecting a Map</p></li>
+         <ol type="i">
+             <li>Select a map type from the "Category" menu.</li>
+             <li>Select a map from the options within the "Map" menu. Your chosen map will appear below the menus.</li>
+         </ol>
+     <li><p class="bold">Adding Maps</p></li>
+         <ol type="i">
+             <li>Click the "Add Another Map" button.</li>
+	     <li>Follow the steps in 1 to select the desired map.</li>
+	     <li>Repeat until all desired maps are added</li>
+	 </ol>
+     <li><p class="bold">Removing Maps</p></li>
+         <ol type="i">
+	     <li>Click the "Remove" button beside the map you want to remove.</li>
+	 </ol>
+     <li><p class="bold">Getting Pattern Data</p></li>
+         <ol type="i">
+	     <li>Hover the mouse pointer over any hexagon to reveal the pattern number</li>
+	     <li>Click a hexagon within any map to view summary data for the corresponding pattern.</li>
+             <li>Click the "Jump to Browser" button below the pattern summary table to view the selected map and pattern within the SOM Browser.</li>
+	 </ol>
+    </ol>
+    <p><a href="[% c.uri_for('/help') %]?topic=navigation#compare" class="dialog" style="color: #0000FF">View full help section</a></p>
 </div>

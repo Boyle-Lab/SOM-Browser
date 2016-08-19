@@ -1,4 +1,4 @@
-<p class="centeredbold">Navigation</p>
+<p class="centeredbold">Navigating the Browser</p>
 <p class="bold" id="intro">Getting Started</p>
 <p>The Boyle Lab Human-Mouse SOM Browser consists of three tools: the SOM Data Browser, the Compare Maps tool, and the Search tool.</p>
 <p><ol type="1">
@@ -37,31 +37,108 @@
 <p class="bold" id="browser">Using The SOM Data Browser</p>
 <p><ol type=1>
     <li>The SOM Map
-        <p class="indented">Brief description</p>
+        <p class="indented">SOM Maps graphically show properties of the SOM dataset and associated annotations for every grammatical pattern. They allow visual interpretation of the dataset, enabling ready identification of patterns sharing similar properties and annotations.</p>
         <p><ol type="i">
-	    <img src="[% c.uri_for('/static/images/browser_map_select_menu.png') %]" class="help_img">
+	    <img src="[% c.uri_for('/static/images/browser_map_select_menu.png') %]" class="help_img">	    
 	    <li>Map Selection</li>
+	        <p>Maps are selected by clicking any of the links housed within the menus located at the upper left of every page. From the home page, menu clicks will bring up the selected map in a default browser window. From there, you may select any pattern on the map to obtain detailed information. While in the browser, selecting a different map from the menu will change the map shown without changing the detailed data.</p>
 	    <li>Map Interpretation</li>
+	        <img src="[% c.uri_for('/static/images/browser_map.png') %]" class="help_img">
+	        <p>Each hexagon on the map image represents an individual grammatical pattern. Patterns are arranged spatially by the SOM algorithm based on their similarity, as described in (kohonen reference).</p>
+		<p>Individual hexagons on the map are given different shadings and/or colors based on their value, relative to the specific annotation being described. Values may be continuous or categorical, and are described by heat keys, on the left and/or right of the SOM image.</p>
 	    <li>Pattern Selection</li>
+	        <img src="[% c.uri_for('/static/images/browser_select_pattern.png') %]" class="help_img">
+	        <p>Hovering the mouse pointer over any hexagon on the map will reveal the corresponding pattern number. Clicking on the hexagon will select that pattern and bring up its details in the Pattern Summary and Pattern Details sections, described below, and the location of the selected pattern on the SOM map will be highlighted in a contrasting color.</p>
 	    <li>Getting Map Information</li>
+	        <img src="[% c.uri_for('/static/images/browser_map_description_dialog.png') %]" class="help_img">
+		<p> The "About this map" link below the map image will reveal a dialog containing descriptive information for the currently-selected map. In general, the annotations and values plotted are described, often with additional interpretive information, links and references. The dialog may be dragged and resized, and its content will be updated any time the map is changed through the menus. The dialog may be closed by clicking the "x" icon at the upper right.</p>
 	</ol></p>
     </li>
     <li>Pattern Summary
-        <p class="indented">Brief description</p>
+        <img src="[% c.uri_for('/static/images/browser_window_summary.png') %]" class="help_img">
+        <p class="indented">This section gives basic information about the selected pattern, including the transcription factors making up the pattern, the total number of factors in the pattern, total number of CRMs assigned to the pattern, number of human and mouse CRMs in the pattern and fraction of CRMs within the pattern contributed by each species, percentage of all human and mouse CRMs contained within the pattern, median distance to the nearest transcription start site in human and mouse, and the grammatical class to which the pattern belongs.<br><br><br></p>
     </li>
     <li>Pattern Details
-        <p class="indented">Brief description</p>
+        <img src="[% c.uri_for('/static/images/browser_window_details.png') %]" class="help_img">
+        <p class="indented">This section offers detailed information about annotations for each CRM within the selected pattern in a tabbed format. Each tab contains data pertaining to a different type of annotation, with some tabs offering aggregated data for multiple related annotations (selection, for example).</p>
 	<p><ol type="i">
 	    <li>Tabs Available</li>
-            <li></li>
-            <li>Pattern	Selection</li>
-            <li></li>
+	        <p class="indented">There are currently nine tabs available, each presenting a different type of data or annotation:</p>
+		<ol type="1">
+		    <li>TF Content</li>
+		        <p class="indented">Presents the complete set of transcription factors for which each CRM contains a ChIP-seq peak. The "Averages" table shows the fraction of CRMs in the dataset carrying each TF found at least once in the set of CRMs for the selected pattern.</p>
+		    <li>Orthologs</li>		     
+			<p class="indented">Describes the orthology status and relationships for each CRM within the selected pattern. The "Orth" column contains values ranging from 1-6, describing the orthology status of each CRM, "Orth Location" giving the location in the other species' genome for 1:1 orthologs, and the remaining four columns presenting the grammatical pattern present at the given locus in all four cell types.</p>
+			<img src="[% c.uri_for('/static/images/browser_window_orth-pattern.png') %]" class="help_img">
+			<p class="indented">Hovering the mouse over a pattern number in one of these columns will reveal a list of the transcription factors contributing to the pattern. A '.' in these columns indicates that the given locus is not occupied in a cell type.</p>
+		    <li>Selection</li>
+			<p class="indented">Presents values for several methods of measuring selection within CRMs. These include PhastCons elements and scores, PhyloP scores, and an estimate of the fraction of selected sites based on the method presented by <a href="http://www.ncbi.nlm.nih.gov/pubmed/15338624" target="_blank">Chiaramonte et al.</a></p>
+		    <li>Gene Expression</li>
+		        <img src="[% c.uri_for('/static/images/browser_window_gene-expr-norm.png') %]" class="help_img">
+                      	<p class="indented">Offers RNA-seq gene expression values for target genes of each CRM. Target gene assignments were made based on the nearest TSS to the midpoint of each CRM and gene expression values are presented as log-2 TPM. Three modes of normalization are available, and these may be toggled between using the "Normalization" menu.</p>
+		    <li>Gene Ontology</li>
+		        <img src="[% c.uri_for('/static/images/browser_window_gene-onto-source.png') %]" class="help_img">
+                      	<p class="indented">Gene Ontology terms associated with the set of target genes for the selected pattern are given in tabular and graphical formats. Gene Ontology terms describe the molecular functions, biological processes and cellular components in which a gene functions. Each of these ontology sources is presented separately, and these sources can be toggled between using the "Ontology Source" menu.</p>
+			<img src="[% c.uri_for('/static/images/browser_window_gene-onto-revigo.png') %]" class="help_img">
+			<p class="indented">Dot plots describe the most significant terms, color coded by p-value. These were produced by the REVIGO utility, and data may be sent directly to REVIGO for further exploration by clicking the "Send Results to REVIGO" button.<br><br></p>
+		    <li>Histone Modifcations</li>
+                      	<p class="indented">Presents histone modification ChIP-seq annotations within each CRM for seven different modifications. Annotations are expressed as the maximum score observed for a given histone modification. Histograms showing the distributions of scores for each modification in each cell type are presented in addition to the tabular data.</p>
+		    <li>ChromHMM</li>
+			<p class="indented">Describes the ChromHMM state annotations for each CRM. The overall fractions of CRMs carrying each state are given in the "Averages" table, with the color of the column headers defining the color codes used to describe state annotations within the main table rows. The main data tables graphically represent the ChromHMM state annotations present along the length of each CRM.</p>
+		    <li>GWAS</li>
+			<p class="indented">Shows annotations for NHGRI/EBI GWAS Catalog variants within human CRMs. Results are presented in four tables: a "Summary" table giving overal counts of GWAS peaks; "Human Peaks", presenting the list of human CRMs containing GWAS SNPs along with the number of SNPs and associated GWAS terms; "GWAS Ontology Terms", giving the complete list of GWAS Ontology terms associated with SNPs found in CRMs within the selected pattern and the number of CRMs carrying SNPs associated with each term; and "Peak-Term Associations", describing the associations of individual CRMs with GWAS Ontology terms.</p>
+		    <li>DNase Hypersensitivity</li>		
+                  	<p class="indented">Gives the coverages of each CRM by DNaseI Hypersensitive sites (DHS), a measure of open chromatin. Each CRM is annotated with the DHS coverage in all four cell types, not just its own, for easy comparison.</p>
+		</ol>
+	    <li>Data Tables</li>
+	        <p class="indented">Annotations data are presented in a tabular format, with data on most tabs separated into three tables: "Averages", presenting aggregated information for all CRMs within the selected pattern; "Mouse", containing data for all mouse CRMs within the pattern; and "Human", containing data for all human CRMs within the pattern. Individual values in the data tables are given numerically, and table cells are color coded and shaded according to the species of origin and magnitude of the observation relative to the overall range of values.</p>
+		<p class="indented">The first three columns of the Mouse and Human tables follow a uniform format across all tabs, giving, in order, the cell of origion, genomic location and distance to the nearest transcription start site for each CRM. By default, tables are sorted based on the cell of origin and genomic location, but they may be sorted by any column or combination of columns by clicking the column headers. See the "Sorting Data Tables" section below for more information. Clicking the genomic location of any CRM will bring up the genomic region of the given CRM within the UCSC Genome Browser.</p>
+            <li>Sorting Data Tables</li>
+	        <img src="[% c.uri_for('/static/images/browser_window_table-sort.png') %]" class="help_img">
+		<p class="indented">Most data tables can be sorted by any column or combination of columns, in either ascending or descending order, by clicking the column header for any column. Clicking again on the same column will reverse the sorting order. By default, tables are sorted on the cell of origin and genomic location of the CRMs.</p>
+		<img src="[% c.uri_for('/static/images/browser_window_table-sort-multi.png') %]" class="help_img">
+		<p class="indented">It is possible to sort based on more than one column by holding the "shift" key while clicking additional columns.</p>
+	    <li>Selecting Data by Orthology</li>
+                <img src="[% c.uri_for('/static/images/browser_window_orth-select.png') %]" class="help_img">
+                <p class="indented">All tabs offer a drop-down menu from which the set of CRMs shown in the display can be alternately set to include all regions, 1:1 orthologous regions, 1:many orthologous regions, and non-orthologous regions (i.e., those that are unique to either human or mouse, or have been lost from one species or the other.)<br><br></p>
+            <li>Getting Tab Information</li>
+	        <img src="[% c.uri_for('/static/images/browser_window_tab-description.png') %]" class="help_img">
+		<p class="indented">Clicking the "info" icon at the upper right hand corner of each tab reveals a description of the data and annotations contained in the selected tab. This dialog may be dragged and resized as desired, and its content will update automatically whenever a new tab is selected. Click the "x" icon in the upper right corner to close the dialog.</p>
         </ol></p>
     </li>
     <li>Bookmarking and Sharing Browser Pages
-        <p class="indented">Brief description</p>
+        <p class="indented">Every time selections are made within the browser, the web address in the browser's location bar is updated to reflect the currently selected map, pattern, tab and other options pertaining to content on specific tabs. This entire web address may be copied and pasted to reproduce the content in a new window, share with colleagues, or bookmarked for later retrieval. The SOM browser does not use sessions or cookies; all parameters needed to retrieve the exact data time and again are stored within the web address.</p>    
     </li>
 </ol></p>
 
 <p class="bold" id="compare">Comparing Maps</p>
+    <img src="[% c.uri_for('/static/images/browser_window_compare.png') %]" class="help_img">
+    <p class="indented">The Compare Maps utility allows side by side comparison of multiple SOM maps through its simple, menu-driven interface. This extends the utility of the SOM maps by facilitating simultaneous comparisons of multiple properties and annotations in order to find patterns with complex relationships. As many maps as needed can be added, changed and removed, and summary data for individual patterns can be accessed independently for each map, along with a button to view the selected map and pattern within the SOM Browser.<br><br><br><br><br><br></p>
+    <p><ol type="1">
+        <li>Getting There</li>
+	    <img src="[% c.uri_for('/static/images/browser_window_compare-link.png') %]" class="help_img">
+	    <p class="indented">The Compare Maps utility can be accesed from any page on the site by clicking the "Compare Maps" link on the navigation menu.</p>
+        <li>Selecting Maps</li>
+	    <img src="[% c.uri_for('/static/images/browser_window_compare_select-category.png') %]" class="help_img">
+    	    <p class="indented">Maps are selected and changed using the "Category" and "Map" menus. First select a map category from the "Category" menu. This will populate the "Map" menu with the available maps in the selected category.</p>
+	    <img src="[% c.uri_for('/static/images/browser_window_compare_select-map.png') %]" class="help_img">
+	    <p class="indented">Second, select a map from the "Map" menu. The chosen map will then load in the space below the menus.</p>
+	<li>Adding Maps</li>
+	    <img src="[% c.uri_for('/static/images/browser_window_compare-add.png') %]" class="help_img">
+            <p class="indented">To add a map, simply click the "Add Another Map" button below the lower-most map. You will be presented with another set of "Category" and "Map" menus from which to make your selection by following the steps in section 2.</p>
+	<li>Changing Maps</li>
+	    <p class="indented">Maps can be changed by simply selecting a new map and/or category following the steps in section 2.</p>
+	<li>Removing Maps</li>
+	    <img src="[% c.uri_for('/static/images/browser_window_compare-remove.png') %]" class="help_img">
+            <p class="indented">Maps can be removed by clicking the "Remove" button beside the selection menus for the map you wish to remove. This will remove the desired map without affecting any of the other maps or pattern selections elsewhere on the page.</p>
+	<li>Getting Pattern Data</li>
+	    <img src="[% c.uri_for('/static/images/browser_window_compare_pattern-select-hover.png') %]" class="help_img">
+            <p class="indented">Hovering the mouse pointer over any hexagon on a map will reveal the pattern number.</p>
+	    <img src="[% c.uri_for('/static/images/browser_window_compare_pattern-select.png') %]" class="help_img">
+	    <p class="indented">Clicking the hexagon will reveal a table, to the right of the map image, with summary data pertaining to the selected pattern. Patterns can be selected independently on each map displayed and selecting or changing a pattern on one map will not affect selections on any other maps.</p>
+	<li>Viewing Pattern Data in the SOM Browser</li>
+	    <img src="[% c.uri_for('/static/images/browser_window_compare_browser-jump.png') %]" class="help_img">
+            <p class="indented">Detailed data for the selected map and pattern can be viewed in the SOM Browser by clicking the "Jump to Browser" button below the summary data table. The SOM Browser will open in a new window, initialized to the selected map and pattern.</p>
+    </ol></p>
+
 <p class="bold" id="search">Searching the Database</p>

@@ -66,10 +66,10 @@
 <!-- Top-Right Panel: Neuron Summary Data -->
 <div id="neuronsummary">
 
-    <p class="centeredbold">Neuron Summary</p>
+    <p class="centeredbold">Pattern Summary</p>
 
     <p class="centeredbody">
-    Click a location on the map!
+    Click a hexagon on the map to get started.
     </p>
 
 </div> <!-- End Neuron Summary Block -->
@@ -79,7 +79,7 @@
 <div id="neurondetails">
 
      <p class="centeredbold">
-     Click a location on the map for detailed pattern data!
+     Click a hexagon on the map for detailed pattern data.
      </p>
 
      [% # PROCESS maps/neuron_tabs.tt2 -%]
