@@ -712,7 +712,7 @@ sub get_search_res {
 }
 
 sub get_orthologs {
-    my ($self, $neuron, $orths_db, $factors_db, $show) = @_;
+    my ($self, $neuron, $orths_db, $factors_db, $peaks_genes, $show) = @_;
 
     my %peaks;
     my @peaks_hg19;
@@ -735,7 +735,7 @@ sub get_orthologs {
     $total_CH12[0] = "Mouse CH12";
 
     my @header = ("Species/Cell", "N Peaks", "N Orth");
-    my @header_1 = ("Cell", "Location", "Orth", "Orth Location",
+    my @header_1 = ("Cell", "Location", "TssDist", "Orth", "Orth Location",
 		    "GM12878 Pat", "K562 Pat", "CH12 Pat", "MEL Pat");
 
     my %factor_str;
@@ -743,47 +743,50 @@ sub get_orthologs {
     my $peaks_rs;
     if ($show >= 0) {
         if ($show == 0) {
-	    $peaks_rs = $self->search(
+	    $peaks_rs = $peaks_genes->search(
 		{ 'id_neurons' => $neuron,
 		  -or => [
                       'is_orth' => { ">" => '2' },
                       'is_orth' => 0
                       ]
 		},
-		{ select => ['me.id_peaks', 'me.id_neurons', 'me.species', 'me.cell',
-			     'me.chrom', 'me.chromstart', 'me.chromend',
-			     'me.is_orth', 'me.orth_coords', 'me.pair_id'],
+		{ join => 'peaks',
+		  select => ['peaks.id_peaks', 'peaks.id_neurons', 'peaks.species', 'peaks.cell',
+			     'peaks.chrom', 'peaks.chromstart', 'peaks.chromend',
+			     'peaks.is_orth', 'peaks.orth_coords', 'peaks.pair_id', 'me.targetgenedist'],
 		  as => ['id_peaks', 'id_neurons', 'species', 'cell',
 			 'chrom', 'chromstart', 'chromend',
-			 'is_orth', 'orth_coords', 'pair_id']
+			 'is_orth', 'orth_coords', 'pair_id', 'targetgenedist']
 		}
 		);
 	    
 	} else {
 	    
-	    $peaks_rs = $self->search(
+	    $peaks_rs = $peaks_genes->search(
 		{ 'id_neurons' => $neuron,
 		  'is_orth' => $show
 		},
-		{ select => ['me.id_peaks', 'me.id_neurons', 'me.species', 'me.cell',
-			     'me.chrom', 'me.chromstart', 'me.chromend',
-			     'me.is_orth', 'me.orth_coords', 'me.pair_id'],
+		{ join => 'peaks',
+		  select => ['peaks.id_peaks', 'peaks.id_neurons', 'peaks.species', 'peaks.cell',
+			     'peaks.chrom', 'peaks.chromstart', 'peaks.chromend',
+			     'peaks.is_orth', 'peaks.orth_coords', 'peaks.pair_id', 'me.targetgenedist'],
 		  as => ['id_peaks', 'id_neurons', 'species', 'cell',
 			 'chrom', 'chromstart', 'chromend',
-			 'is_orth', 'orth_coords', 'pair_id']
+			 'is_orth', 'orth_coords', 'pair_id', 'targetgenedist']
 		}
 		);
         }
 	
     } else {
-        $peaks_rs = $self->search(
+        $peaks_rs = $peaks_genes->search(
             { 'id_neurons' => $neuron },
-            { select => ['me.id_peaks', 'me.id_neurons', 'me.species', 'me.cell',
-			 'me.chrom', 'me.chromstart', 'me.chromend',
-			 'me.is_orth', 'me.orth_coords', 'me.pair_id'],
+            { join => 'peaks',
+	      select => ['peaks.id_peaks', 'peaks.id_neurons', 'peaks.species', 'peaks.cell',
+			 'peaks.chrom', 'peaks.chromstart', 'peaks.chromend',
+			 'peaks.is_orth', 'peaks.orth_coords', 'peaks.pair_id', 'me.targetgenedist'],
               as => ['id_peaks', 'id_neurons', 'species', 'cell',
 		     'chrom', 'chromstart', 'chromend',
-		     'is_orth', 'orth_coords', 'pair_id']
+		     'is_orth', 'orth_coords', 'pair_id', 'targetgenedist']
             }
             );
     }
@@ -798,8 +801,10 @@ sub get_orthologs {
 	    . $peak->get_column('chromstart') . '-'
 	    . $peak->get_column('chromend');
 	$row[1] = $loc;
-	$row[2] = $peak->get_column('is_orth');
-	$row[3] = $peak->get_column('orth_coords');
+	$row[2] = $peak->get_column('targetgenedist');
+	my $is_orth = $peak->get_column('is_orth');
+	$row[3] = $is_orth;
+	$row[4] = $peak->get_column('orth_coords');
 
 	my $K562_pat = ".";
 	my $GM12878_pat = ".";
@@ -827,14 +832,14 @@ sub get_orthologs {
             }
 	}
 
-	$row[4] = $GM12878_pat;
-	$row[5] = $K562_pat;
-	$row[6] = $CH12_pat;
-	$row[7] = $MEL_pat;
+	$row[5] = $GM12878_pat;
+	$row[6] = $K562_pat;
+	$row[7] = $CH12_pat;
+	$row[8] = $MEL_pat;
 
 	$n++;
 	$total[1]++;
-	if ($row[2]) {
+	if ($is_orth) {
 	    $total[2]++;
 	}
 	
@@ -852,52 +857,52 @@ sub get_orthologs {
         if ($spp eq "hg19") {
             push @peaks_hg19, \@row;
             $total_hg19[1]++;
-	    if ($row[2]) {
+	    if ($is_orth) {
 		$total_hg19[2]++;
 	    }
 
             if ($cell eq "K562") {
                 $total_K562[1]++;
-		if ($row[2]) {
+		if ($is_orth) {
 		    $total_K562[2]++;
 		}
-		$row[5] = $peak->get_column('id_neurons');
-		$row[4] = $pair_id;
+		$row[6] = $peak->get_column('id_neurons');
+		$row[5] = $pair_id;
             } elsif ($cell eq "GM12878") {
                 $total_GM12878[1]++;
-		if ($row[2]) {
+		if ($is_orth) {
 		    $total_GM12878[2]++;
 		}
-		$row[4] = $peak->get_column('id_neurons');
-		$row[5] = $pair_id;
+		$row[5] = $peak->get_column('id_neurons');
+		$row[6] = $pair_id;
             }
 
 	} else {
             push @peaks_mm9, \@row;
 	    $total_mm9[1]++;
-	    if ($row[2]) {
+	    if ($is_orth) {
 		$total_mm9[2]++;
 	    }
 
 	    if ($cell eq "MEL") {
                 $total_MEL[1]++;
-		if ($row[2]) {
+		if ($is_orth) {
 		    $total_MEL[2]++;
 		}
-		$row[7] = $peak->get_column('id_neurons');
-		$row[6] = $pair_id;
+		$row[8] = $peak->get_column('id_neurons');
+		$row[7] = $pair_id;
             } elsif ($cell eq "CH12") {
                 $total_CH12[1]++;
-		if ($row[2]) {
+		if ($is_orth) {
 		    $total_CH12[2]++;
 		}
-		$row[6] = $peak->get_column('id_neurons');
-		$row[7] = $pair_id;
+		$row[7] = $peak->get_column('id_neurons');
+		$row[8] = $pair_id;
             }
 	}
 	
 	# Assign pattern factor strings
-	for (my $p = 4; $p <= 7; $p++) {
+	for (my $p = 5; $p <= 8; $p++) {
 	    my $id = $row[$p];
 	    if (!exists($factor_str{$id})) {
 		my @tmp;

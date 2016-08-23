@@ -52,13 +52,13 @@
 	    [% IF class =="header" -%]
                 <th class="[% class %]">[% col %]</th>
             [% ELSIF class == "mouse" && loop.count > nc -%]
-	        [% IF loop.count == 4 -%]
+	        [% IF loop.count == 5 -%]
 		    [% IF col == "." %]
     		        <td class="[% class %]" style="background: rgba(0,0,255,0)">[% col %]</td>
 		    [% ELSE %]
                         <td class="[% class %]" style="background: rgba(0,0,255,0.1)"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=[% col %]" target="_blank">[%col %]</a></td>
 		    [% END %]
-                [% ELSIF loop.count >= 7 -%]
+                [% ELSIF loop.count >= 8 -%]
 		    [% IF col == "." || col == "0" %]
                         <td class="[% class %]" style="background: rgba(255,0,0,0)">[% col %]</td>
 		    [% ELSIF loop.count > 8 %]
@@ -70,7 +70,7 @@
 		    [% IF col == "." || col == "0" %]
                         <td class="[% class %]" style="background: rgba(0,0,255,0)">[% col %]</td>
 		    [% ELSE %]
-		        [% IF loop.count == 3 %]
+		        [% IF loop.count == 4 %]
 			    <td class="[% class %]" style="background: rgba(0,0,255,0.1)">[% col %]</td>
 			[% ELSE %]
                     	    <td class="[% class %]" style="background: rgba(0,0,255,0.1)"><a class="pattern_link" href="javascript:void(0);" title="[% peak.$str_idx %]">[% col %]</a></td>
@@ -78,18 +78,18 @@
 		    [% END %]
 		[% END -%]
             [% ELSIF class == "human" && loop.count > nc -%]
-	        [% IF loop.count == 4 -%]
+	        [% IF loop.count == 5 -%]
 		    [% IF col == "." %]
                         <td class="[% class %]" style="background: rgba(255,0,0,0)">[% col %]</td>
                     [% ELSE %]
                         <td class="[% class %]" style="background: rgba(255,0,0,0.1)"><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&position=[% col %]" target="_blank">[% col %]</a></td>
     		    [% END %]
-		[% ELSIF loop.count >= 7 || loop.count == 3 -%]
+		[% ELSIF loop.count >= 8 || loop.count == 4 -%]
 		    [% IF col == "." || col == "0" %]
                         <td class="[% class %]" style="background: rgba(255,0,0,0)">[% col %]</td>    
-		    [% ELSIF loop.count > 8 %]
+		    [% ELSIF loop.count > 9 %]
 		        [%# Hidden Columns -- do nothing %]
-		    [% ELSIF loop.count == 3 %]
+		    [% ELSIF loop.count == 4 %]
 		        <td class="[% class %]" style="background: rgba(255,0,0,0.1)">[% col %]</td>
 		    [% ELSE %]
                     	<td class="[% class %]" style="background: rgba(255,0,0,0.1)"><a class="pattern_link" href="javascript:void(0);" title="[% peak.$str_idx %]">[% col %]</a></td>
@@ -148,7 +148,7 @@
         <!-- Hidden row to avoid triggering tablesorter empty table bug -->
         <tr class="hidden"><td>A</td><td>A</td><td>0</td><td>A</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
     [% FOREACH row = orthologs.peaks_mm9 -%]
-        [% PROCESS table_row peak = row  class = "mouse" nc = 2 peaks = orthologs table_id = "mouse" -%]
+        [% PROCESS table_row peak = row  class = "mouse" nc = 3 peaks = orthologs table_id = "mouse" -%]
     [% END -%]
     </tbody>
 </table>
@@ -163,7 +163,7 @@
 	<!-- Hidden row	to avoid triggering tablesorter	empty table bug	-->
         <tr class="hidden"><td>A</td><td>A</td><td>0</td><td>A</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
     [% FOREACH row = orthologs.peaks_hg19 -%]
-        [% PROCESS table_row peak = row  class = "human" nc = 2 peaks = orthologs table_id = "human" -%]
+        [% PROCESS table_row peak = row  class = "human" nc = 3 peaks = orthologs table_id = "human" -%]
     [% END -%]
     </tbody>
 </table>

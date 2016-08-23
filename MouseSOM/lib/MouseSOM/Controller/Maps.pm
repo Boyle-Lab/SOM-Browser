@@ -150,6 +150,7 @@ sub load_tab :Path :Local :ARGS(2) {
             $c->stash(orthologs => {$c->model('DB::Peak')->get_orthologs($neuron,
 									 $c->model('DB::OrthPeak'),
 									 $c->model('DB::Factor'),
+									 $c->model('DB::PeaksGene'),
 									 $show)});
 
 	} elsif ($tab_id == 2) {
