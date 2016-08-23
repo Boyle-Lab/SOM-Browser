@@ -67,7 +67,7 @@ sub get_peaks {
     }
 
     my @factors_a = ("Species", "N Peaks");
-    my @factors_b = ("Cell", "Location", "TsssDist");
+    my @factors_b = ("Cell", "Location", "TssDist");
 
     my $i = 0;
     my $n_hg19 = 0;

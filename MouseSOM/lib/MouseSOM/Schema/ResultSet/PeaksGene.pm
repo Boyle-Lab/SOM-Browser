@@ -186,7 +186,7 @@ sub get_genes_bnorm {
     my @header = ("Species/Cell", "N Peaks", "Med TSS Dist", "Med Norm Expr");
 
     my @header_1 = ("Cell", "Location", "Target Gene",
-                    "TSS Distance", "GM12878 Expr", "K562 Expr", 
+                    "TssDist", "GM12878 Expr", "K562 Expr", 
 		    "CH12 Expr", "MEL Expr",
                     "log2 FC K562/GM12878", "Log2 FC MEL/CH12",
 		    "Log2 FC CH12/GM12878", "Log2 FC MEL/K562");
