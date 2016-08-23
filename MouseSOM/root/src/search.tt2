@@ -50,7 +50,7 @@
 
     $(document).on("click",".remove_field", function(e){
         e.preventDefault(); $(this).parent('div').remove();
-        document.search_form.n_fields.value--;
+//        document.search_form.n_fields.value--;
     })
 
     $(document).on("click",".remove_order", function(e){

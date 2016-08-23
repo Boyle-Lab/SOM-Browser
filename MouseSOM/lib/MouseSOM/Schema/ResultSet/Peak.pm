@@ -304,7 +304,9 @@ sub get_search_res {
 	my $tname = "table_" . $i;
 	my $tbl = $params->{$tname};
 #	print STDERR "$tbl\n";
-	$tables{$tbl} = "";
+	if (defined($tbl)) {
+	    $tables{$tbl} = "";
+	}
     }
 
     if (!keys(%tables)) {
@@ -427,6 +429,11 @@ sub get_search_res {
     my $is_group = 0;
     for (my $i = 0; $i < $n_fields; $i++) {
         my $tname = "table_" . $i;
+
+	if (!defined($params->{$tname})) {
+	    next;
+	}
+
         my $fname = "field_" . $i;
         my $cname = "constraint_" . $i;
         my $vname = "value_" . $i;
@@ -513,7 +520,7 @@ sub get_search_res {
     
     $qry .= ";";
 
-    print STDERR "$qry\n";
+#    print STDERR "$qry\n";
 
     # Check SQL statement for "blacklist" terms. This is not the sine qua non
     # of security, but should give a margin of safety from sql injection attacks.

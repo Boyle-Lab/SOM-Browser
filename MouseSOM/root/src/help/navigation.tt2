@@ -142,3 +142,50 @@
     </ol></p>
 
 <p class="bold" id="search">Searching the Database</p>
+    <img src="[% c.uri_for('/static/images/browser_search.png') %]" class="help_img">
+    <p class="indented">The browser Search utility offers an extensible platform with which arbitrarily complex queries against one or more data tables can be built. The menu-driven interface allows easy specification of query tables, conditions, logic, multiple order-by conditions, and group-by clauses. Additional conditions can be added and removed with a simple button click and check-boxes are provided to group conditions with parentheses.</p>
+    <img src="[% c.uri_for('/static/images/browser_search-result.png') %]" class="help_img">
+    <p class="indented">Results are presented in graphical and tabular forms, with SOM map locations shaded to indicate the number of results found in each pattern, and a comprehensive list of results and associated annotations from all tables included for both mouse and human. In addition, query terms are listed in a table for reference. Individual patterns on the map can be clicked to retrieve associated pattern summary information, and a button is given to jump into the SOM Browser to view detailed data on the selected pattern.<br><br><br><br><br><br></p>
+    <p><ol type="1">
+        <li>Getting There</li>
+    	    <img src="[% c.uri_for('/static/images/browser_search_link.png') %]" class="help_img">
+            <p class="indented">The Search utility can be accesed from any page on the site by clicking the "Search" link on the navigation menu.</p>
+	<li>Selecting a Base Table</li>
+	    <img src="[% c.uri_for('/static/images/browser_search_base.png') %]" class="help_img">
+            <p class="indented">Queries may be constructed to return either individual CRMs (Peaks) or patterns (Neurons) that match the query conditions. To toggle between these, use the "Base Table" menu to select the desired data type.</p>
+	<li>Choosing Query Tables</li>
+	    <img src="[% c.uri_for('/static/images/browser_search_table-select.png') %]" class="help_img">
+            <p class="indented">When entering search criteria, you must first specify which database table to search against. This is accomplished by selecting the desired table on the "Table" menu. Selecting a table will populate the "Field" menu with the available database columns. You will need to do this for every search term you enter.</p>
+	<li>Setting a Query Condition</li>
+	    <img src="[% c.uri_for('/static/images/browser_search_column-select.png') %]" class="help_img">
+            <p class="indented">Each database table has multiple fields you can search against. These are listed in the "Field" menu. Selecting a field within this menu will tell the search utility to look for the term given in the Value field within this column. Only one column can be selected at a time. In order to search against multiple columns, follow the directions in section 5 to add additional search terms.</p>
+	    <img src="[% c.uri_for('/static/images/browser_search_term-select.png') %]" class="help_img">
+	    <p class="indented">Having selected a database table and column, you will need to supply a search term in the "Value" field. This can be a gene name, chromosome, genomic coordinate, etc., but only values matching the data type and format expected by the database column will return results.</p>
+	    <img src="[% c.uri_for('/static/images/browser_search_boolean-select.png') %]" class="help_img">
+	    <p class="indented">By default, the search utility is set to search for an exact match to the search term. You can change this behavior by changing the comparison condition. Use the drop-down menu containing the double-equals sign (==) to the desired condition to do so.</p>
+	<li>Adding Additional Conditions</li>
+	    <img src="[% c.uri_for('/static/images/browser_search_add-row.png') %]" class="help_img">
+            <p class="indented">Additional query conditions can be added by clicking the "Add More Search Terms" button.</p>
+	    <img src="[% c.uri_for('/static/images/browser_search_chain-select.png') %]" class="help_img">
+            <p class="indented">Search terms can be chained with any of the logical operators available within mySQL (AND, OR, NOT, XOR) by selecting the desired value from the dropdown menu. Follow the steps in section 4 to complete specifying the search term.</p>
+	    <p class="indented"><span class="bold">Tip:</span> To add additional annotations to the results table without restricting the values, select the desired table, select any value from the "Field" menu, set the search condition to "!=", and the value to "NULL" (equivalent to "WHERE table.field != NULL"). Columns from the selected table will be appended to all rows in the search results.</p>
+        <li>Removing Conditions</li>
+	    <img src="[% c.uri_for('/static/images/browser_search_remove-term.png') %]" class="help_img">
+            <p class="indented">Search conditions can be removed by simply clicking the "Remove" button beside the term you would like to remove.</p>
+        <li>Combining Conditions</li>
+	    <img src="[% c.uri_for('/static/images/browser_search_combine-terms.png') %]" class="help_img">
+            <p class="indented">Search terms may be combined into parenthetical groups by checking the "Group with previous" box next to any term. This is equivalent to adding a set of parentheses surrounding the given term with the term in the row directly above it. You can include multiple groups of terms but nested groups are not currently supported.</p>
+	    <p class="indented">Equivalent SQL code to the example shown would be "WHERE (target_genes.targetGene = "brca1" OR target_genes.targetGene = "tp53") AND gene_expression_tpm.exp_g > 5".</p>
+        <li>Adding "Order By" Conditions</li>
+	    <img src="[% c.uri_for('/static/images/browser_window_compare-link.png') %]" class="help_img">
+            <p class="indented">Results can be ordered by values in one or more columns in the selected tables by selecting the desired combination of tables and columns in the "Order Results By" section. Results will be ordered hierarchically in the order by which conditions are supplied. In addition, results may be reordered within the results tables on the search results page by clicking the desired columns in the table header.</p>
+        <li>Grouping Results</li>
+	    <img src="[% c.uri_for('/static/images/browser_window_compare-link.png') %]" class="help_img">
+            <p class="indented">Results may be grouped by a single table and column, supplied through the drop-down menus in the "Group Results By" section.</p>
+	<li>Submitting Your Search</li>
+	    <img src="[% c.uri_for('/static/images/browser_window_compare-link.png') %]" class="help_img">
+            <p class="indented">Once you have supplied all your search criteria, submit your search by clicking the "Search" button at the bottom of the search form.</p>
+        <li>Working with the Results Display</li>
+	    <img src="[% c.uri_for('/static/images/browser_window_compare-link.png') %]" class="help_img">
+            <p class="indented"></p>
+
