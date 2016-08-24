@@ -16,7 +16,7 @@
        	    <li><a class="help_link" href="javascript:void(0)" name="navigation" id="navigation">Navigating the Browser</a>
                 <ol type="i">
                     <li><a class="help_sublink" href="javascript:void(0)" name="intro" id="intro">Getting Started</a></li>
-	       	    <li><a class="help_sublink" href="javascript:void(0)" name="sorting">Using The SOM Data Browser</a></li>
+	       	    <li><a class="help_sublink" href="javascript:void(0)" name="browser">Using The SOM Data Browser</a></li>
 	       	    <li><a class="help_sublink" href="javascript:void(0)" name="compare">Comparing Maps</a></li>
 	       	    <li><a class="help_sublink" href="javascript:void(0)" name="search">Searching the Database</a></li>
 	   	</ol>
@@ -29,7 +29,7 @@
         <!-- Help Content Goes Here -->
     </div>
 
-    <p id="active" class="hidden" name="[% topic %]"></p>
+    <p id="active" class="hidden" name="[% topic %]">You can't see me.</p>
 
 </div>
 
@@ -47,6 +47,7 @@
             }
 	    $('#helpcontent').load("[% c.uri_for('/help/help_load/') %]" + topic);
 	}
+
     });
 
     $(document).on("click", ".help_link", function(e){
@@ -69,19 +70,7 @@
 		.addClass("disabled");
 	}
 
-	var params = '?topic=' + this.name;
-	var urlParts = document.location.href.split(/\?/g);
-	var newUrl = urlParts[0] + params;
-
-	var baseTitle = document.title.split(/:/g);
-        var newTitle = baseTitle[0] + ": " + this.name;
-        document.title = newTitle;
-
-	var state = { url: newUrl, title: newTitle, loadTag: true };
-	window.history.pushState(state, newTitle, newUrl);
-
-	// Load the help content with an ajax call...
-	$('#helpcontent').load("[% c.uri_for('/help/help_load/') %]" + this.name);
+	loadContent(this.name, prevSel);
 
     });
 

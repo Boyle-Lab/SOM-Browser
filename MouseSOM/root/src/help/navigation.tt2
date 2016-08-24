@@ -2,7 +2,7 @@
 <p class="bold" id="intro">Getting Started</p>
 <p>The Boyle Lab Human-Mouse SOM Browser consists of three tools: the SOM Data Browser, the Compare Maps tool, and the Search tool.</p>
 <p><ol type="1">
-    <li>SOM Data Browser
+    <li><a href="#browser">SOM Data Browser</a>
         <p class="indented">The SOM Data Browser offers an integrated display for grammatical patterns and annotations with three sections:</p>
 	    <p><img src="[% c.uri_for('/static/images/browser_window_small_map.png') %]" class="help_img">
 	    <ol type="i">
@@ -11,7 +11,7 @@
 	    <li>A tabbed section offering detailed annotations with sortable tables summarizing data within species and cell types and within individual CRMs in human and mouse. Data can easily be restricted to 1:1 ortholgous, 1:many orthologous, or non-orthologous CRMs, and tables may be custome-sorted by any number of columns.</li>
 	    </ol></p>
     </li>
-    <li>Compare Maps
+    <li><a href="#compare">Compare Maps</a>
         <p class="indented">The Compare Maps section offers a way to place maps of different annotations side-by-side for comparison. It offers several unique features:</p>
 	    <p><img src="[% c.uri_for('/static/images/browser_map_compare_small.png') %]" class="help_img">
             <ol type="i">
@@ -22,7 +22,7 @@
             <li>The ability to jump directly to detailed data on the selected pattern from any map with a simple button click.</li>
             </ol></p>
     </li>
-    <li>Search
+    <li><a href="#search">Search</a>
         <p class="indented">The Search section offers the ability to construct custom queries against the Browser database. It is highly user configurable, offering the ability to:</p>
             <p><img src="[% c.uri_for('/static/images/search_preview.png') %]" class="help_img">
             <ol type="i">
@@ -36,7 +36,7 @@
 
 <p class="bold" id="browser">Using The SOM Data Browser</p>
 <p><ol type=1>
-    <li>The SOM Map
+    <li><p>The SOM Map</p></li>
         <p class="indented">SOM Maps graphically show properties of the SOM dataset and associated annotations for every grammatical pattern. They allow visual interpretation of the dataset, enabling ready identification of patterns sharing similar properties and annotations.</p>
         <p><ol type="i">
 	    <img src="[% c.uri_for('/static/images/browser_map_select_menu.png') %]" class="help_img">	    
@@ -53,16 +53,14 @@
 	        <img src="[% c.uri_for('/static/images/browser_map_description_dialog.png') %]" class="help_img">
 		<p> The "About this map" link below the map image will reveal a dialog containing descriptive information for the currently-selected map. In general, the annotations and values plotted are described, often with additional interpretive information, links and references. The dialog may be dragged and resized, and its content will be updated any time the map is changed through the menus. The dialog may be closed by clicking the "x" icon at the upper right.</p>
 	</ol></p>
-    </li>
-    <li>Pattern Summary
+    <li><p>Pattern Summary</p></li>
         <img src="[% c.uri_for('/static/images/browser_window_summary.png') %]" class="help_img">
         <p class="indented">This section gives basic information about the selected pattern, including the transcription factors making up the pattern, the total number of factors in the pattern, total number of CRMs assigned to the pattern, number of human and mouse CRMs in the pattern and fraction of CRMs within the pattern contributed by each species, percentage of all human and mouse CRMs contained within the pattern, median distance to the nearest transcription start site in human and mouse, and the grammatical class to which the pattern belongs.<br><br><br></p>
-    </li>
-    <li>Pattern Details
+    <li><p>Pattern Details</p></li>
         <img src="[% c.uri_for('/static/images/browser_window_details.png') %]" class="help_img">
         <p class="indented">This section offers detailed information about annotations for each CRM within the selected pattern in a tabbed format. Each tab contains data pertaining to a different type of annotation, with some tabs offering aggregated data for multiple related annotations (selection, for example).</p>
 	<p><ol type="i">
-	    <li>Tabs Available</li>
+	    <li><p>Tabs Available</p></li>
 	        <p class="indented">There are currently nine tabs available, each presenting a different type of data or annotation:</p>
 		<ol type="1">
 		    <li>TF Content</li>
@@ -90,53 +88,51 @@
 		    <li>DNase Hypersensitivity</li>		
                   	<p class="indented">Gives the coverages of each CRM by DNaseI Hypersensitive sites (DHS), a measure of open chromatin. Each CRM is annotated with the DHS coverage in all four cell types, not just its own, for easy comparison.</p>
 		</ol>
-	    <li>Data Tables</li>
+	    <li><p>Data Tables</p></li>
 	        <p class="indented">Annotations data are presented in a tabular format, with data on most tabs separated into three tables: "Averages", presenting aggregated information for all CRMs within the selected pattern; "Mouse", containing data for all mouse CRMs within the pattern; and "Human", containing data for all human CRMs within the pattern. Individual values in the data tables are given numerically, and table cells are color coded and shaded according to the species of origin and magnitude of the observation relative to the overall range of values.</p>
 		<p class="indented">The first three columns of the Mouse and Human tables follow a uniform format across all tabs, giving, in order, the cell of origion, genomic location and distance to the nearest transcription start site for each CRM. By default, tables are sorted based on the cell of origin and genomic location, but they may be sorted by any column or combination of columns by clicking the column headers. See the "Sorting Data Tables" section below for more information. Clicking the genomic location of any CRM will bring up the genomic region of the given CRM within the UCSC Genome Browser.</p>
-            <li>Sorting Data Tables</li>
+            <li><p>Sorting Data Tables</p></li>
 	        <img src="[% c.uri_for('/static/images/browser_window_table-sort.png') %]" class="help_img">
 		<p class="indented">Most data tables can be sorted by any column or combination of columns, in either ascending or descending order, by clicking the column header for any column. Clicking again on the same column will reverse the sorting order. By default, tables are sorted on the cell of origin and genomic location of the CRMs.</p>
 		<img src="[% c.uri_for('/static/images/browser_window_table-sort-multi.png') %]" class="help_img">
 		<p class="indented">It is possible to sort based on more than one column by holding the "shift" key while clicking additional columns.</p>
-	    <li>Selecting Data by Orthology</li>
+	    <li><p>Selecting Data by Orthology</p></li>
                 <img src="[% c.uri_for('/static/images/browser_window_orth-select.png') %]" class="help_img">
                 <p class="indented">All tabs offer a drop-down menu from which the set of CRMs shown in the display can be alternately set to include all regions, 1:1 orthologous regions, 1:many orthologous regions, and non-orthologous regions (i.e., those that are unique to either human or mouse, or have been lost from one species or the other.)<br><br></p>
-            <li>Getting Tab Information</li>
+            <li><p>Getting Tab Information</p></li>
 	        <img src="[% c.uri_for('/static/images/browser_window_tab-description.png') %]" class="help_img">
 		<p class="indented">Clicking the "info" icon at the upper right hand corner of each tab reveals a description of the data and annotations contained in the selected tab. This dialog may be dragged and resized as desired, and its content will update automatically whenever a new tab is selected. Click the "x" icon in the upper right corner to close the dialog.</p>
         </ol></p>
-    </li>
-    <li>Bookmarking and Sharing Browser Pages
+    <li><p>Bookmarking and Sharing Browser Pages</p></li>
         <p class="indented">Every time selections are made within the browser, the web address in the browser's location bar is updated to reflect the currently selected map, pattern, tab and other options pertaining to content on specific tabs. This entire web address may be copied and pasted to reproduce the content in a new window, share with colleagues, or bookmarked for later retrieval. The SOM browser does not use sessions or cookies; all parameters needed to retrieve the exact data time and again are stored within the web address.</p>    
-    </li>
 </ol></p>
 
 <p class="bold" id="compare">Comparing Maps</p>
     <img src="[% c.uri_for('/static/images/browser_window_compare.png') %]" class="help_img">
     <p class="indented">The Compare Maps utility allows side by side comparison of multiple SOM maps through its simple, menu-driven interface. This extends the utility of the SOM maps by facilitating simultaneous comparisons of multiple properties and annotations in order to find patterns with complex relationships. As many maps as needed can be added, changed and removed, and summary data for individual patterns can be accessed independently for each map, along with a button to view the selected map and pattern within the SOM Browser.<br><br><br><br><br><br></p>
     <p><ol type="1">
-        <li>Getting There</li>
+        <li><p>Getting There</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_window_compare-link.png') %]" class="help_img">
 	    <p class="indented">The Compare Maps utility can be accesed from any page on the site by clicking the "Compare Maps" link on the navigation menu.</p>
-        <li>Selecting Maps</li>
+        <li><p>Selecting Maps</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_window_compare_select-category.png') %]" class="help_img">
     	    <p class="indented">Maps are selected and changed using the "Category" and "Map" menus. First select a map category from the "Category" menu. This will populate the "Map" menu with the available maps in the selected category.</p>
 	    <img src="[% c.uri_for('/static/images/browser_window_compare_select-map.png') %]" class="help_img">
 	    <p class="indented">Second, select a map from the "Map" menu. The chosen map will then load in the space below the menus.</p>
-	<li>Adding Maps</li>
+	<li><p>Adding Maps</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_window_compare-add.png') %]" class="help_img">
             <p class="indented">To add a map, simply click the "Add Another Map" button below the lower-most map. You will be presented with another set of "Category" and "Map" menus from which to make your selection by following the steps in section 2.</p>
-	<li>Changing Maps</li>
+	<li><p>Changing Maps</p></li>
 	    <p class="indented">Maps can be changed by simply selecting a new map and/or category following the steps in section 2.</p>
-	<li>Removing Maps</li>
+	<li><p>Removing Maps</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_window_compare-remove.png') %]" class="help_img">
             <p class="indented">Maps can be removed by clicking the "Remove" button beside the selection menus for the map you wish to remove. This will remove the desired map without affecting any of the other maps or pattern selections elsewhere on the page.</p>
-	<li>Getting Pattern Data</li>
+	<li><p>Getting Pattern Data</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_window_compare_pattern-select-hover.png') %]" class="help_img">
             <p class="indented">Hovering the mouse pointer over any hexagon on a map will reveal the pattern number.</p>
 	    <img src="[% c.uri_for('/static/images/browser_window_compare_pattern-select.png') %]" class="help_img">
 	    <p class="indented">Clicking the hexagon will reveal a table, to the right of the map image, with summary data pertaining to the selected pattern. Patterns can be selected independently on each map displayed and selecting or changing a pattern on one map will not affect selections on any other maps.</p>
-	<li>Viewing Pattern Data in the SOM Browser</li>
+	<li><p>Viewing Pattern Data in the SOM Browser</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_window_compare_browser-jump.png') %]" class="help_img">
             <p class="indented">Detailed data for the selected map and pattern can be viewed in the SOM Browser by clicking the "Jump to Browser" button below the summary data table. The SOM Browser will open in a new window, initialized to the selected map and pattern.</p>
     </ol></p>
@@ -147,46 +143,46 @@
     <img src="[% c.uri_for('/static/images/browser_search-result.png') %]" class="help_img">
     <p class="indented">Results are presented in graphical and tabular forms, with SOM map locations shaded to indicate the number of results found in each pattern, and a comprehensive list of results and associated annotations from all tables included for both mouse and human. In addition, query terms are listed in a table for reference. Individual patterns on the map can be clicked to retrieve associated pattern summary information, and a button is given to jump into the SOM Browser to view detailed data on the selected pattern.<br><br><br><br><br><br></p>
     <p><ol type="1">
-        <li>Getting There</li>
+        <li><p>Getting There</p></li>
     	    <img src="[% c.uri_for('/static/images/browser_search_link.png') %]" class="help_img">
             <p class="indented">The Search utility can be accesed from any page on the site by clicking the "Search" link on the navigation menu.</p>
-	<li>Selecting a Base Table</li>
+	<li><p>Selecting a Base Table</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_search_base.png') %]" class="help_img">
             <p class="indented">Queries may be constructed to return either individual CRMs (Peaks) or patterns (Neurons) that match the query conditions. To toggle between these, use the "Base Table" menu to select the desired data type.</p>
-	<li>Choosing Query Tables</li>
+	<li><p>Choosing Query Tables</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_search_table-select.png') %]" class="help_img">
             <p class="indented">When entering search criteria, you must first specify which database table to search against. This is accomplished by selecting the desired table on the "Table" menu. Selecting a table will populate the "Field" menu with the available database columns. You will need to do this for every search term you enter.</p>
-	<li>Setting a Query Condition</li>
+	<li><p>Setting a Query Condition</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_search_column-select.png') %]" class="help_img">
             <p class="indented">Each database table has multiple fields you can search against. These are listed in the "Field" menu. Selecting a field within this menu will tell the search utility to look for the term given in the Value field within this column. Only one column can be selected at a time. In order to search against multiple columns, follow the directions in section 5 to add additional search terms.</p>
 	    <img src="[% c.uri_for('/static/images/browser_search_term-select.png') %]" class="help_img">
 	    <p class="indented">Having selected a database table and column, you will need to supply a search term in the "Value" field. This can be a gene name, chromosome, genomic coordinate, etc., but only values matching the data type and format expected by the database column will return results.</p>
 	    <img src="[% c.uri_for('/static/images/browser_search_boolean-select.png') %]" class="help_img">
 	    <p class="indented">By default, the search utility is set to search for an exact match to the search term. You can change this behavior by changing the comparison condition. Use the drop-down menu containing the double-equals sign (==) to the desired condition to do so.</p>
-	<li>Adding Additional Conditions</li>
+	<li><p>Adding Additional Conditions</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_search_add-row.png') %]" class="help_img">
             <p class="indented">Additional query conditions can be added by clicking the "Add More Search Terms" button.</p>
 	    <img src="[% c.uri_for('/static/images/browser_search_chain-select.png') %]" class="help_img">
             <p class="indented">Search terms can be chained with any of the logical operators available within mySQL (AND, OR, NOT, XOR) by selecting the desired value from the dropdown menu. Follow the steps in section 4 to complete specifying the search term.</p>
 	    <p class="indented"><span class="bold">Tip:</span> To add additional annotations to the results table without restricting the values, select the desired table, select any value from the "Field" menu, set the search condition to "!=", and the value to "NULL" (equivalent to "WHERE table.field != NULL"). Columns from the selected table will be appended to all rows in the search results.</p>
-        <li>Removing Conditions</li>
+        <li><p>Removing Conditions</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_search_remove-term.png') %]" class="help_img">
             <p class="indented">Search conditions can be removed by simply clicking the "Remove" button beside the term you would like to remove.</p>
-        <li>Combining Conditions</li>
+        <li><p>Combining Conditions</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_search_combine-terms.png') %]" class="help_img">
             <p class="indented">Search terms may be combined into parenthetical groups by checking the "Group with previous" box next to any term. This is equivalent to adding a set of parentheses surrounding the given term with the term in the row directly above it. You can include multiple groups of terms but nested groups are not currently supported.</p>
 	    <p class="indented">Equivalent SQL code to the example shown would be "WHERE (target_genes.targetGene = "brca1" OR target_genes.targetGene = "tp53") AND gene_expression_tpm.exp_g > 5".</p>
-        <li>Adding "Order By" Conditions</li>
+        <li><p>Adding "Order By" Conditions</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_search_order-by.png') %]" class="help_img">
             <p class="indented">Results can be ordered by values in one or more columns in the selected tables by selecting the desired table, column and sorting order in the "Order Results By" section. Results will be ordered hierarchically in the order by which conditions are supplied. In addition, results may be reordered within the results tables on the search results page by clicking the desired columns in the table header.</p>
 	    <p class="indented"><span class="bold">WARNING:</span> Selecting fields from tables not included in the search will generate an error!</p>
-        <li>Grouping Results</li>
+        <li><p>Grouping Results</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_search_group-by.png') %]" class="help_img">
             <p class="indented">Results may be grouped by any field from any table used in the query, supplied through the drop-down menus in the "Group Results By" section.</p>
-	<li>Submitting Your Search</li>
+	<li><p>Submitting Your Search</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_search_search-button.png') %]" class="help_img">
             <p class="indented">Once you have supplied all your search criteria, submit your search by clicking the "Search" button at the bottom of the search form.</p>
-        <li>Working with the Results Display</li>
+        <li><p>Working with the Results Display</p></li>
 	    <img src="[% c.uri_for('/static/images/browser_search-result_guide.png') %]" class="help_img">
             <p class="indented">The results display page has four sections:</p>
 	    <p class="indented"><ol type="i">

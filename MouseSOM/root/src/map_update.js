@@ -65,16 +65,3 @@ $(document).on("click",".map_select", function(e){
 	window.history.pushState(state, "", newUrl);
     }
 })
-
-
-$(window).on('popstate', function(event) {
-    var state = event.originalEvent.state;
-
-    if (!state.loadTag) return;
-
-    if (state) {
-	window.location.assign(state.url);
-    } else {
-	window.location.assign(document.location.href);
-    }
-});

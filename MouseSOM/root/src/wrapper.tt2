@@ -28,6 +28,23 @@
  ga('send', 'pageview');
 </script>
 
+<!-- Site-specific javascript -->
+<script>
+
+    $(window).on('popstate', function(event) {
+        var state = event.originalEvent.state;
+
+    	if ( !state || !state.loadTag) return;
+
+    	if (state) {
+       	    window.location.assign(state.url);
+        } else {
+            window.location.assign(document.location.href);
+        }
+    });
+
+</script>
+
 </head>
 
 <body>
