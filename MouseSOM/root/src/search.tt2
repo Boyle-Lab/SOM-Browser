@@ -15,6 +15,14 @@
              'class' : 'orderBuild', html: GetOrderHtml()
         }).appendTo('#container2');
 
+	$("#map_info_block").dialog(
+            {
+		height: 720,
+			width: 600,
+                autoOpen: false
+            }
+        );
+
     })
 
     function GetSearchHtml()
@@ -89,6 +97,9 @@
 	document.search_form.n_orders.value++;
     })
 
+    $(document).on("click", "#search_info", function() {
+        $( "#map_info_block" ).dialog( "open" );
+    });
 
 </script>
 
@@ -98,6 +109,10 @@
 
 <div id="searchform">
     <p class="bold">Enter your search criteria using the form below.</p>
+
+    <p style="text-align: right">
+        <a id="search_info" href="javascript:void(0);" name="25" title="Map Description"><img src="[% c.uri_for('/static/images/info.png') %]" width=20 height=20><span style="position: absolute;">&nbsp;Help</span></a>
+    </p>
 
     <form method="post" name="search_form" action="[% c.uri_for('search_results') %]">
     <input type="hidden" name="n_fields" value="0">
@@ -215,4 +230,40 @@
 
     <p><input class="button" type="submit" name="Submit" value="Search"></p>
     </form>
+</div>
+
+<div id="map_info_block" title="Search">
+     <p>The Browser Search utility offers the ability to build extensible queries against the browser database. Follow these steps to build and submit a search:</p>
+     <ol type="1">
+     <li><p class="bold">Select a Base Table from the "Base Table" menu.</p>
+         <p>This will dictate whether the search returns CRMs or patterns matching the query parameters.</p>
+     </li>
+     <li><p class="bold">Entering Search Terms</p></li>
+         <p>Any number of search terms may be supplied. For each term, follow these steps:</p>
+         <ol type="i">
+             <li>Select a table from the "Table" menu.</li>
+             <li>Select a data column to search against from the "Field" menu.</li>
+	     <li>Choose the comparison type ("==", for an exact match, by default).</li>
+	     <li>Enter a search term in the "Value" field.</li>	
+         </ol>
+	 <p>Additional terms can be added by clicking the "Add More Search Terms" button. Terms can be combined with "AND", "OR", "XOR" or "NOT" by selecting the appropriate value from the menu.</p>
+	 <p>When all parameters have been entered, run the search by clicking the "Search" button.</p>
+     <li><p class="bold">Parenthetical Groups</p></li>
+         <p>Search terms can be combined into parenthetical groups by clicking the "Group With Previous" box at the right of the row.</p>
+     <li><p class="bold">Removing Terms</p></li>
+         <ol type="i">
+             <li>Click the "Remove" button beside the term you want to remove.</li>
+         </ol>
+     <li><p class="bold">Ordering Results</p></li>
+         <p>Custom sorting orders can be applied to the results by selecting the desired combination of tables and columns in the "Order Results By" section:</p>
+         <ol type="i">
+             <li>Select the table containing the column you wish to sort by from the "Table" menu.</li>
+             <li>Choose the desired column in the "Field" menu.</li>
+             <li>Specify the desired sorting order.</li>
+	     <li>Click "Add More Order Terms and repeat i-iii to add more conditions.</li>
+         </ol>
+    <li><p class="bold">Grouping Results</p></li>
+         <p>Search results can be grouped by any column by specifying the desired "Table" and "Field" values in the "Group Results By" menu.</p>
+    </ol>
+    <p><a href="[% c.uri_for('/help') %]?topic=navigation#search" class="dialog" style="color: #0000FF">View full help section</a></p>
 </div>
