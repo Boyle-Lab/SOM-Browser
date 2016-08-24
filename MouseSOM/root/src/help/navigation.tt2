@@ -177,15 +177,28 @@
             <p class="indented">Search terms may be combined into parenthetical groups by checking the "Group with previous" box next to any term. This is equivalent to adding a set of parentheses surrounding the given term with the term in the row directly above it. You can include multiple groups of terms but nested groups are not currently supported.</p>
 	    <p class="indented">Equivalent SQL code to the example shown would be "WHERE (target_genes.targetGene = "brca1" OR target_genes.targetGene = "tp53") AND gene_expression_tpm.exp_g > 5".</p>
         <li>Adding "Order By" Conditions</li>
-	    <img src="[% c.uri_for('/static/images/browser_window_compare-link.png') %]" class="help_img">
-            <p class="indented">Results can be ordered by values in one or more columns in the selected tables by selecting the desired combination of tables and columns in the "Order Results By" section. Results will be ordered hierarchically in the order by which conditions are supplied. In addition, results may be reordered within the results tables on the search results page by clicking the desired columns in the table header.</p>
+	    <img src="[% c.uri_for('/static/images/browser_search_order-by.png') %]" class="help_img">
+            <p class="indented">Results can be ordered by values in one or more columns in the selected tables by selecting the desired table, column and sorting order in the "Order Results By" section. Results will be ordered hierarchically in the order by which conditions are supplied. In addition, results may be reordered within the results tables on the search results page by clicking the desired columns in the table header.</p>
+	    <p class="indented"><span class="bold">WARNING:</span> Selecting fields from tables not included in the search will generate an error!</p>
         <li>Grouping Results</li>
-	    <img src="[% c.uri_for('/static/images/browser_window_compare-link.png') %]" class="help_img">
-            <p class="indented">Results may be grouped by a single table and column, supplied through the drop-down menus in the "Group Results By" section.</p>
+	    <img src="[% c.uri_for('/static/images/browser_search_group-by.png') %]" class="help_img">
+            <p class="indented">Results may be grouped by any field from any table used in the query, supplied through the drop-down menus in the "Group Results By" section.</p>
 	<li>Submitting Your Search</li>
-	    <img src="[% c.uri_for('/static/images/browser_window_compare-link.png') %]" class="help_img">
+	    <img src="[% c.uri_for('/static/images/browser_search_search-button.png') %]" class="help_img">
             <p class="indented">Once you have supplied all your search criteria, submit your search by clicking the "Search" button at the bottom of the search form.</p>
         <li>Working with the Results Display</li>
-	    <img src="[% c.uri_for('/static/images/browser_window_compare-link.png') %]" class="help_img">
-            <p class="indented"></p>
-
+	    <img src="[% c.uri_for('/static/images/browser_search-result_guide.png') %]" class="help_img">
+            <p class="indented">The results display page has four sections:</p>
+	    <p class="indented"><ol type="i">
+	        <li>Results Map
+		    <p class="indented">This map graphically shows the location of all search results on the SOM grid. Hexagons are shaded according to the number of result rows found within the given pattern and a heat key is provided to indicate the range of values present. If over 10 results are returned, this will be given in log scale. Hovering the mouse over any hexagon will reveal the pattern ID and number of results found within the pattern. Clicking on any hexagon will load the pattern summary section with data for the selected pattern.</p>
+		</li>
+		<li>Pattern Summary Table
+		    <p class="indented">Clicking on a hexagon in the results map will load the pattern details in this section. The format is the same as in the main browser and compare maps sections. Clicking the "Jump To Browser" button will open a SOM Browser window initialized to the selected pattern.</p>
+		</li>
+		<li>Search Parameters Table
+		    <p class="indented">This table lists the terms and parameters supplied in the search form.</p>
+                </li>
+		<li>Results Tables
+		    <p class="indented">These tables show the detailed results of the query for human and mouse, including all columns from each table selected in the query. Results are sorted according to all user-supplied criteria, but may be resorted as desired by clicking the column headers. See the "Sorting Data Tables" section of SOM Browser help for more details. Within this table, individual pattern ID numbers link directly to detailed pattern data within the SOM Browser.</p>
+                </li>
