@@ -18,7 +18,7 @@
 
     $(document).on("click", ".neuron_link", function(e){
 	// default to four-cell pattern usage (map 4)
-	var b_link = '<p class="centeredbody"><a href="[% c.uri_for('/maps/neuron/') %]' + 4 + '/' + this.id + '" class="button">Jump to Browser</a></p>';
+	var b_link = '<p class="centeredbody"><a href="[% c.uri_for('/maps/neuron/') %]' + 4 + '/' + this.id + '" class="button" target="blank_">Jump to Browser</a></p>';
 	$('#neuronsummary').html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + this.id + '<br/><img src="[% c.uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
         $.when(loadSummary(this.id, $('#neuronsummary'))).done(function(a) {
              $('#neuronsummary').append(b_link);
