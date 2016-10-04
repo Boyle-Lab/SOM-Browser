@@ -215,7 +215,7 @@ sub get_genes_bnorm {
         $row[3] = $peak->get_column('targetgenedist');
 
 	my $td = abs($row[3]);
-        if ($td) > $tss_max) {
+        if ($td > $tss_max) {
             $tss_max = $td;
         }
 
