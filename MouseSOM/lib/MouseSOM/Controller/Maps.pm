@@ -47,7 +47,7 @@ sub map :Path :Local :Args(1) {
 
     my %params = %{$c->request->params};
     if (exists($params{neuron})) {
-        return $c->res->redirect( $c->uri_for('neuron', $map_id, $params{neuron}));
+        return $c->res->redirect( $c->secure_uri_for('neuron', $map_id, $params{neuron}));
     }
 }
 
@@ -70,7 +70,7 @@ sub update_map :Path :Local :Args(1) {
     my $fields = $c->model('DB::Map')->find($map_id);
     my $map_file = $fields->get_column('map_file');
 #    print STDERR "$map_file\n";
-    my $returnUrl = $c->uri_for('/static/svg', $map_file);
+    my $returnUrl = $c->secure_uri_for('/static/svg', $map_file);
 #    print STDERR "$returnUrl\n";
     $c->res->content_type("text/plain");
     $c->res->body($returnUrl);
@@ -219,7 +219,7 @@ sub load_tab :Path :Local :ARGS(2) {
 
 	} else {
 	    # Invalid Tab -- return a 404 error
-	    return $c->res->redirect( $c->uri_for('/default'));
+	    return $c->res->redirect( $c->secure_uri_for('/default'));
 	}
     }
 }
@@ -236,7 +236,7 @@ sub neuron :Path :Local :Args(2) {
 
     my %params = %{$c->request->params};
 #    if (exists($params{neuron})) {
-#        return $c->res->redirect( $c->uri_for('neuron', $map_id, $params{neuron}));
+#        return $c->res->redirect( $c->secure_uri_for('neuron', $map_id, $params{neuron}));
 #    }
     if (exists($params{activeTab})) {
         $c->stash(activeTab => $params{activeTab});
