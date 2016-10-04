@@ -44,7 +44,6 @@ docker exec -i MouseSOM sh -c 'cat > /etc/nginx/nginx.conf' <nginx.conf
 sleep 60
 
 # Load the database data
-docker run -it --link db -v $BROWSER_PATH/sql/:/data/sql --rm mysql sh -c 'exec mysql -h 172.18.0.2 -P 3306 -uroot -pmy-secret-pw </data/sql/MouseSOM.sql'
 docker run -it --link db -v $BROWSER_PATH/sql/:/data/sql --rm mysql sh -c 'exec mysql -h 172.18.0.2 -P 3306 -uroot -pmy-secret-pw mousesom </data/sql/MouseSOM_DB_DATA.sql'
 # Users.sql sets up the 'webuser' account and changes the root password. The
 # root password defaults to 'CHANGE_ME'. You should change this to something

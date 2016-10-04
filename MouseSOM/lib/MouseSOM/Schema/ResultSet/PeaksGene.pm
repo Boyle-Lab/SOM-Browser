@@ -214,8 +214,9 @@ sub get_genes_bnorm {
 	}
         $row[3] = $peak->get_column('targetgenedist');
 
-        if (abs($row[3]) > $tss_max) {
-            $tss_max = abs($row[3]);
+	my $td = abs($row[3]);
+        if ($td) > $tss_max) {
+            $tss_max = $td;
         }
 
         # Gene expression values
@@ -263,16 +264,16 @@ sub get_genes_bnorm {
 	}
 
 
-        push @tss, $row[3];
+        push @tss, $td;
         $total[1]++;
 
         my $spp = $peak->get_column('species');
         if ($spp eq "hg19") {
             push @peaks_hg19, \@row;
-            push @tss_hg19,$row[3];
+            push @tss_hg19,$td;
             $total_hg19[1]++;
             if ($cell eq "K562") {
-                push @tss_K562, $row[3];
+                push @tss_K562, $td;
 		if (defined($row[7]) && $row[7] ne "NA") {
 		    push @fpkm, $row[5];
 		    push @fpkm_hg19, $row[5];
@@ -280,7 +281,7 @@ sub get_genes_bnorm {
 		}
                 $total_K562[1]++;
             } elsif ($cell eq "GM12878") {
-                push @tss_GM12878,$row[3];
+                push @tss_GM12878,$td;
 		if (defined($row[6]) && $row[6] ne "NA") {
 		    push @fpkm, $row[4];
 		    push @fpkm_hg19, $row[4];
@@ -290,10 +291,10 @@ sub get_genes_bnorm {
             }
         } else {
             push @peaks_mm9, \@row;
-            push @tss_mm9,$row[3];
+            push @tss_mm9,$td;
             $total_mm9[1]++;
             if ($cell eq "MEL") {
-                push @tss_MEL,$row[3];
+                push @tss_MEL,$td;
 		if (defined($row[9]) && $row[9] ne "NA") {
 		    push @fpkm, $row[7];
 		    push @fpkm_mm9, $row[7];
@@ -301,7 +302,7 @@ sub get_genes_bnorm {
 		}
                 $total_MEL[1]++;
             } elsif ($cell eq "CH12") {
-                push @tss_CH12,$row[3];
+                push @tss_CH12,$td;
 		if (defined($row[8]) && $row[8] ne "NA") {
 		    push @fpkm, $row[6];
 		    push @fpkm_mm9, $row[6];
