@@ -45,7 +45,7 @@
                     .removeClass("help_link")
                     .addClass("disabled");
             }
-	    $('#helpcontent').load("[% c.uri_for('/help/help_load/') %]" + topic);
+	    $('#helpcontent').load("[% c.secure_uri_for('/help/help_load/') %]" + topic);
 	}
 
     });
@@ -118,7 +118,7 @@
         var state = { url: newUrl, title: newTitle, loadTag: true };
         window.history.pushState(state, newTitle, newUrl);
 
-        $('#helpcontent').load("[% c.uri_for('/help/help_load/') %]" + topic);
+        $('#helpcontent').load("[% c.secure_uri_for('/help/help_load/') %]" + topic);
     }
 
 </script>

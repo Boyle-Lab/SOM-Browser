@@ -36,14 +36,14 @@ $(document).on("click",".map_select", function(e){
         });
     });
 
-    $("#map_info_block").load("[% c.uri_for('/maps/get_map_info/') %]" + mapId);
+    $("#map_info_block").load("[% c.secure_uri_for('/maps/get_map_info/') %]" + mapId);
 
     if (neuronId != null) {
 	var newUrl;
 	if (params_str != null) {
-	    newUrl = "[% c.uri_for('/maps/neuron/') %]" + mapId + '/' + neuronId + '?' + params_str;
+	    newUrl = "[% c.secure_uri_for('/maps/neuron/') %]" + mapId + '/' + neuronId + '?' + params_str;
 	} else {
-	    newUrl = "[% c.uri_for('/maps/neuron/') %]" + mapId + '/' + neuronId;
+	    newUrl = "[% c.secure_uri_for('/maps/neuron/') %]" + mapId + '/' + neuronId;
 	}
 	var titleParts = document.title.split(/:/g);
 	var newTitle = titleParts[0] + ": Map " + mapId + ", Pattern " + neuronId;
@@ -54,9 +54,9 @@ $(document).on("click",".map_select", function(e){
     } else {
 	var newUrl;
 	if (params_str != null) {
-	    newUrl= "[% c.uri_for('/maps/map/') %]" + mapId + '?' + params_str;
+	    newUrl= "[% c.secure_uri_for('/maps/map/') %]" + mapId + '?' + params_str;
 	} else {
-	    newUrl= "[% c.uri_for('/maps/map/') %]" + mapId;
+	    newUrl= "[% c.secure_uri_for('/maps/map/') %]" + mapId;
 	}
 	var titleParts = document.title.split(/:/g);
 	var newTitle = titleParts[0] + ": Map " + mapId;

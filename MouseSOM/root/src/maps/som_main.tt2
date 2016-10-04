@@ -28,7 +28,7 @@
 	document.title = newTitle;
 	window.history.replaceState(state, newTitle, document.location.href);
 
-	$("#map_info_block").load("[% c.uri_for('/maps/get_map_info/') %]" + mapId);
+	$("#map_info_block").load("[% c.secure_uri_for('/maps/get_map_info/') %]" + mapId);
 
         $("#map_info_block").dialog(
             {
@@ -46,7 +46,7 @@
     $(document).on("click",".neuron_link", function(e){
         var urlParts = document.location.href.split(/\/+/g);
         var mapId = urlParts[4].replace(/#/, "");
-        window.location.assign("[% c.uri_for('/maps/neuron/') %]" + mapId + '/' + this.id);
+        window.location.assign("[% c.secure_uri_for('/maps/neuron/') %]" + mapId + '/' + this.id);
     })
 </script>
 
@@ -58,7 +58,7 @@
         <svg id="som_map" class="mapmain" width="800px" height="460px"></svg>
     </p>
     <p id="map_info" style="text-align: left">
-        <a href="javascript:void(0);" name="25" title="Map Description"><img src="[% c.uri_for('/static/images/info.png') %]" width=20 height=20><span style="position: absolute;">&nbsp;About this map</span></a>
+        <a href="javascript:void(0);" name="25" title="Map Description"><img src="[% c.secure_uri_for('/static/images/info.png') %]" width=20 height=20><span style="position: absolute;">&nbsp;About this map</span></a>
     </p>
 
 </div> <!-- End Map Block -->

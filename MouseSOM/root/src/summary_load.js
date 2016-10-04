@@ -1,6 +1,6 @@
 function loadSummary(neuronId, target) {
     return jQuery.ajax({
-        url: "[% c.uri_for('/maps/update_neuron_summary/') %]" + neuronId,
+        url: "[% c.secure_uri_for('/maps/update_neuron_summary/') %]" + neuronId,
         success: function(result) {
             if(result.isOk == false) {
                 alert("Bad response from server: " + result.message);

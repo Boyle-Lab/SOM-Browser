@@ -50,7 +50,7 @@
 
 
 <p style="text-align: right; float: right;">
-    <a class="tab_info" name="3" href="javascript:void(0);" title="About This Tab"><img src="[% c.uri_for('/static/images/info.png') %]" width=25 height=25></a>
+    <a class="tab_info" name="3" href="javascript:void(0);" title="About This Tab"><img src="[% c.secure_uri_for('/static/images/info.png') %]" width=25 height=25></a>
 </p>
 
 [% PROCESS "ontology_select.tt2" %]
@@ -60,7 +60,7 @@
         [% IF go_data.mm9_img == "NULL" -%]
             <p>&nbsp;</p>
         [% ELSE -%]
-            <img class="centered" src="[% c.uri_for('/static/revigo/') %][% go_data.mm9_img %]">
+            <img class="centered" src="[% c.secure_uri_for('/static/revigo/') %][% go_data.mm9_img %]">
         [% END -%]
         [% IF go_data.mm9_in != "NULL" -%]
             <p>[% PROCESS revigo_submit spp = "mouse" in_data = go_data.mm9_in -%]</p>
@@ -79,7 +79,7 @@
         [% IF go_data.hg19_img == "NULL" -%]
             <p>&nbsp;</p>
         [% ELSE -%]
-            <img class="centered" src="[% c.uri_for('/static/revigo/') %][% go_data.hg19_img %]">
+            <img class="centered" src="[% c.secure_uri_for('/static/revigo/') %][% go_data.hg19_img %]">
         [% END -%]
         [% IF go_data.hg19_in != "NULL" -%]
             <p>[% PROCESS revigo_submit spp = "human" in_data = go_data.hg19_in -%]</p>

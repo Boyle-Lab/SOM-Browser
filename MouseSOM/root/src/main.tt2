@@ -10,7 +10,7 @@
     [% PROCESS "map_open.js" -%]
 
     $(document).ready(function() {
-        var map_src = "[% c.uri_for('/static/svg/') %]" + getMap();
+        var map_src = "[% c.secure_uri_for('/static/svg/') %]" + getMap();
         $("#som_map").attr('src', map_src);
 	setTimeout("changeImage()", 10000);
     });
@@ -23,7 +23,7 @@
 
     function changeImage() {
         var img = document.getElementById("som_map");
-        var map_src = "[% c.uri_for('/static/svg/') %]" + getMap();;
+        var map_src = "[% c.secure_uri_for('/static/svg/') %]" + getMap();;
         img.src	= map_src;
         setTimeout("changeImage()", 10000);
     }

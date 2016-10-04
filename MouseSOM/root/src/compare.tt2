@@ -47,7 +47,7 @@
     $(document).on("change", ".table_select", function(e) {
         var tmp = this.name.split("_");
         var field = "field_" + tmp[1];
-        $(document.map_form[field]).load("[% c.uri_for('/compare/get_fields/') %]" + $(this).val());
+        $(document.map_form[field]).load("[% c.secure_uri_for('/compare/get_fields/') %]" + $(this).val());
     })
     
     $(document).on("change", ".db_field", function(e) {
@@ -73,9 +73,9 @@
 	var tmp = target.id.split("_");
 	var field = "neuronsummary_" + tmp[1];
 	var summary = $(document.getElementById(field));
-	var b_link = '<p class="centeredbody"><a href="[% c.uri_for('/maps/neuron/') %]' + target.type + '/' + this.id + '" class="button" target="blank_">Jump to Browser</a></p>';
+	var b_link = '<p class="centeredbody"><a href="[% c.secure_uri_for('/maps/neuron/') %]' + target.type + '/' + this.id + '" class="button" target="blank_">Jump to Browser</a></p>';
 //	console.log(b_link);
-	summary.html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + this.id + '<br/><img src="[% c.uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
+	summary.html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + this.id + '<br/><img src="[% c.secure_uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
 	$.when(loadSummary(this.id, summary)).done(function(a) {
 	     summary.append(b_link);
 	});
@@ -98,7 +98,7 @@
     <p class="bold">Compare Maps</p>
 
     <p style="text-align: right">
-        <a id="compare_info" href="javascript:void(0);" name="25" title="Map Description"><img src="[% c.uri_for('/static/images/info.png') %]" width=20 height=20><span style="position: absolute;">&nbsp;Help</span></a>	
+        <a id="compare_info" href="javascript:void(0);" name="25" title="Map Description"><img src="[% c.secure_uri_for('/static/images/info.png') %]" width=20 height=20><span style="position: absolute;">&nbsp;Help</span></a>	
     </p>
 
     <form method="post" name="map_form" action="javascript:void(0)") %]">
@@ -160,5 +160,5 @@
              <li>Click the "Jump to Browser" button below the pattern summary table to view the selected map and pattern within the SOM Browser.</li>
 	 </ol>
     </ol>
-    <p><a href="[% c.uri_for('/help') %]?topic=navigation#compare" class="dialog" style="color: #0000FF">View full help section</a></p>
+    <p><a href="[% c.secure_uri_for('/help') %]?topic=navigation#compare" class="dialog" style="color: #0000FF">View full help section</a></p>
 </div>

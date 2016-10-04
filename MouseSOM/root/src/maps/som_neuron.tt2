@@ -8,7 +8,7 @@
         <object id="som_map" class="mapmain" width="800px" height="460px"></object>
     </p>
     <p style="text-align: left">
-        <a id="map_info" href="javascript:void(0);" name="25" title="Map Description"><img src="[% c.uri_for('/static/images/info.png') %]" width=20 height=20><span style="position: absolute;">&nbsp;About this map</span></a>
+        <a id="map_info" href="javascript:void(0);" name="25" title="Map Description"><img src="[% c.secure_uri_for('/static/images/info.png') %]" width=20 height=20><span style="position: absolute;">&nbsp;About this map</span></a>
     </p>
 </div> <!-- End Map Block -->
 
@@ -48,10 +48,10 @@
 	    });
 	});
 
-        $('#neuronsummary').html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + neuronId + '<br/><img src="[% c.uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
-	$('#neuronsummary').load("[% c.uri_for('/maps/update_neuron_summary/') %]" + neuronId);
+        $('#neuronsummary').html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + neuronId + '<br/><img src="[% c.secure_uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
+	$('#neuronsummary').load("[% c.secure_uri_for('/maps/update_neuron_summary/') %]" + neuronId);
 	
-	var newUrl = "[% c.uri_for('/maps/neuron/') %]" + mapId + '/' + neuronId + "?activeTab=" + activeTab;
+	var newUrl = "[% c.secure_uri_for('/maps/neuron/') %]" + mapId + '/' + neuronId + "?activeTab=" + activeTab;
 	if (show) {
 	    newUrl = newUrl + '&show=' + show;
 	}
@@ -66,7 +66,7 @@
 	document.title = newTitle;
 	window.history.replaceState(state, newTitle, newUrl);
 	
-	$("#map_info_block").load("[% c.uri_for('/maps/get_map_info/') %]" + mapId);
+	$("#map_info_block").load("[% c.secure_uri_for('/maps/get_map_info/') %]" + mapId);
 
         $("#map_info_block").dialog(
             {
@@ -76,7 +76,7 @@
 	    }
         );
 
-        $("#tab_info_block").load("[% c.uri_for('/maps/get_tab_info/') %]" + activeTab);
+        $("#tab_info_block").load("[% c.secure_uri_for('/maps/get_tab_info/') %]" + activeTab);
 
         $("#tab_info_block").dialog(
             {
@@ -108,7 +108,7 @@
 	var goSource = "[% goSource %]";
 
 	var tabId = activeTab + 1;
-        var targetUrl = "[% c.uri_for('/maps/load_tab/') %]" + activeTab + '/' + neuronId;
+        var targetUrl = "[% c.secure_uri_for('/maps/load_tab/') %]" + activeTab + '/' + neuronId;
 	var params_str = "";
         if (show) {
             params_str = '?show=' + show;
@@ -136,7 +136,7 @@
     /* Handler for neuron link clicks */
         var urlParts = document.location.href.split(/[\/\?]+/g);
         var mapId = urlParts[4].replace(/#/, "");
-        var newUrl = "[% c.uri_for('/maps/neuron/') %]" + mapId + '/' + this.id;
+        var newUrl = "[% c.secure_uri_for('/maps/neuron/') %]" + mapId + '/' + this.id;
 
 	var baseTitle = document.title.split(/:/g);
     	var newTitle = baseTitle[0] + ": Map " + mapId + ", Pattern " + this.id;
@@ -145,12 +145,12 @@
 	var state = { url: newUrl, title: newTitle, loadTag: true };
 
 	if (typeof urlParts[6] === 'undefined') {
-	    window.history.pushState(state, newTitle, "[% c.uri_for('/maps/neuron/') %]" + mapId + '/' + this.id);
+	    window.history.pushState(state, newTitle, "[% c.secure_uri_for('/maps/neuron/') %]" + mapId + '/' + this.id);
 	} else {
-       	    window.history.pushState(state, newTitle, "[% c.uri_for('/maps/neuron/') %]" + mapId + '/' + this.id + '?' + urlParts[6]);
+       	    window.history.pushState(state, newTitle, "[% c.secure_uri_for('/maps/neuron/') %]" + mapId + '/' + this.id + '?' + urlParts[6]);
 	}
 
-	var neuronUrl = "[% c.uri_for('/maps/update_neuron/') %]" + this.id;
+	var neuronUrl = "[% c.secure_uri_for('/maps/update_neuron/') %]" + this.id;
 	if (urlParts[6]) {
 	    neuronUrl = neuronUrl + '?' + urlParts[6];
 	}
@@ -159,15 +159,15 @@
         var params = urlParts[6].split(/&/g);
 	var activeTab = params[0].split(/\=/g)[1]
 	var tabId = Number(activeTab) + 1;
-        var targetUrl = "[% c.uri_for('/maps/load_tab/') %]" + activeTab + '/' + this.id;
+        var targetUrl = "[% c.secure_uri_for('/maps/load_tab/') %]" + activeTab + '/' + this.id;
         if (params[1]) {
             targetUrl = targetUrl + '?' + params[1];
         }
 	$("#neuron_id").text("Pattern " + this.id + " Peak Data");
         loadTab(tabId, targetUrl);
 
-	$('#neuronsummary').html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + this.id + '<br/><img src="[% c.uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
-	$('#neuronsummary').load("[% c.uri_for('/maps/update_neuron_summary/') %]" + this.id);
+	$('#neuronsummary').html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + this.id + '<br/><img src="[% c.secure_uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
+	$('#neuronsummary').load("[% c.secure_uri_for('/maps/update_neuron_summary/') %]" + this.id);
 
 	// Highlight the current neuron (unighlight default if needed)
 	$def_node = $(document.getElementById("selected_default"));
@@ -203,12 +203,12 @@
 	var state = { url: newUrl, title: newTitle, loadTag: true };
 	window.history.pushState(state, newTitle, newUrl);
 	loadTab(tabId, targetUrl);
-	$("#tab_info_block").load("[% c.uri_for('/maps/get_tab_info/') %]" + activeTab);
+	$("#tab_info_block").load("[% c.secure_uri_for('/maps/get_tab_info/') %]" + activeTab);
     })
 
     function loadTab(tabId, targetUrl) {
         var target = "ui-tabs-" + tabId;
-        $(document.getElementById(target)).html('<p class="centeredbold">Retrieving data<br/><img src="[% c.uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
+        $(document.getElementById(target)).html('<p class="centeredbold">Retrieving data<br/><img src="[% c.secure_uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
 	$(document.getElementById(target)).load(targetUrl);
     }
 
@@ -265,7 +265,7 @@
 	var urlMain = document.location.href.split(/\?/g);
 	var urlParts = urlMain[0].split(/[\/\?]+/g);
 
-    	var url = "[% c.uri_for('/maps/load_tab/') %]" + tab + '/' + urlParts[5] + params_str;
+    	var url = "[% c.secure_uri_for('/maps/load_tab/') %]" + tab + '/' + urlParts[5] + params_str;
 
 	var newUrl = urlMain[0] + params_str;
 	var state = { url: newUrl, loadTag: true };
@@ -319,9 +319,9 @@
 	    }
         }
 
-    	var url = "[% c.uri_for('/maps/load_tab/') %]" + tab + '/' + urlParts[5] + params_str;
+    	var url = "[% c.secure_uri_for('/maps/load_tab/') %]" + tab + '/' + urlParts[5] + params_str;
 
-	var newUrl = "[% c.uri_for('/maps/neuron/') %]" + mapId + '/' + urlParts[5] + params_str;
+	var newUrl = "[% c.secure_uri_for('/maps/neuron/') %]" + mapId + '/' + urlParts[5] + params_str;
 	var state = { url: newUrl, loadTag: true };
 	window.history.pushState(state, "", newUrl);
 
@@ -333,7 +333,7 @@
             });
         });
 
-	$("#map_info_block").load("[% c.uri_for('/maps/get_map_info/') %]" + mapId);
+	$("#map_info_block").load("[% c.secure_uri_for('/maps/get_map_info/') %]" + mapId);
        	$(parentID).load(url);
     })
 
@@ -360,7 +360,7 @@
 	var urlMain = document.location.href.split(/\?/g);
 	var urlParts = urlMain[0].split(/[\/\?]+/g);
 
-    	var url = "[% c.uri_for('/maps/load_tab/') %]" + tab + '/' + urlParts[5] + params_str;	
+    	var url = "[% c.secure_uri_for('/maps/load_tab/') %]" + tab + '/' + urlParts[5] + params_str;	
 
 	var newUrl = urlMain[0] + params_str;
 	var state = { url: newUrl, loadTag: true };

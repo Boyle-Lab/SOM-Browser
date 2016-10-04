@@ -69,18 +69,18 @@
     $(document).on("change", ".table_select", function(e) {
         var tmp = this.name.split("_");
         var field = "field_" + tmp[1];
-        $(document.search_form[field]).load("[% c.uri_for('/search/get_fields/') %]" + $(this).val());
+        $(document.search_form[field]).load("[% c.secure_uri_for('/search/get_fields/') %]" + $(this).val());
     })
 
     $(document).on("change", ".order_select", function(e) {
         if (document.search_form.n_orders.value == 0) document.search_form.n_orders.value++;
 	var tmp = this.name.split("_");
         var field = "order_by_f_" + tmp[3];
-        $(document.search_form[field]).load("[% c.uri_for('/search/get_fields/') %]" + $(this).val());
+        $(document.search_form[field]).load("[% c.secure_uri_for('/search/get_fields/') %]" + $(this).val());
     })
 
     $(document).on("change", "#group_by_t", function() {
-        $("#group_by_f").load("[% c.uri_for('/search/get_fields/') %]" + $("#group_by_t").val());
+        $("#group_by_f").load("[% c.secure_uri_for('/search/get_fields/') %]" + $("#group_by_t").val());
     })
 
     $(document).on("click", "#addRow", function () {
@@ -111,10 +111,10 @@
     <p class="bold">Enter your search criteria using the form below.</p>
 
     <p style="text-align: right">
-        <a id="search_info" href="javascript:void(0);" name="25" title="Map Description"><img src="[% c.uri_for('/static/images/info.png') %]" width=20 height=20><span style="position: absolute;">&nbsp;Help</span></a>
+        <a id="search_info" href="javascript:void(0);" name="25" title="Map Description"><img src="[% c.secure_uri_for('/static/images/info.png') %]" width=20 height=20><span style="position: absolute;">&nbsp;Help</span></a>
     </p>
 
-    <form method="post" name="search_form" action="[% c.uri_for('search_results') %]">
+    <form method="post" name="search_form" action="[% c.secure_uri_for('search_results') %]">
     <input type="hidden" name="n_fields" value="0">
     <input type="hidden" name="n_orders" value="0">
         <p>Base Table: <select class=table_select name="base_table">
@@ -265,5 +265,5 @@
     <li><p class="bold">Grouping Results</p></li>
          <p>Search results can be grouped by any column by specifying the desired "Table" and "Field" values in the "Group Results By" menu.</p>
     </ol>
-    <p><a href="[% c.uri_for('/help') %]?topic=navigation#search" class="dialog" style="color: #0000FF">View full help section</a></p>
+    <p><a href="[% c.secure_uri_for('/help') %]?topic=navigation#search" class="dialog" style="color: #0000FF">View full help section</a></p>
 </div>

@@ -18,8 +18,8 @@
 
     $(document).on("click", ".neuron_link", function(e){
 	// default to four-cell pattern usage (map 4)
-	var b_link = '<p class="centeredbody"><a href="[% c.uri_for('/maps/neuron/') %]' + 4 + '/' + this.id + '" class="button" target="blank_">Jump to Browser</a></p>';
-	$('#neuronsummary').html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + this.id + '<br/><img src="[% c.uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
+	var b_link = '<p class="centeredbody"><a href="[% c.secure_uri_for('/maps/neuron/') %]' + 4 + '/' + this.id + '" class="button" target="blank_">Jump to Browser</a></p>';
+	$('#neuronsummary').html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + this.id + '<br/><img src="[% c.secure_uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
         $.when(loadSummary(this.id, $('#neuronsummary'))).done(function(a) {
              $('#neuronsummary').append(b_link);
         });
@@ -39,13 +39,13 @@
             <th class="[% class %]">[% col %]</th>
         [% ELSIF loop.count > nc -%]
 	    [% IF loop.count == link_col -%]
-	        <td class="[% class %]"><a href="[% c.uri_for('/maps/neuron/4', col) %]">[% col %]</a></td>
+	        <td class="[% class %]"><a href="[% c.secure_uri_for('/maps/neuron/4', col) %]">[% col %]</a></td>
 	    [% ELSE -%]
                 <td class="[% class %]">[% col %]</td>
 	    [% END -%]
         [% ELSE -%]
 	    [% IF loop.count ==	link_col -%]
-	        <td class="[% class %]" style="background: #ddd"><a href="[% c.uri_for('/maps/neuron/4', col) %]">[% col %]</a></td>
+	        <td class="[% class %]" style="background: #ddd"><a href="[% c.secure_uri_for('/maps/neuron/4', col) %]">[% col %]</a></td>
 	    [% ELSE -%]
                 <td class="[% class %]" style="background: #ddd">[% col %]</td>
 	    [% END -%]

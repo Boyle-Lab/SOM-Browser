@@ -129,7 +129,7 @@
 [% END -%]
 
 <p style="text-align: right; float: right;">
-    <a class="tab_info" name="3" href="javascript:void(0);" title="About This Tab"><img src="[% c.uri_for('/static/images/info.png') %]" width=25 height=25></a>
+    <a class="tab_info" name="3" href="javascript:void(0);" title="About This Tab"><img src="[% c.secure_uri_for('/static/images/info.png') %]" width=25 height=25></a>
 </p>
 
 [% PROCESS "row_select.tt2" %]

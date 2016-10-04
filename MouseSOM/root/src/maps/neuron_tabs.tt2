@@ -16,7 +16,7 @@
     <div id="tabs">
         <ul>
             [% FOREACH i = [0 .. 8] -%]
-                <li><a href="javascript:void(0);" name="[% c.uri_for('/maps/load_tab', i, neuron.id) %]">
+                <li><a href="javascript:void(0);" name="[% c.secure_uri_for('/maps/load_tab', i, neuron.id) %]">
 		    [% IF i == 0 -%]
 		        TF Content
 		    [% ELSIF i == 1 -%]

@@ -12,7 +12,7 @@
 	    </li>
        	    <p><li>Selected Sites</p>
 	    <p>Selected Sites gives an estimate of the fraction of individual nucleotide sites within a CRM that are under selection, i.e., evolving at a rate significantly different than that expected under a neutral substitution model. This fraction was calculated based on the method adapted from <a href="http://symposium.cshlp.org/content/68/245.extract" target="blank_">Chiaromonte et al., 2003.</a> Briefly, the empirical cumulative distribution functions were computed for PhyloP scores within CRMs and ancestral repeat sequences, which are presumed to be neutrally evolving. For each CRM, the fraction of sites under selection, &pi;&#770;, was computed according to equation 1:</p>
-	    <p><img src="[% c.uri_for('/static/images/selsites.png') %]" name="Selected sites formula"/></p>
+	    <p><img src="[% c.secure_uri_for('/static/images/selsites.png') %]" name="Selected sites formula"/></p>
 	    <p>Where F<sub>sel</sub>(x) and F<sub>neut</sub>(x) are the Gaussian kernel density estimates for selection in CRMs and ancestral repeats, respectively, and &epsilon; is a constant error term. Elements were separated by chromosome and divided into three equally-sized GC-content bins to reduce biases arising from regional variations in substitution rates and base composition.</p>
 	    </li>
         </ol></li>
