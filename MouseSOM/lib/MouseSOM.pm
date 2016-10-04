@@ -39,8 +39,8 @@ our $VERSION = '0.01';
 __PACKAGE__->config(
     name => 'MouseSOM',
     # Disable deprecated behavior needed by old applications
-    disable_component_resolution_regex_fallback => 1,
-);
+	    disable_component_resolution_regex_fallback => 1,
+	);
 
 __PACKAGE__->config(
     # Configure the view
@@ -53,6 +53,8 @@ __PACKAGE__->config(
         ],
     },
 );
+
+__PACKAGE__->config(using_frontend_proxy => 1);
 
 # Start the application
 __PACKAGE__->setup();
@@ -84,5 +86,12 @@ This library is free software. You can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
+
+sub secure_uri_for {
+    my ($self, @args) = @_;
+    my $u = $self->uri_for(@args);
+    $u->scheme('https');
+    return $u;
+}
 
 1;
