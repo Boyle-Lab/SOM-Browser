@@ -2,8 +2,9 @@
 
 <script>
     $(document).ready(function() {
-        $("#table_100").tablesorter({sortList: [[0,0], [1,0]]});
+        $("#table_100").tablesorter();
         $("#table_101").tablesorter({sortList: [[0,0], [1,0]]});
+        $("#table_102").tablesorter({sortList: [[0,0], [1,0]]});
     })
 </script>
 
@@ -105,7 +106,7 @@
 [% PROCESS "row_select.tt2" %]
 
 <p>Average Coverage by chromHMM Chromatin States<br/>
-<table class="peakdata">
+<table class="tablesorter peakdata" id="table_100">
     <thead>
     [% PROCESS table_row peak = chromstate.header_a class = "header" nc = 0 table_id = "avg" n_peaks = chromstate.n_peaks -%]
     </thead>
@@ -120,7 +121,7 @@
 </p>
 
 <p>Mouse Peaks<br/>
-<table class="peakdata" id="table_100">
+<table class="tablesorter peakdata" id="table_101">
     <thead>
     [% PROCESS table_row peak = chromstate.header_b class = "header" nc = 0 table_id = "states" n_peaks = chromstate.n_peaks -%]
     </thead>
@@ -133,7 +134,7 @@
 </p>
 
 <p>Human Peaks<br/>
-<table class="peakdata" id="table_101">
+<table class="tablesorter peakdata" id="table_102">
     <thead>
     [% PROCESS table_row peak = chromstate.header_b class = "header" nc = 0 table_id = "states" n_peaks = chromstate.n_peaks -%]
     </thead>
