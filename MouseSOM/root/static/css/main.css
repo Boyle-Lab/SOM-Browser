@@ -25,7 +25,6 @@
     padding-top: 20px;
     clear: both;
 }
-
 #wrapper{
     float:left;
     width: 200px
@@ -46,7 +45,42 @@
 #groupsubmit {
     clear: both;
 }
+#container {
+/*    float: left; */
+}
+#container2 {
+    clear: both;
+}
+#neurondetails {
+    clear: left;
+}
+#content {
+    margin-left: 120px;
+}
+#helpcontent {
+    margin-left: 50px;
+}
+#welcome {
+    margin: 0 150px 0 150px;
+}
+#mapblock {
+    float: left;
+    width: 800px;
+    margin: 0 0 0 10px;
+}
+div.mapblock {
+    float: left;
+    width: 800px;
+    height: 460px;
+    margin: 0 0 0 10px;
+}
+div[id^="neuronsummary"] {
+    float: left;
+    width: 300px;
+    padding-left: 10px;
+}
 
+/* Table Formating */
 table.go_data {
     border: 1px solid black;
     border-collapse: collapse;
@@ -54,10 +88,49 @@ table.go_data {
     width: 100%;
     text-align: left;
 }
-
 table.in_text {
     border: 1px solid black;
     border-collapse: collapse;
+}
+table.peakdata {
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-size: 8pt;
+    width: 100%;
+}
+td {
+    border: 1px solid black;
+}
+td.cat {
+    font-weight: bold;
+    text-align: right;
+    font-size: 80%;
+}
+td.val {
+    text-align: center;
+    padding: 0 10px 0 10px;
+    font-size: 80%;
+}
+td.shared {
+    text-shadow:
+        -0.75px -0.75px 0 rgba(255,255,255,0.4),
+        0.75px -0.75px 0  rgba(255,255,255,0.4),
+        -0.75px 0.75px 0 rgba(255,255,255,0.4),
+        0.75px 0.75px 0 rgba(255,255,255,0.4);
+}
+td.human {
+    text-shadow:
+        -0.75px -0.75px 0 rgba(255,255,255,0.4),
+        0.75px -0.75px 0  rgba(255,255,255,0.4),
+        -0.75px 0.75px 0 rgba(255,255,255,0.4),
+        0.75px 0.75px 0 rgba(255,255,255,0.4);
+}
+td.mouse {
+    text-shadow:
+        -0.75px -0.75px 0 rgba(255,255,255,0.4),
+        0.75px -0.75px 0  rgba(255,255,255,0.4),
+        -0.75px 0.75px 0 rgba(255,255,255,0.4),
+        0.75px 0.75px 0 rgba(255,255,255,0.4);
 }
 
 .mm9_go {
@@ -170,37 +243,7 @@ ul#menu > li:hover > ul {
 }
 /* End Menu Code */
 
-#mapblock {
-    float: left;
-    width: 800px;
-    margin: 0 0 0 10px;
-}
-div.mapblock {
-    float: left;
-    width: 800px;
-    height: 460px;
-    margin: 0 0 0 10px;
-}
-
-div[id^="neuronsummary"] {
-    float: left;
-    width: 300px;
-    padding-left: 10px;
-}
-
-#neurondetails {
-    clear: left;
-}
-
-#content {
-    margin-left: 120px;
-}
-#helpcontent {
-    margin-left: 50px;
-}
-#welcome {
-    margin: 0 150px 0 150px;
-}
+/* Various classes */
 .message {
     color: #390;
 }
@@ -214,61 +257,15 @@ div[id^="neuronsummary"] {
     text-align: center;
     font-weight: bold;
 }
-img.centered {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .neurondetail {
     border: 1px solid black;
     width: 300px;
-}
-td {
-    border: 1px solid black;
-}
-td.cat {
-    font-weight: bold;
-    text-align: right;
-    font-size: 80%;
-}
-td.val {
-    text-align: center;
-    padding: 0 10px 0 10px;
-    font-size: 80%;
-}
-table.peakdata {
-    border: 1px solid black;
-    border-collapse: collapse;
-    font-size: 8pt;
-    width: 100%;
-}
-td.shared {
-    text-shadow:
-        -0.75px -0.75px 0 rgba(255,255,255,0.4),
-        0.75px -0.75px 0  rgba(255,255,255,0.4),
-        -0.75px 0.75px 0 rgba(255,255,255,0.4),
-        0.75px 0.75px 0 rgba(255,255,255,0.4);
 }
 .header {
     background: #aaa;
     border: 1px solid #000;
     padding: 4px;
     font-size: 8pt;
-}
-td.human {
-    text-shadow:
-        -0.75px -0.75px 0 rgba(255,255,255,0.4),
-        0.75px -0.75px 0  rgba(255,255,255,0.4),
-        -0.75px 0.75px 0 rgba(255,255,255,0.4),
-        0.75px 0.75px 0 rgba(255,255,255,0.4);
-}
-td.mouse {
-    text-shadow:
-   	-0.75px -0.75px 0 rgba(255,255,255,0.4),
-    	0.75px -0.75px 0  rgba(255,255,255,0.4),
-    	-0.75px 0.75px 0 rgba(255,255,255,0.4),
-     	0.75px 0.75px 0 rgba(255,255,255,0.4);
 }
 .searchTemplate {
     float: left;
@@ -296,14 +293,11 @@ td.mouse {
 .italic {
     font-style: italic;
 }
+.hidden {
+    display: none;
+}
 .compBuild {
     float: left;
-}
-#container {
-/*    float: left; */
-}
-#container2 {
-    clear: both;
 }
 .vertical-text {
     transform: rotate(70deg);
@@ -314,9 +308,6 @@ td.mouse {
     display: inline-block;
     padding: 4px;
 }
-.hidden {
-    display: none;
-}
 .summary_load_msg {
     font-weight: bold;
     text-align: center;
@@ -326,6 +317,27 @@ td.mouse {
     font-size: 18pt;
     color: #E63900;
 }
+.content_main {
+    text-align: left;
+}
+
+/* Paragraph formating */
+p.indented {
+    margin-left: 25px;
+}
+
+/* Images */
+img.help_img {
+    border: 1px solid;
+    float: right;
+}
+img.centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Links */
 a.disabled {
     pointer-events: none;
     color: black;
@@ -333,16 +345,6 @@ a.disabled {
 }
 a:hover {
     color: #C70039;
-}
-.content_main {
-    text-align: left;
-}
-p.indented {
-    margin-left: 25px;
-}
-img.help_img {
-    border: 1px solid;
-    float: right;
 }
 a.dialog {
     color: #0000FF;
