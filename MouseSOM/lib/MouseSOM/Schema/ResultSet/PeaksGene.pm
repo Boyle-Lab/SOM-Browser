@@ -24,8 +24,8 @@ sub get_genes_summary {
     
     while (my $peak = $peaks_rs->next) {
 
-	my $tss_dist = $peak->get_column('targetgenedist');
-	push @tss, abs($tss_dist);
+	my $tss_dist = abs($peak->get_column('targetgenedist'));
+	push @tss, $tss_dist;
 
         my $spp = $peak->get_column('species');
 	my $cell = $peak->get_column('cell');
