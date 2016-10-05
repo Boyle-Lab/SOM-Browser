@@ -44,7 +44,7 @@
                     <td style="background: rgba(255,0,0,[% col %])">[% col %]</td>
                 [% END %]
             [% ELSE -%]
-                <td class="[% class %]" style="background: rgb([% col %]); border-style: solid none solid none">&nbsp;</td>
+                <td class="[% class %]" style="background: rgb([% col %]); border-style: solid none solid none; font-size: 25%">&nbsp;</td>
 	    [% END -%]
         [% ELSIF class == "human" && loop.count > nc -%]
             [% IF table_id == "avg" && loop.count == 2 -%]
@@ -60,7 +60,7 @@
                     <td style="background: rgba(0,0,255,[% col %])">[% col %]</td>
                 [% END %]
 	    [% ELSE -%]
-                <td class="[% class %]" style="background: rgb([% col %]); border-style: solid none solid none">&nbsp;</td>
+                <td class="[% class %]" style="background: rgb([% col %]); border-style: solid none solid none; font-size: 25%">&nbsp;</td>
 	    [% END -%]
         [% ELSIF class =="header" -%]
 	    [% IF table_id == "states" && loop.count == 4 -%]
