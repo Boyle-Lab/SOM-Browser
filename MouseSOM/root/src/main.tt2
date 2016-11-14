@@ -24,7 +24,9 @@
     function getMap() {
         var maps = [[% PROCESS build_map_list maps = maps_list -%]];
 	var idx = Math.floor((Math.random() * maps.length));
-	return maps[idx];
+	map_data = maps[idx].split(/,/g);		
+	$('#map_id').name = map_data[1];
+	return map_data[0];
     }
 
     function changeImage() {
@@ -42,7 +44,7 @@
 <div id="welcome">
 [% # SOM Map Image -%]
 <p class="centeredbody">
-
+   <p class="hidden" id="map_id" name="">You can't see me!</p>
    <svg id="som_map" class="mapmain" width="800px" height="460px"></svg>
 <!--    <img id="som_map" class="mapmain" width="800px" height="460px" src="" title="Random SOM Image"> -->
 </p>
