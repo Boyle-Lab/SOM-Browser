@@ -13,13 +13,12 @@
     $(document).ready(function() {
         var mapUrl = "[% c.secure_uri_for('/static/svg/') %]" + getMap();
 
-	console.log(mapUrl);
 	$.when(loadSvgContent(mapUrl, $("#som_map"))).done(function(a) {
-	    console.log(mapUrl);
+//	    console.log(mapUrl);
 	});	
 
 //        $("#som_map").attr('src', map_src);
-//	setTimeout("changeImage()", 10000);
+	setTimeout("changeImage()", 10000);
     });
 
     function getMap() {
@@ -28,12 +27,15 @@
 	return maps[idx];
     }
 
-//    function changeImage() {
+    function changeImage() {
 //        var img = document.getElementById("som_map");
-//        var mapUrl = "[% c.secure_uri_for('/static/svg/') %]" + getMap();;
+        var mapUrl = "[% c.secure_uri_for('/static/svg/') %]" + getMap();;
+	$.when(loadSvgContent(mapUrl, $("#som_map"))).done(function(a) {
+//	    console.log(mapUrl);
+	});
 //        img.src = mapUrl;
-//        setTimeout("changeImage()", 10000);
-//    }
+        setTimeout("changeImage()", 10000);
+    }
 
 </script>
 
