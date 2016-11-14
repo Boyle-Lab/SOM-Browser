@@ -39,6 +39,11 @@
         setTimeout("changeImage()", 10000);
     }
 
+    $(document).on("click",".neuron_link", function(e){
+        var mapId = $('#map_id').attr("name");
+        window.location.assign("[% c.secure_uri_for('/maps/neuron/') %]" + mapId + '/' + this.id);
+    });
+
 </script>
 
 <div id="welcome">
