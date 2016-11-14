@@ -11,11 +11,11 @@
     [% PROCESS "map_update.js" -%]
 
     $(document).ready(function() {
-        var map_src = "[% c.secure_uri_for('/static/svg/') %]" + getMap();
+        var mapUrl = "[% c.secure_uri_for('/static/svg/') %]" + getMap();
 
 	console.log(map_src);
 	$.when(loadSvgContent(mapUrl, $("#som_map"))).done(function(a) {
-	    console.log(map_src);
+	    console.log(mapUrlk);
 	});	
 
 //        $("#som_map").attr('src', map_src);
@@ -30,8 +30,8 @@
 
 //    function changeImage() {
 //        var img = document.getElementById("som_map");
-//        var map_src = "[% c.secure_uri_for('/static/svg/') %]" + getMap();;
-//        img.src	= map_src;
+//        var mapUrl = "[% c.secure_uri_for('/static/svg/') %]" + getMap();;
+//        img.src = mapUrl;
 //        setTimeout("changeImage()", 10000);
 //    }
 
