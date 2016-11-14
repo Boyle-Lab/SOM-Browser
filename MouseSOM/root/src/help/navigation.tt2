@@ -1,9 +1,9 @@
 <p class="centeredbold">Navigating the Browser</p>
 <p class="bold" id="intro">Getting Started</p>
-<p>The Boyle Lab Human-Mouse SOM Browser consists of three tools: the SOM Data Browser, the Compare Maps tool, and the Search tool.</p>
+<p>The Human-Mouse Gene Regulatory Module Browser consists of three tools: the Data Browser, the Compare Maps tool, and the Search tool.</p>
 <p><ol type="1">
-    <li><a href="#browser">SOM Data Browser</a>
-        <p class="indented">The SOM Data Browser offers an integrated display for grammatical patterns and annotations with three sections:</p>
+    <li><a href="#browser">Data Browser</a>
+        <p class="indented">The Data Browser offers an integrated display for grammatical patterns and annotations with three sections:</p>
 	    <p><img src="[% c.secure_uri_for('/static/images/browser_window_small_map.png') %]" class="help_img">
 	    <ol type="i">
 	    <li>A map summarizing annotations across the entire dataset.</li>
@@ -34,7 +34,7 @@
     </li>
 </ol></p>
 
-<p class="bold" id="browser">Using The SOM Data Browser</p>
+<p class="bold" id="browser">Using The Data Browser</p>
 <p><ol type=1>
     <li><p>The SOM Map</p></li>
         <p class="indented">SOM Maps graphically show properties of the SOM dataset and associated annotations for every grammatical pattern. They allow visual interpretation of the dataset, enabling ready identification of patterns sharing similar properties and annotations.</p>
@@ -196,5 +196,5 @@
 		    <p class="indented">This table lists the terms and parameters supplied in the search form.</p>
                 </li>
 		<li>Results Tables
-		    <p class="indented">These tables show the detailed results of the query for human and mouse, including all columns from each table selected in the query. Results are sorted according to all user-supplied criteria, but may be resorted as desired by clicking the column headers. See the "Sorting Data Tables" section of SOM Browser help for more details. Within this table, individual pattern ID numbers link directly to detailed pattern data within the SOM Browser.</p>
+		    <p class="indented">These tables show the detailed results of the query for human and mouse, including all columns from each table selected in the query. Results are sorted according to all user-supplied criteria, but may be resorted as desired by clicking the column headers. See the "Sorting Data Tables" section of SOM Browser help for more details. Within this table, individual pattern ID numbers link directly to detailed pattern data within the Data Browser.</p>
                 </li>
