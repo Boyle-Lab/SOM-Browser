@@ -25,7 +25,7 @@
         var maps = [[% PROCESS build_map_list maps = maps_list -%]];
 	var idx = Math.floor((Math.random() * maps.length));
 	map_data = maps[idx].split(/,/g);		
-	$('#map_id').name = map_data[1];
+	$('#map_id').attr("name", map_data[1]);
 	return map_data[0];
     }
 
