@@ -13,9 +13,9 @@
     $(document).ready(function() {
         var mapUrl = "[% c.secure_uri_for('/static/svg/') %]" + getMap();
 
-	console.log(map_src);
+	console.log(mapUrl);
 	$.when(loadSvgContent(mapUrl, $("#som_map"))).done(function(a) {
-	    console.log(mapUrlk);
+	    console.log(mapUrl);
 	});	
 
 //        $("#som_map").attr('src', map_src);
