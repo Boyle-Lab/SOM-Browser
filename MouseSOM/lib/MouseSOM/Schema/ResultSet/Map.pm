@@ -21,7 +21,7 @@ sub get_maps {
     my @maps;
 
     while (my $row = $self->next) {
-	push @maps, [$row->get_column('map_file'), $row->get_column('id_maps')];
+	push @maps, join ',', ($row->get_column('map_file'), $row->get_column('id_maps'));
 #        push @maps, $row->get_column('map_file');
     }
 
