@@ -8,11 +8,18 @@
 
 <script>
     [% PROCESS "map_open.js" -%]
+    [% PROCESS "map_update.js" -%]
 
     $(document).ready(function() {
         var map_src = "[% c.secure_uri_for('/static/svg/') %]" + getMap();
-        $("#som_map").attr('src', map_src);
-	setTimeout("changeImage()", 10000);
+
+	console.log(map_src);
+	$.when(loadSvgContent(mapUrl, $("#som_map"))).done(function(a) {
+	    console.log(map_src);
+	});	
+
+//        $("#som_map").attr('src', map_src);
+//	setTimeout("changeImage()", 10000);
     });
 
     function getMap() {
@@ -21,19 +28,21 @@
 	return maps[idx];
     }
 
-    function changeImage() {
-        var img = document.getElementById("som_map");
-        var map_src = "[% c.secure_uri_for('/static/svg/') %]" + getMap();;
-        img.src	= map_src;
-        setTimeout("changeImage()", 10000);
-    }
+//    function changeImage() {
+//        var img = document.getElementById("som_map");
+//        var map_src = "[% c.secure_uri_for('/static/svg/') %]" + getMap();;
+//        img.src	= map_src;
+//        setTimeout("changeImage()", 10000);
+//    }
 
 </script>
 
 <div id="welcome">
 [% # SOM Map Image -%]
 <p class="centeredbody">
-    <img id="som_map" class="mapmain" width="800px" height="460px" src="" title="Random SOM Image">
+
+   <svg id="som_map" class="mapmain" width="800px" height="460px"></svg>
+<!--    <img id="som_map" class="mapmain" width="800px" height="460px" src="" title="Random SOM Image"> -->
 </p>
 
 <p class="centeredbold" style="font-size: 18pt;">Welcome to the Human-Mouse Gene Regulatory Module Browser!</p>
