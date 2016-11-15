@@ -281,14 +281,16 @@ sub get_search_res {
 
     my $n_fields = $params->{n_fields};
     my $n_orders = $params->{n_orders};
+    my $n_groups = $params->{n_groups};
     my $factors_q = 0;
     my $peaks_factors_q = 0;
     my $gwas_q = 0;
     my $peaks_gwas_q = 0;
 
     my $base_table = $params->{base_table};
-    my $group_by_table = $params->{group_by_t};
-    my $group_by_field = $params->{group_by_f};
+
+#    my $group_by_table = $params->{group_by_t};
+#    my $group_by_field = $params->{group_by_f};
 
     my @q_header = ("", "Table", "Field", "Condition", "Value", "Group W/Prev");
 
@@ -511,12 +513,30 @@ sub get_search_res {
     }
 
     my @query_group_by;
-    if ($group_by_table ne "NULL") {
-	$qry .= " GROUP BY $group_by_table.$group_by_field";
-	@query_group_by = ("GROUP BY", $group_by_table, $group_by_field, "",
-			   "", "");
-	push @query_params, \@query_group_by;
+    
+    for (my $i = 0; $i < $n_groups; $i++) {
+	my $tname = "group_by_t_" . $i;
+        my $fname = "group_by_f_" . $i;
+	my $tbl = $params->{$tname};
+        my $fld = $params->{$fname};
+
+	my @tmp;
+        if ($i == 0) {
+            $qry .= " GROUP BY $tbl.$fld";
+            @tmp = ("GROUP BY", $tbl, $fld, "", "", "");
+        } else {
+            $qry .= ", $tbl.$fld";
+            @tmp = ("then", $tbl, $fld, "", "", "");
+        }
+	push @query_params, \@tmp;
     }
+
+#    if ($group_by_table ne "NULL") {
+#	$qry .= " GROUP BY $group_by_table.$group_by_field";
+#	@query_group_by = ("GROUP BY", $group_by_table, $group_by_field, "",
+#			   "", "");
+#	push @query_params, \@query_group_by;
+#    }
     
     $qry .= ";";
 

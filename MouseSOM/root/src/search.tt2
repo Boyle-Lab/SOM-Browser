@@ -6,6 +6,7 @@
 
         document.search_form.n_fields.value = 1;
 	document.search_form.n_orders.value = 0;
+	document.search_form.n_groups.value = 0;
 
         $('<div/>', {
              'class' : 'searchBuild', html: GetSearchHtml()
@@ -14,6 +15,10 @@
 	$('<div/>', {
              'class' : 'orderBuild', html: GetOrderHtml()
         }).appendTo('#container2');
+
+	$('<div/>', {
+             'class' : 'orderBuild', html: GetGroupHtml()
+        }).appendTo('#container3');
 
 	$("#map_info_block").dialog(
             {
@@ -56,6 +61,18 @@
       return $html.html();
     }
 
+    function GetGroupHtml()
+    {
+      var len = $('.groupBuild').length;
+      var $html = $('.groupTemplate').clone();
+      $html.find('[name=group_by_t]')[0].name="group_by_t_" + len;
+      $html.find('[name=group_by_f]')[0].name="group_by_f_" + len;
+      if (len == 0) {
+          $html.find('[name=group_remove]')[0].remove();
+      }
+      return $html.html();
+    }
+
     $(document).on("click",".remove_field", function(e){
         e.preventDefault(); $(this).parent('div').remove();
 //        document.search_form.n_fields.value--;
@@ -64,6 +81,11 @@
     $(document).on("click",".remove_order", function(e){
         e.preventDefault(); $(this).parent('div').remove();
         document.search_form.n_orders.value--;
+    })
+
+    $(document).on("click",".remove_group", function(e){
+        e.preventDefault(); $(this).parent('div').remove();
+        document.search_form.n_groups.value--;
     })
     
     $(document).on("change", ".table_select", function(e) {
@@ -79,8 +101,11 @@
         $(document.search_form[field]).load("[% c.secure_uri_for('/search/get_fields/') %]" + $(this).val());
     })
 
-    $(document).on("change", "#group_by_t", function() {
-        $("#group_by_f").load("[% c.secure_uri_for('/search/get_fields/') %]" + $("#group_by_t").val());
+    $(document).on("change", ".group_select", function() {
+        if (document.search_form.n_groups.value == 0) document.search_form.n_groups.value++;
+	var tmp = this.name.split("_");
+	var field = "group_by_f_" + tmp[3];
+	$(document.search_form[field]).load("[% c.secure_uri_for('/search/get_fields/') %]" + $(this).val());
     })
 
     $(document).on("click", "#addRow", function () {
@@ -95,6 +120,13 @@
         'class' : 'orderBuild', html: GetOrderHtml()
         }).hide().appendTo('#container2').slideDown('slow');
 	document.search_form.n_orders.value++;
+    })
+
+    $(document).on("click", "#addGroupRow", function () {
+        $('<div/>', {
+        'class' : 'groupBuild', html: GetGroupHtml()
+        }).hide().appendTo('#container2').slideDown('slow');
+        document.search_form.n_orders.value++;
     })
 
     $(document).on("click", "#search_info", function() {
@@ -117,6 +149,7 @@
     <form method="post" name="search_form" action="[% c.secure_uri_for('search_results') %]">
     <input type="hidden" name="n_fields" value="0">
     <input type="hidden" name="n_orders" value="0">
+    <input type="hidden" name="n_groups" value="0">
         <p>Base Table: <select class=table_select name="base_table">
         <option selected value="peaks">Peaks</option>
         <option value="neurons">Patterns</option>
@@ -203,9 +236,8 @@
 
     <a class="field button" href="javascript:void(0)" id="addOrderRow">Add More Order-By Terms</a>
 
-    <div id="groupsubmit">
-        <p>Group Results By:<br/>
-    	Table: <select id="group_by_t" name="group_by_t">
+    <div id="groupTemplate">
+    	Table: <select class="group_select" name="group_by_t">
             <option selected value="NULL">Choose a Table</option>
     	    <option value="neurons">Patterns</option>
     	    <option value="factors">Transcription Factors</option>
@@ -222,10 +254,14 @@
             <option value="gwas">GWAS</option>
             <option value="peaks_dnase">Peaks_DNase</option>
     	</select>
-    	Field: <select id="group_by_f" name="group_by_f">
+    	Field: <select class="group_field" name="group_by_f">
             <option value="NULL"></option>
         </select>
-	</p>
+	<input class="remove_group" type="submit" name="group_remove" value="Remove">
+    </div>
+
+    <div id="container3">
+        <p>Group Results By:
     </div>
 
     <p><input class="button" type="submit" name="Submit" value="Search"></p>
