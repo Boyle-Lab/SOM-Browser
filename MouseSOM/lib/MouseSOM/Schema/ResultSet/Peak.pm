@@ -512,7 +512,7 @@ sub get_search_res {
 	push @query_params, \@tmp;
     }
 
-    my $gb_tbl_found = 0;
+    my $gb_tbl_found = 1;
     for (my $i = 0; $i < $n_groups; $i++) {
 	my $tname = "group_by_t_" . $i;
         my $fname = "group_by_f_" . $i;
