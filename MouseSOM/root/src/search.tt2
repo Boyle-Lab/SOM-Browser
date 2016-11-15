@@ -264,6 +264,8 @@
         <p>Group Results By:
     </div>
 
+    <a class="field button" href="javascript:void(0)" id="addGroupRow">Add More Group-By Terms</a>
+
     <p><input class="button" type="submit" name="Submit" value="Search"></p>
     </form>
 </div>

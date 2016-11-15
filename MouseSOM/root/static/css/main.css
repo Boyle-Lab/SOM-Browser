@@ -42,13 +42,16 @@
 #searchform {
     margin-left: 200px;
 }
-#groupsubmit {
+/*#groupsubmit {
     clear: both;
-}
+}*/
 #container {
 /*    float: left; */
 }
 #container2 {
+    clear: both;
+}
+#container3 {
     clear: both;
 }
 #neurondetails {
