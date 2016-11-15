@@ -126,7 +126,7 @@
         $('<div/>', {
         'class' : 'groupBuild', html: GetGroupHtml()
         }).hide().appendTo('#container3').slideDown('slow');
-        document.search_form.n_orders.value++;
+        document.search_form.n_groups.value++;
     })
 
     $(document).on("click", "#search_info", function() {
