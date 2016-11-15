@@ -295,7 +295,7 @@ sub get_search_res {
     my @q_header = ("", "Table", "Field", "Condition", "Value", "Group W/Prev");
 
     my $qry;
-    if ($n_groups > 0) {
+    if ($n_groups == 0) {
 	$qry = "SELECT * FROM $base_table";
     } else {
 	$qry = "SELECT *, count(*) FROM $base_table";
@@ -512,13 +512,26 @@ sub get_search_res {
 	push @query_params, \@tmp;
     }
 
-    my @query_group_by;
-    
+    my $gb_table_found = 0;
     for (my $i = 0; $i < $n_groups; $i++) {
 	my $tname = "group_by_t_" . $i;
         my $fname = "group_by_f_" . $i;
 	my $tbl = $params->{$tname};
         my $fld = $params->{$fname};
+
+	if ($tbl ne $base_table) {
+	    foreach my $table (keys(%tables)) {
+		if ($tbl eq $table || ( $tbl eq "peaks_genes" && ( 
+					    $table eq "genes" ||
+					    $table eq "genes_bnorm" ||
+					    $table eq "genes_qnorm" ) )
+		    )
+		{
+		    $gb_tbl_found = 1;
+		    last;
+		}
+	    }
+	}
 
 	my @tmp;
         if ($i == 0) {
@@ -529,6 +542,10 @@ sub get_search_res {
             @tmp = ("then", $tbl, $fld, "", "", "");
         }
 	push @query_params, \@tmp;
+    }
+
+    if (!$gb_tbl_found) {
+	return -1;
     }
 
 #    if ($group_by_table ne "NULL") {
