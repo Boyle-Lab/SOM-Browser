@@ -316,24 +316,24 @@ sub get_search_res {
 	return -1;
     }
 
-    if ($group_by_table ne "NULL" && $group_by_table ne $base_table) {
-	my $gb_table_found = 0;
-	foreach my $table (keys(%tables)) {
-	    if ($table eq $group_by_table
-		|| ( ($table eq "geneexp" ||
-		      $table eq "genexp_qnorm" ||
-		      $table eq "genexp_bnorm") &&
-		    $group_by_table eq "peaks_genes")) {
-		$gb_table_found = 1;
-		last;
-	    }
-	}
-	if (!$gb_table_found) {
-	    $res{error} = 1;
+#    if ($group_by_table ne "NULL" && $group_by_table ne $base_table) {
+#	my $gb_table_found = 0;
+#	foreach my $table (keys(%tables)) {
+#	    if ($table eq $group_by_table
+#		|| ( ($table eq "geneexp" ||
+#		      $table eq "genexp_qnorm" ||
+#		      $table eq "genexp_bnorm") &&
+#		    $group_by_table eq "peaks_genes")) {
+#		$gb_table_found = 1;
+#		last;
+#	    }
+#	}
+#	if (!$gb_table_found) {
+#	    $res{error} = 1;
 #	    return %res;
-	    return -1;
-	}
-    }
+#	    return -1;
+#	}
+#    }
 
 
     foreach my $table (keys(%tables)) {
