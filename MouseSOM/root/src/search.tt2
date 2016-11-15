@@ -125,7 +125,7 @@
     $(document).on("click", "#addGroupRow", function () {
         $('<div/>', {
         'class' : 'groupBuild', html: GetGroupHtml()
-        }).hide().appendTo('#container2').slideDown('slow');
+        }).hide().appendTo('#container3').slideDown('slow');
         document.search_form.n_orders.value++;
     })
 
