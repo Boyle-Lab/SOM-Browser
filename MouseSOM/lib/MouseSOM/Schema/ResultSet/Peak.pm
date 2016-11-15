@@ -295,7 +295,7 @@ sub get_search_res {
     my @q_header = ("", "Table", "Field", "Condition", "Value", "Group W/Prev");
 
     my $qry;
-    if ($group_by_table eq "NULL") {
+    if ($n_groups > 0) {
 	$qry = "SELECT * FROM $base_table";
     } else {
 	$qry = "SELECT *, count(*) FROM $base_table";
