@@ -298,7 +298,7 @@ sub get_search_res {
     if ($n_groups == 0) {
 	$qry = "SELECT * FROM $base_table";
     } else {
-	$qry = "SELECT *, count(*) FROM $base_table";
+	$qry = "SELECT *, COUNT(*) AS count FROM $base_table";
     }
 
     my %tables;
