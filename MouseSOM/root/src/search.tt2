@@ -17,7 +17,7 @@
         }).appendTo('#container2');
 
 	$('<div/>', {
-             'class' : 'orderBuild', html: GetGroupHtml()
+             'class' : 'groupBuild', html: GetGroupHtml()
         }).appendTo('#container3');
 
 	$("#map_info_block").dialog(
