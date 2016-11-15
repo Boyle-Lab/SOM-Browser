@@ -236,7 +236,7 @@
 
     <a class="field button" href="javascript:void(0)" id="addOrderRow">Add More Order-By Terms</a>
 
-    <div id="groupTemplate">
+    <div class="groupTemplate" id="groupby">
     	Table: <select class="group_select" name="group_by_t">
             <option selected value="NULL">Choose a Table</option>
     	    <option value="neurons">Patterns</option>
