@@ -278,6 +278,10 @@ ul#menu > li:hover > ul {
     float: left;
     display: none;
 }
+.groupTemplate {
+    float: left;
+    display: none;
+}
 .remove_field {
     text-decoration: none;
 }
