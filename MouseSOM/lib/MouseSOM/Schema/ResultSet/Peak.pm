@@ -409,7 +409,7 @@ sub get_search_res {
 		$qry .= " INNER JOIN peaks ON peaks.id_neurons = neurons.id_neurons INNER JOIN $table ON $table.id_peaks = peaks.id_peaks";
 		next;
 	    } elsif ($table eq "genes" || $table eq "genes_bnorm" || $table eq "genes_qnorm") {
-		$qry .= " INNER JOIN peaks ON peaks.id_neurons = neurons.id_neurons INNER JOIN peaks_genes ON peaks_genes.id_peaks = peaks.id_peaks INNER JOIN $table ON $table.id_peaks = peaks.id_peaks";
+		$qry .= " INNER JOIN peaks ON peaks.id_neurons = neurons.id_neurons INNER JOIN peaks_genes ON peaks_genes.id_peaks = peaks.id_peaks INNER JOIN $table ON $table.id_genes = peaks_genes.id_genes";
 		next;
 	    } elsif ($table eq "gwas") {
                 $gwas_q = 1;
