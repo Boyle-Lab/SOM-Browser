@@ -300,21 +300,21 @@
         var mapId = Number(urlParts[4]);
 	var neuronId = Number(urlParts[5]);
 	if (this.value == "tpm") {
-	    if (mapId >= 800) {
+	    if (mapId >= 800 && mapId < 900) {
 	        mapId -= 700;
-	    } else if (mapId >= 200) {
+	    } else if (mapId >= 200 && mapId < 300) {
 	        mapId -= 100;
 	    }
         } else if (this.value == "bnorm") {
-	    if (mapId < 200) {
+	    if (mapId >= 100 && mapId < 200) {
                 mapId += 100;
-	    } else if (mapId >= 800) {
+	    } else if (mapId >= 800 && mapId < 900) {
 	        mapId -= 600
 	    }
         } else if (this.value == "qnorm") {
-	    if (mapId < 200) {
+	    if (mapId >= 100 && mapId < 200) {
                 mapId += 700;
-	    } else if (mapId < 300) {
+	    } else if (mapId >= 200 && mapId < 300) {
 	        mapId += 600;
 	    }
         }
