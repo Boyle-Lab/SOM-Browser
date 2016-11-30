@@ -95,7 +95,9 @@ sub get_tab_info :Path :Local :Args(1) {
 
 sub load_tab :Path :Local :ARGS(2) {
     my ( $self, $c, $tab_id, $neuron ) = @_;
-
+    
+#    $tab_id = $params{activeTab};
+    
     # For showing orth/non-orth/all rows
     my $show = -1; # -1 = all, 0 = non-orth, 1 = 1:1 orth, 2 = 1:many orth
     my %params = %{$c->request->params};
