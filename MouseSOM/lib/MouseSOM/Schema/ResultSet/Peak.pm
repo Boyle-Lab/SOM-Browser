@@ -488,7 +488,7 @@ sub get_search_res {
 	    if ($cnd eq "=") {
 		$qry .= ' "' . $val . '" IN (SELECT pg.targetGene FROM peaks p INNER JOIN peaks_genes pg ON pg.id_peaks = p.id_peaks INNER JOIN neurons n ON n.id_neurons = p.id_neurons WHERE p.id_neurons = neurons.id_neurons)';
 	    } elsif ($cnd eq "LIKE") {
-		$qry .= ' dddEXISTS (SELECT 1 FROM peaks p INNER JOIN peaks_genes pg ON pg.id_peaks = p.id_peaks INNER JOIN neurons n ON n.id_neurons = p.id_neurons WHERE p.id_neurons = neurons.id_neurons AND pg.targetGene LIKE "%' . $val . '%")';
+		$qry .= ' EXISTS (SELECT 1 FROM peaks p INNER JOIN peaks_genes pg ON pg.id_peaks = p.id_peaks INNER JOIN neurons n ON n.id_neurons = p.id_neurons WHERE p.id_neurons = neurons.id_neurons AND pg.targetGene LIKE "%' . $val . '%")';
 	    } else {
 		$qry .= ' "' . $val . '" NOT IN (SELECT pg.targetGene FROM peaks p INNER JOIN peaks_genes pg ON pg.id_peaks = p.id_peaks INNER JOIN neurons n ON n.id_neurons = p.id_neurons WHERE p.id_neurons = neurons.id_neurons)';
 	    }
