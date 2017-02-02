@@ -484,11 +484,11 @@ sub get_search_res {
 	if ($cnd eq "LIKE") {
 	    $qry .= " $tbl.$fld $cnd" . ' "%' . $val. '%"';
 	} else {
-	    if ($tbl =~ m/genes/ && ($cnd eq "=" || $cnd eq "!=")) {
+	    if ($base_table eq "neurons" && $tbl =~ m/genes/ && ($cnd eq "=" || $cnd eq "!=")) {
 		if ($cnd eq "=") {
-		    $qry .= ' "' . $val . '" IN (SELECT targetGene FROM peaks_genes pg WHERE pg.id_peaks = peaks.id_peaks)';
+		    $qry .= ' "' . $val . '" IN (SELECT pg.targetGene FROM peaks p INNER JOIN peaks_genes pg ON pg.id_peaks = p.id_peaks INNER JOIN neurons n ON n.id_neurons = p.id_neurons WHERE p.id_neurons = neurons.id_neurons)';
 		} else {
-		    $qry .= ' "' . $val . '" NOT IN (SELECT targetGene FROM peaks_genes pg WHERE pg.id_peaks = peaks.id_peaks)';
+		    $qry .= ' "' . $val . '" NOT IN (SELECT pg.targetGene FROM peaks p INNER JOIN peaks_genes pg ON pg.id_peaks = p.id_peaks INNER JOIN neurons n ON n.id_neurons = p.id_neurons WHERE p.id_neurons = neurons.id_neurons)';
 		}
 	    } else {
 		$qry .= " $tbl.$fld $cnd" . ' "' . $val. '"';
@@ -560,7 +560,7 @@ sub get_search_res {
     
     $qry .= ";";
 
-    print STDERR "$qry\n";
+#    print STDERR "$qry\n";
 
     # Check SQL statement for "blacklist" terms. This is not the sine qua non
     # of security, but should give a margin of safety from sql injection attacks.
