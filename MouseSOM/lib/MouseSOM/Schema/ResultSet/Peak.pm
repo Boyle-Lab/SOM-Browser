@@ -600,7 +600,7 @@ sub get_search_res {
 #	push @query_params, \@query_group_by;
 #    }
     
-    $qry .= "x;";
+    $qry .= ";";
 
 #    print STDERR "$qry\n";
 
