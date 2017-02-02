@@ -560,7 +560,7 @@ sub get_search_res {
     
     $qry .= ";";
 
-#    print STDERR "$qry\n";
+    print STDERR "$qry\n";
 
     # Check SQL statement for "blacklist" terms. This is not the sine qua non
     # of security, but should give a margin of safety from sql injection attacks.
