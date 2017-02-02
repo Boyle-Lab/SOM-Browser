@@ -462,8 +462,6 @@ sub get_search_res {
 	    $qry .= ')';  
 	}
 
-	my @tmp;
-
 	my $gwp = "";
 	if ($cgp) {
 	    $gwp = "TRUE";
@@ -471,7 +469,7 @@ sub get_search_res {
 
 	if ($i == 0) {
 	    $qry = $qry. " WHERE";
-	    @tmp = ("", $tbl, $fld, $cnd, $val, $gwp);
+	    push @query_params, ["", $tbl, $fld, $cnd, $val, $gwp];
 	} else {
 	    my $chn = $params->{$chain};
 #	    print STDERR "$chn\n";
@@ -480,9 +478,8 @@ sub get_search_res {
 	    } else {
 		$qry .= " $chn";
 	    }
-	    @tmp = ($chn, $tbl, $fld, $cnd, $val, $gwp);
+	    push @query_params, [$chn, $tbl, $fld, $cnd, $val, $gwp];
 	}
-	push @query_params, \@tmp;
 
 	if ($cnd eq "LIKE") {
 	    $qry .= " $tbl.$fld $cnd" . ' "%' . $val. '%"';
@@ -503,15 +500,13 @@ sub get_search_res {
         my $fld = $params->{$fname};
         my $ord = $params->{$order};
 
-	my @tmp;
 	if ($i == 0) {
 	    $qry .= " ORDER BY $tbl.$fld $ord";
-	    @tmp = ("ORDER BY", $tbl, $fld, $ord, "", "");
+	    push @query_params, ["ORDER BY", $tbl, $fld, $ord, "", ""];
 	} else {
 	    $qry .= ", $tbl.$fld $ord";
-	    @tmp = ("then", $tbl, $fld, $ord, "", "");
+	    push @query_params, ["then", $tbl, $fld, $ord, "", ""];
 	}
-	push @query_params, \@tmp;
     }
 
     my $gb_tbl_found = 1;
@@ -535,15 +530,13 @@ sub get_search_res {
 	    }
 	}
 
-	my @tmp;
         if ($i == 0) {
             $qry .= " GROUP BY $tbl.$fld";
-            @tmp = ("GROUP BY", $tbl, $fld, "", "", "");
+            push @query_params, ["GROUP BY", $tbl, $fld, "", "", ""];
         } else {
             $qry .= ", $tbl.$fld";
-            @tmp = ("then", $tbl, $fld, "", "", "");
+            push @query_params, ["then", $tbl, $fld, "", "", ""];
         }
-	push @query_params, \@tmp;
     }
 
     if (!$gb_tbl_found) {
