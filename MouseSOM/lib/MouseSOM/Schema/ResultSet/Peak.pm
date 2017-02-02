@@ -547,6 +547,12 @@ sub get_search_res {
         }
     }
 
+    # Implicit group-by if we're searching for neurons that target more than one gene
+    # (since a result would be reported for all peaks within that neuron otherwise)
+    if ($qry =~ m/IN \(SELECT pg\.targetGene/) {
+	$qry .= " GROUP BY neurons.id_neurons";
+    }
+
     if (!$gb_tbl_found) {
 	return -1;
     }
