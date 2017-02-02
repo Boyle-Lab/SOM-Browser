@@ -483,12 +483,12 @@ sub get_search_res {
 
 	# Add the query terms
 	if ($base_table eq "neurons" && $tbl =~ m/genes/ &&
-	    #($fld =~ m/gene/ || $fld =~ m/name/) &&
+	    ($fld eq "targetGene" || $fld =~ m/name/) &&
 	    ($cnd eq "=" || $cnd eq "!=" || $cnd eq "LIKE")) {
 	    if ($cnd eq "=") {
 		$qry .= ' "' . $val . '" IN (SELECT pg.targetGene FROM peaks p INNER JOIN peaks_genes pg ON pg.id_peaks = p.id_peaks INNER JOIN neurons n ON n.id_neurons = p.id_neurons WHERE p.id_neurons = neurons.id_neurons)';
 	    } elsif ($cnd eq "LIKE") {
-		$qry .= 'dddd EXISTS (SELECT 1 FROM peaks p INNER JOIN peaks_genes pg ON pg.id_peaks = p.id_peaks INNER JOIN neurons n ON n.id_neurons = p.id_neurons WHERE p.id_neurons = neurons.id_neurons AND pg.targetGene LIKE "%' . $val . '%")';
+		$qry .= ' EXISTS (SELECT 1 FROM peaks p INNER JOIN peaks_genes pg ON pg.id_peaks = p.id_peaks INNER JOIN neurons n ON n.id_neurons = p.id_neurons WHERE p.id_neurons = neurons.id_neurons AND pg.targetGene LIKE "%' . $val . '%")';
 	    } else {
 		$qry .= ' "' . $val . '" NOT IN (SELECT pg.targetGene FROM peaks p INNER JOIN peaks_genes pg ON pg.id_peaks = p.id_peaks INNER JOIN neurons n ON n.id_neurons = p.id_neurons WHERE p.id_neurons = neurons.id_neurons)';
 	    }
