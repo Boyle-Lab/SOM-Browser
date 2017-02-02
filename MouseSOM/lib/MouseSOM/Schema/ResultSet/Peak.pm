@@ -571,10 +571,13 @@ sub get_search_res {
     # Implicit group-by if we're searching for terms within a set of results (e.g.,
     # neurons targeting one or more genes, peaks containing one or more factors),
     # since multiple results for each peak/neuron would be reported otherwise.
-    if ($qry =~ m/IN \(SELECT pg\.targetGene/ && $qry !~ m/GROUP BY neurons.id_neurons/) {
+    if (($qry =~ m/IN \(SELECT pg\.targetGene/ ||
+	 $qry =~ m/EXISTS \(SELECT 1 FROM peaks/) &&
+	$qry !~ m/GROUP BY neurons.id_neurons/) {
 	$qry .= " GROUP BY neurons.id_neurons";
     }
-    if ($qry =~ m/IN \(SELECT f\.name/ &&
+    if (($qry =~ m/IN \(SELECT f\.name/ ||
+	 $qry =~ m/EXISTS \(SELECT 1 FROM factors/) &&
 	$qry !~ m/GROUP BY peaks.id_peaks/ &&
 	$qry !~ m/GROUP BY neurons.id_neurons/) {
 	if ($base_table eq "peaks") {
