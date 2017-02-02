@@ -483,7 +483,7 @@ sub get_search_res {
 
 	# Add the query terms
 	if ($base_table eq "neurons" && $tbl =~ m/genes/ &&
-	    ($fld =~ m/gene/ || $fld =~ m/name/) &&
+	    #($fld =~ m/gene/ || $fld =~ m/name/) &&
 	    ($cnd eq "=" || $cnd eq "!=" || $cnd eq "LIKE")) {
 	    if ($cnd eq "=") {
 		$qry .= ' "' . $val . '" IN (SELECT pg.targetGene FROM peaks p INNER JOIN peaks_genes pg ON pg.id_peaks = p.id_peaks INNER JOIN neurons n ON n.id_neurons = p.id_neurons WHERE p.id_neurons = neurons.id_neurons)';
