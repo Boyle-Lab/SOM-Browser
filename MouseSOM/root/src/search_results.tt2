@@ -107,7 +107,7 @@
 [% ELSIF results.base_table == "neurons" -%]
     <p>Found [% results.nrows %] patterns:</p>
     <p>Patterns<br/>
-    <table id="table_2" class="peakdata tablesorter">
+    <table id="table_1" class="peakdata tablesorter">
         <thead>
        	[% PROCESS table_row peak = results.header class = "header" nc = 0 link_col = 0 -%]
        	</thead>
