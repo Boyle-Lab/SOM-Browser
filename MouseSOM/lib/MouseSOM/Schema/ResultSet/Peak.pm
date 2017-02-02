@@ -484,7 +484,15 @@ sub get_search_res {
 	if ($cnd eq "LIKE") {
 	    $qry .= " $tbl.$fld $cnd" . ' "%' . $val. '%"';
 	} else {
-	    $qry .= " $tbl.$fld $cnd" . ' "' . $val. '"';
+	    if ($tbl =~ m/genes/ && ($cnd eq "=" || $cnd eq "!=")) {
+		if ($cnd eq "=") {
+		    $qry .= ' "' . $val . '" IN (SELECT targetGene FROM peaks_genes pg WHERE pg.id_peaks = peaks.id_peaks)';
+		} else {
+		    $qry .= ' "' . $val . '" NOT IN (SELECT targetGene FROM peaks_genes pg WHERE pg.id_peaks = peaks.id_peaks)';
+		}
+	    } else {
+		$qry .= " $tbl.$fld $cnd" . ' "' . $val. '"';
+	    }
 	}
 
 	if ($is_group && $i == $n_fields-1) {
