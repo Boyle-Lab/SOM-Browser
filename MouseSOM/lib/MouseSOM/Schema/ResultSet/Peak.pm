@@ -559,8 +559,14 @@ sub get_search_res {
     if ($qry =~ m/IN \(SELECT pg\.targetGene/ && $qry !~ m/GROUP BY neurons.id_neurons/) {
 	$qry .= " GROUP BY neurons.id_neurons";
     }
-    if ($qry =~ m/IN \(SELECT f\.name/ && $qry !~ m/GROUP BY peaks.id_peaks/) {
-	$qry .= " GROUP BY peaks.id_peaks";
+    if ($qry =~ m/IN \(SELECT f\.name/ &&
+	$qry !~ m/GROUP BY peaks.id_peaks/ &&
+	$qry !~ m/GROUP BY neurons.id_neurons/) {
+	if ($base_table eq "peaks") {
+	    $qry .= " GROUP BY peaks.id_peaks";
+	} else {
+	    $qry .= " GROUP BY neurons.id_neurons";
+	}
     }
 
     if (!$gb_tbl_found) {
