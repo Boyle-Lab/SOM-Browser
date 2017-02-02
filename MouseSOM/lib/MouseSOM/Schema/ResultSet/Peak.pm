@@ -490,6 +490,12 @@ sub get_search_res {
 		} else {
 		    $qry .= ' "' . $val . '" NOT IN (SELECT pg.targetGene FROM peaks p INNER JOIN peaks_genes pg ON pg.id_peaks = p.id_peaks INNER JOIN neurons n ON n.id_neurons = p.id_neurons WHERE p.id_neurons = neurons.id_neurons)';
 		}
+	    } elsif ($tbl =~ m/factors/ && ($cnd eq "=" || $cnd eq "!=")) {
+		if ($cnd eq "=") {
+		    $qry .= ' "' . $val . '" IN (SELECT f.name FROM factors f INNER JOIN peaks_factors pf ON pf.id_factors = f.id_factors WHERE pf.id_peaks = peaks.id_peaks AND pf.score = 1)';
+		} else {
+		    $qry .= ' "' . $val . '" NOT IN (SELECT f.name FROM factors f INNER JOIN peaks_factors pf ON pf.id_factors = f.id_factors WHERE pf.id_peaks = peaks.id_peaks AND pf.score = 1)';
+		}
 	    } else {
 		$qry .= " $tbl.$fld $cnd" . ' "' . $val. '"';
 	    }
@@ -547,10 +553,14 @@ sub get_search_res {
         }
     }
 
-    # Implicit group-by if we're searching for neurons that target more than one gene
-    # (since a result would be reported for all peaks within that neuron otherwise)
-    if ($qry =~ m/IN \(SELECT pg\.targetGene/) {
+    # Implicit group-by if we're searching for terms within a set of results (e.g.,
+    # neurons targeting one or more genes, peaks containing one or more factors),
+    # since multiple results for each peak/neuron would be reported otherwise.
+    if ($qry =~ m/IN \(SELECT pg\.targetGene/ && $qry !~ m/GROUP BY neurons.id_neurons/) {
 	$qry .= " GROUP BY neurons.id_neurons";
+    }
+    if ($qry =~ m/IN \(SELECT f\.name/ && $qry !~ m/GROUP BY peaks.id_peaks/) {
+	$qry .= " GROUP BY peaks.id_peaks";
     }
 
     if (!$gb_tbl_found) {
