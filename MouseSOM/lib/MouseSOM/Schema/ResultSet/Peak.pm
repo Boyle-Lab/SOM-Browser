@@ -295,18 +295,23 @@ sub get_search_res {
     my @q_header = ("", "Table", "Field", "Condition", "Value", "Group W/Prev");
 
     my $qry;
+    my $abr = "p";
+    if ($base_table eq "neurons") {
+	$abr = "n";
+    }
     if ($n_groups == 0) {
-	$qry = "SELECT * FROM $base_table";
+	$qry = "SELECT * FROM $base_table $abr";
     } else {
-	$qry = "SELECT *, COUNT(*) AS count FROM $base_table";
+	$qry = "SELECT *, COUNT(*) AS count FROM $base_table $abr";
     }
 
+    # Get a non-redundant list of join tables
     my %tables;
     for (my $i = 0; $i < $n_fields; $i++) {
 	my $tname = "table_" . $i;
 	my $tbl = $params->{$tname};
 #	print STDERR "$tbl\n";
-	if (defined($tbl)) {
+	if (defined($tbl) && $tbl ne $base_table) {
 	    $tables{$tbl} = "";
 	}
     }
@@ -316,26 +321,6 @@ sub get_search_res {
 	return -1;
     }
 
-#    if ($group_by_table ne "NULL" && $group_by_table ne $base_table) {
-#	my $gb_table_found = 0;
-#	foreach my $table (keys(%tables)) {
-#	    if ($table eq $group_by_table
-#		|| ( ($table eq "geneexp" ||
-#		      $table eq "genexp_qnorm" ||
-#		      $table eq "genexp_bnorm") &&
-#		    $group_by_table eq "peaks_genes")) {
-#		$gb_table_found = 1;
-#		last;
-#	    }
-#	}
-#	if (!$gb_table_found) {
-#	    $res{error} = 1;
-#	    return %res;
-#	    return -1;
-#	}
-#    }
-
-
     foreach my $table (keys(%tables)) {
 #	    print STDERR "$table\n";
 	if ($base_table eq "peaks") {
@@ -344,9 +329,9 @@ sub get_search_res {
 	    } elsif ($table eq "factors") {
 		$factors_q = 1;
 		if ($peaks_factors_q) {
-		    $qry .= " INNER JOIN factors on factors.id_factors = peaks_factors.id_factors";
+		    $qry .= " INNER JOIN factors f on f.id_factors = peaks_factors.id_factors";
 		} else  {
-		    $qry .= " INNER JOIN peaks_factors ON peaks_factors.id_peaks = peaks.id_peaks INNER JOIN factors on factors.id_factors = peaks_factors.id_factors";
+		    $qry .= " INNER JOIN peaks_factors ON peaks_factors.id_peaks = p.id_peaks INNER JOIN factors f on f.id_factors = peaks_factors.id_factors";
 		}
 		next;
 	    } elsif ($table eq "peaks_factors") {
@@ -355,26 +340,26 @@ sub get_search_res {
 		    next;
 		}
 	    } elsif ($table eq "neurons") {
-		$qry .= " INNER JOIN neurons ON neurons.id_neurons = peaks.id_neurons";
+		$qry .= " INNER JOIN neurons ON neurons.id_neurons = p.id_neurons";
 		next;
 	    } elsif ($table eq "go_data") {
-		$qry .= " INNER JOIN go_data ON go_data.id_neurons = peaks.id_neurons";
+		$qry .= " INNER JOIN go_data ON go_data.id_neurons = p.id_neurons";
 		next;
 	    } elsif ($table eq "genes") {
 		if (!($qry =~ m/peaks_genes\.id_peaks/)) {
-		    $qry .= " INNER JOIN peaks_genes ON peaks_genes.id_peaks = peaks.id_peaks";
+		    $qry .= " INNER JOIN peaks_genes ON peaks_genes.id_peaks = p.id_peaks";
 		}
-		$qry .= " INNER JOIN genes ON genes.id_genes = peaks_genes.id_genes";
+		$qry .= " INNER JOIN genes g ON g.id_genes = peaks_genes.id_genes";
 		next;
 	    } elsif ($table eq "genes_qnorm") {
                 if (!($qry =~ m/peaks_genes\.id_peaks/)) {
-                    $qry .= " INNER JOIN peaks_genes ON peaks_genes.id_peaks = peaks.id_peaks";
+                    $qry .= " INNER JOIN peaks_genes ON peaks_genes.id_peaks = p.id_peaks";
                 }
 		$qry .= " INNER JOIN genes_qnorm ON genes_qnorm.id_genes = peaks_genes.id_genes";
 		next;
             } elsif ($table eq "genes_bnorm") {
                 if (!($qry =~ m/peaks_genes\.id_peaks/)) {
-                    $qry .= " INNER JOIN peaks_genes ON peaks_genes.id_peaks = peaks.id_peaks";
+                    $qry .= " INNER JOIN peaks_genes ON peaks_genes.id_peaks = p.id_peaks";
 		    }
                 $qry .= " INNER JOIN genes_bnorm ON genes_bnorm.id_genes = peaks_genes.id_genes";
 		next;
@@ -383,7 +368,7 @@ sub get_search_res {
 		if ($peaks_gwas_q) {
                     $qry .= " INNER JOIN gwas on gwas.id_gwas = peaks_gwas.id_gwas";
                 } else  {
-		    $qry .= " INNER JOIN peaks_gwas ON peaks_gwas.id_peaks = peaks.id_peaks INNER JOIN gwas ON peaks_gwas.id_gwas = gwas.id_gwas";
+		    $qry .= " INNER JOIN peaks_gwas ON peaks_gwas.id_peaks = p.id_peaks INNER JOIN gwas ON peaks_gwas.id_gwas = gwas.id_gwas";
 		}
 	    } elsif ($table eq "peaks_gwas") {
                 $peaks_gwas_q = 1;
@@ -393,7 +378,7 @@ sub get_search_res {
 	    }
 
 	    if (!($qry =~ m/$table\.id_peaks/)) {
-		$qry .= " INNER JOIN $table ON $table.id_peaks = peaks.id_peaks";
+		$qry .= " INNER JOIN $table ON $table.id_peaks = p.id_peaks";
 	    }
 	} elsif ($base_table eq "neurons") {
 	
@@ -401,22 +386,21 @@ sub get_search_res {
 		next;
 	    } elsif ($table eq "factors") {
 		$factors_q = 1;
-		$qry .= " INNER JOIN neurons_factors on neurons_factors.id_neurons = neurons.id_neurons INNER JOIN factors ON factors.id_factors = neurons_factors.id_factors";
+		$qry .= " INNER JOIN neurons_factors on neurons_factors.id_neurons = neurons.id_neurons INNER JOIN factors f ON f.id_factors = neurons_factors.id_factors";
 		next;
 	    } elsif ($table eq "peaks_factors" || $table eq "peaks_genes" ||
-		     $table eq "peaks_selection" || $table eq "peaks_histmods")
-	    {
-		$qry .= " INNER JOIN peaks ON peaks.id_neurons = neurons.id_neurons INNER JOIN $table ON $table.id_peaks = peaks.id_peaks";
+		     $table eq "peaks_selection" || $table eq "peaks_histmods") {
+		$qry .= " INNER JOIN peaks p ON p.id_neurons = neurons.id_neurons INNER JOIN $table ON $table.id_peaks = p.id_peaks";
 		next;
 	    } elsif ($table eq "genes" || $table eq "genes_bnorm" || $table eq "genes_qnorm") {
-		$qry .= " INNER JOIN peaks ON peaks.id_neurons = neurons.id_neurons INNER JOIN peaks_genes ON peaks_genes.id_peaks = peaks.id_peaks INNER JOIN $table ON $table.id_genes = peaks_genes.id_genes";
+		$qry .= " INNER JOIN peaks p ON p.id_neurons = neurons.id_neurons INNER JOIN peaks_genes ON peaks_genes.id_peaks = p.id_peaks INNER JOIN $table ON $table.id_genes = peaks_genes.id_genes";
 		next;
 	    } elsif ($table eq "gwas") {
                 $gwas_q = 1;
                 if ($peaks_gwas_q) {
                     $qry .= " INNER JOIN gwas on gwas.id_gwas = peaks_gwas.id_gwas";
 		} else  {
-                    $qry .= " INNER JOIN peaks_gwas ON peaks_gwas.id_peaks = peaks.id_peaks INNER JOIN gwas ON peaks_gwas.id_gwas = gwas.id_gwas";
+                    $qry .= " INNER JOIN peaks_gwas ON peaks_gwas.id_peaks = p.id_peaks INNER JOIN gwas ON peaks_gwas.id_gwas = gwas.id_gwas";
                 }
 		next;
             } elsif ($table eq "peaks_gwas") {
@@ -449,6 +433,12 @@ sub get_search_res {
         my $val = $params->{$vname};
 	my $cgp = $params->{$group};
 
+	if ($tbl eq "peaks") {
+	    $tbl = "p";	   
+	} elsif ($tbl eq "neurons") {
+	    $tbl = "n";
+	}
+	
 	if ($cgp && !$is_group) {
 	    $is_group = 1;
 
@@ -462,8 +452,6 @@ sub get_search_res {
 	    $qry .= ')';  
 	}
 
-	my @tmp;
-
 	my $gwp = "";
 	if ($cgp) {
 	    $gwp = "TRUE";
@@ -471,7 +459,7 @@ sub get_search_res {
 
 	if ($i == 0) {
 	    $qry = $qry. " WHERE";
-	    @tmp = ("", $tbl, $fld, $cnd, $val, $gwp);
+	    push @query_params, ["", $params->{$tname}, $fld, $cnd, $val, $gwp];
 	} else {
 	    my $chn = $params->{$chain};
 #	    print STDERR "$chn\n";
@@ -480,9 +468,8 @@ sub get_search_res {
 	    } else {
 		$qry .= " $chn";
 	    }
-	    @tmp = ($chn, $tbl, $fld, $cnd, $val, $gwp);
+	    push @query_params, [$chn, $params->{$tname}, $fld, $cnd, $val, $gwp];
 	}
-	push @query_params, \@tmp;
 
 	if ($cnd eq "LIKE") {
 	    $qry .= " $tbl.$fld $cnd" . ' "%' . $val. '%"';
@@ -503,15 +490,20 @@ sub get_search_res {
         my $fld = $params->{$fname};
         my $ord = $params->{$order};
 
+	if ($tbl eq "peaks") {
+	    $tbl = "p";
+	} elsif($tbl eq "neurons") {
+	    $tbl = "n";
+	}
+	
 	my @tmp;
 	if ($i == 0) {
 	    $qry .= " ORDER BY $tbl.$fld $ord";
-	    @tmp = ("ORDER BY", $tbl, $fld, $ord, "", "");
+	    push @query_params, ["ORDER BY", $params->{$tname}, $fld, $ord, "", ""];
 	} else {
 	    $qry .= ", $tbl.$fld $ord";
-	    @tmp = ("then", $tbl, $fld, $ord, "", "");
+	    push @query_params, ["then", $params->{$tname}, $fld, $ord, "", ""];
 	}
-	push @query_params, \@tmp;
     }
 
     my $gb_tbl_found = 1;
@@ -521,6 +513,12 @@ sub get_search_res {
 	my $tbl = $params->{$tname};
         my $fld = $params->{$fname};
 
+	if ($tbl eq "peaks") {
+	    $tbl = "p";
+	} elsif($tbl eq "neurons") {
+	    $tbl = "n";
+	}
+	
 	if ($tbl ne $base_table) {
 	    foreach my $table (keys(%tables)) {
 		if ($tbl eq $table || ( $tbl eq "peaks_genes" && ( 
@@ -538,12 +536,11 @@ sub get_search_res {
 	my @tmp;
         if ($i == 0) {
             $qry .= " GROUP BY $tbl.$fld";
-            @tmp = ("GROUP BY", $tbl, $fld, "", "", "");
+	    push @query_params, ["GROUP BY", $params->{$tname}, $fld, "", "", ""];
         } else {
             $qry .= ", $tbl.$fld";
-            @tmp = ("then", $tbl, $fld, "", "", "");
+            push @query_params, ["then", $params->{$tname}, $fld, "", "", ""];
         }
-	push @query_params, \@tmp;
     }
 
     if (!$gb_tbl_found) {
