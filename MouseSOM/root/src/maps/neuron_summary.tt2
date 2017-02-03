@@ -9,14 +9,14 @@
             <td class="val">[% neuron.tf_count %]</td>
         </tr>
         <tr>
-            <td class="cat">Peaks</td>
+            <td class="cat">Modules</td>
             <td class="val">[% neuron.n_peaks %]</td>
         <tr>
-            <td class="cat">Human Peaks</td>
+            <td class="cat">Human Modules</td>
             <td class="val">[% neuron.n_human %] ([% neuron.pct_human %]%)</td>
         </tr>
         <tr>
-            <td class="cat">Mouse Peaks</td>
+            <td class="cat">Mouse Modules</td>
             <td class="val">[% neuron.n_mouse %] ([% neuron.pct_mouse %]%)</td>
         <tr>
             <td class="cat">% Human Patterns</td>

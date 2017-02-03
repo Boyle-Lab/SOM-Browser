@@ -1,4 +1,4 @@
-[%# Content for the Peaks Tab -%]
+[%# Content for the Modules Tab -%]
 
 <script>
     [% PROCESS "tablesort_init.js" -%]
@@ -116,7 +116,7 @@
 </table>
 </p>
 
-<p>Mouse Peaks<br/>
+<p>Mouse Modules<br/>
 <table id="table_2" class="peakdata tablesorter">
     <thead>
     [% PROCESS table_row peak = peaks.factors_b class = "header" nc = 0 table_id = "mouse" -%]
@@ -135,7 +135,7 @@
 </table>
 </p>
 
-<p>Human Peaks<br/>
+<p>Human Modules<br/>
 <table id="table_3" class="peakdata tablesorter">
     <thead>
     [% PROCESS table_row peak = peaks.factors_b class = "header" nc = 0 table_id = "human" -%]

@@ -139,7 +139,7 @@
 </table>
 </p>
 
-<p>Mouse Peaks<br/>
+<p>Mouse Modules<br/>
 <table id="table_21" class="peakdata tablesorter">
     <thead>
     [% PROCESS table_row peak = orthologs.p_header class = "header" nc = 0 table_id = "mouse" -%]
@@ -154,7 +154,7 @@
 </table>
 </p>
 
-<p>Human Peaks<br/>
+<p>Human Modules<br/>
 <table id="table_22" class="peakdata tablesorter">
     <thead>
     [% PROCESS table_row peak = orthologs.p_header class = "header" nc = 0 table_id = "human" -%]

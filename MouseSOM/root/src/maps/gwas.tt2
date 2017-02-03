@@ -94,11 +94,11 @@
     </thead>
     <tbody>
         <tr>
-            <td style="background: #ddd">Total Human Peaks</td>
+            <td style="background: #ddd">Total Human Modules</td>
 	    <td style="background: rgba(0,0,255,1); color: white">[% gwas.n_peaks %]</td>
 	</tr>
       	<tr>
-      	    <td style="background: #ddd">Human GWAS Peaks</td>
+      	    <td style="background: #ddd">Human GWAS Modules</td>
 	    [% IF gwas.n_peaks > 0 %]
 	        [% IF (gwas.n_gwas_peaks / gwas.n_peaks) >= 0.5 %]
 		    <td style="background: rgba(0,0,255,[% gwas.n_gwas_peaks / gwas.n_peaks %]); color: white;">[% gwas.n_gwas_peaks %]</td>
@@ -113,7 +113,7 @@
 </table>
 </p>
 
-<p>Human Peaks<br/>
+<p>Human Modules<br/>
 <table id="table_27" class="peakdata tablesorter">
     <thead>
     [% PROCESS table_row peak = gwas.header_d class = "header" nc = 0 table_id = "2" -%]

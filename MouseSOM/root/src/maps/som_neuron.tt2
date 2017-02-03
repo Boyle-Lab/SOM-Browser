@@ -160,10 +160,7 @@
 	var activeTab = params[0].split(/\=/g)[1]
 	var tabId = Number(activeTab) + 1;
         var targetUrl = "[% c.secure_uri_for('/maps/load_tab/') %]" + activeTab + '/' + this.id;
-        if (params[1]) {
-//            targetUrl = targetUrl + '?' + params[1];
-	      targetUrl = targetUrl + '?' + urlParts[6];
-        }
+        targetUrl = targetUrl + '?' + urlParts[6];
 	$("#neuron_id").text("Pattern " + this.id + " Peak Data");
         loadTab(tabId, targetUrl);
 

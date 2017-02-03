@@ -120,7 +120,7 @@
 </table>
 </p>
 
-<p>Mouse Peaks<br/>
+<p>Mouse Modules<br/>
 <table class="tablesorter peakdata" id="table_101">
     <thead>
     [% PROCESS table_row peak = chromstate.header_b class = "header" nc = 0 table_id = "states" n_peaks = chromstate.n_peaks -%]
@@ -133,7 +133,7 @@
 </table>
 </p>
 
-<p>Human Peaks<br/>
+<p>Human Modules<br/>
 <table class="tablesorter peakdata" id="table_102">
     <thead>
     [% PROCESS table_row peak = chromstate.header_b class = "header" nc = 0 table_id = "states" n_peaks = chromstate.n_peaks -%]

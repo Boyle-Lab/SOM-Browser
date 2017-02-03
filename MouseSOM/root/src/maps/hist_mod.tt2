@@ -143,7 +143,7 @@
 </table>
 </p>
 
-<p>Mouse Peaks<br/>
+<p>Mouse Modules<br/>
 <table id="table_14" class="peakdata tablesorter">
     <thead>
     [% PROCESS table_row peak = histone_mod.header_b class = "header" nc = 0 table_id = "peak" peaks = histone_mod -%]
@@ -162,7 +162,7 @@
 </table>
 </p>
 
-<p>Human Peaks<br/>
+<p>Human Modules<br/>
 <table id="table_15" class="peakdata tablesorter">
     <thead>
     [% PROCESS table_row peak = histone_mod.header_b class = "header" nc = 0 table_id = "peak" peaks = histone_mod -%]

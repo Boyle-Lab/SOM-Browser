@@ -214,7 +214,7 @@
 </table>
 </p>
 
-<p>Mouse Peaks<br/>
+<p>Mouse Modules<br/>
 <table id="table_5" class="peakdata tablesorter">
     <thead>
     [% PROCESS table_row peak = selection.header_b class = "header" nc = 0 table_id = "mouse" -%]
@@ -233,7 +233,7 @@
 </table>
 </p>
 
-<p>Human Peaks<br/>
+<p>Human Modules<br/>
 <table id="table_6" class="peakdata tablesorter">
     <thead>
     [% PROCESS table_row peak = selection.header_b class = "header" nc = 0 table_id = "human" -%]

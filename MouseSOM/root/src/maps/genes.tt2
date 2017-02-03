@@ -140,7 +140,7 @@
 </table>
 </p>
 
-<p>Mouse Peaks<br/>
+<p>Mouse Modules<br/>
 <table id="table_31" class="peakdata tablesorter">
     <thead>
     [% PROCESS table_row peak = genes_bnorm.header_1 class = "header" nc = 0 table_id = "peaks" -%]
@@ -159,7 +159,7 @@
 </table>
 </p>
 
-<p>Human Peaks<br/>
+<p>Human Modules<br/>
 <table id="table_32" class="peakdata tablesorter">
     <thead>
     [% PROCESS table_row peak = genes_bnorm.header_1 class = "header" nc = 0 table_id = "peaks" -%]
