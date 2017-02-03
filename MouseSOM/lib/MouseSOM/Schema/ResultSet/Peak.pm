@@ -494,7 +494,7 @@ sub get_search_res {
 	    }
 	} elsif ($tbl eq "factors") {
 	    if ($qry !~ m/factors\.name/) {
-		$qry =~ s/\* /\*, factors\.name AS TF \* /;
+		$qry =~ s/\* /\*, factors\.name AS TF /;
 	    }
 	    if ($cnd eq "=" || $cnd eq "!=" || $cnd eq "LIKE") {
 		if ($base_table eq "peaks") {
