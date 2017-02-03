@@ -652,9 +652,10 @@ sub get_search_res {
 	foreach my $key (sort(keys(%{$row}))) {
 #	    print STDERR "$key: ${$row}{$key}\n";
 	    # Parse the output to discard what we don't need
-	    if ($key eq "cell" || $key eq "chrom" || $key eq "chromStart" ||
-		$key eq "chromEnd" || $key eq "id_neurons" ||
-		$key eq "id_peaks" || $key eq "species") {
+	    if ($key eq "cell" ||
+		$key =~ m/^chrom/ ||
+		$key =~ m/^id_/ ||
+		$key eq "species") {
 		next;
 	    } else {
 		if (!exists($in_header{$key})) {
