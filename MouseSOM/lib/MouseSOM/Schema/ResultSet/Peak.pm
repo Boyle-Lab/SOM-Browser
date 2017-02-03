@@ -515,11 +515,12 @@ sub get_search_res {
 		    }
 		}
 	    }
-	} elsif ($tbl eq "go_data") {	    
-	    if ($qry !~ m/go_data\.name/) {
-		$qry =~ s/\* /\*, go_data\.name AS GO Term /;
-	    }
 	} else {
+	    if ($tbl eq "go_data") {	    
+		if ($qry !~ m/go_data\.name/) {
+		    $qry =~ s/\* /\*, go_data\.name AS GO Term /;
+		}
+	    }
 	    if ($cnd eq "LIKE") {
 		$qry .= " $tbl.$fld $cnd" . ' "%' . $val. '%"';
 	    } else {
