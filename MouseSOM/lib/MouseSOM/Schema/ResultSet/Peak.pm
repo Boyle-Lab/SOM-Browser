@@ -655,6 +655,7 @@ sub get_search_res {
 	    if ($key eq "cell" ||
 		$key =~ m/^chrom/ ||
 		$key =~ m/^id_/ ||
+		$key =~ m/_id$/ ||
 		$key eq "species") {
 		next;
 	    } else {
