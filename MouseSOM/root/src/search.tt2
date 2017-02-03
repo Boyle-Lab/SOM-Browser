@@ -151,7 +151,7 @@
     <input type="hidden" name="n_orders" value="0">
     <input type="hidden" name="n_groups" value="0">
         <p>Base Table: <select class=table_select name="base_table">
-        <option selected value="peaks">Peaks</option>
+        <option selected value="peaks">Modules</option>
         <option value="neurons">Patterns</option>
     </select>
     </p>

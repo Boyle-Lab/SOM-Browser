@@ -293,7 +293,9 @@ sub get_search_res {
 	"peaks_histmods" => "Histone Modifications",
 	"go_data" => "GO Term Enrichment",
 	"gwas" => "Gwas",
-	"peaks_dnase" => "DNase Hypersensitivity"	
+	"peaks_dnase" => "DNase Hypersensitivity",
+	"neurons" => "Patterns",
+	"peaks" => "Modules"
     );
 
     my $n_fields = $params->{n_fields};
@@ -807,7 +809,7 @@ sub get_search_res {
     $res{map_svg} = $map_svg;
     $res{q_header} = \@q_header;
     $res{query} = \@query_params;
-    $res{base_table} = $base_table;
+    $res{base_table} = $tbl_names{$base_table};
     $res{header} = \@header;
     $res{nrows} = $#rows + 1;
     $res{n_hg19} = $n_hg19;
