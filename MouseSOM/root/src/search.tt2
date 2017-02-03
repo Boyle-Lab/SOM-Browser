@@ -207,18 +207,18 @@
             <option selected value="NULL">Choose a Table</option>
             <option value="neurons">Patterns</option>
             <option value="factors">Transcription Factors</option>
-            <option value="peaks_factors">Peaks_Factors</option>
+            <!--<option value="peaks_factors">Peaks_Factors</option>-->
             <option value="peaks_genes">Target Genes</option>
             <option value="genes">Gene Expression (tpm)</option>
-            <option value="genes_qnorm">Gene Expression (quant norm tpm)</option>
+            <option value="genes_qnorm">Gene Expression (quantile norm tpm)</option>
             <option value="genes_bnorm">Gene Expression (batch norm tpm)</option>
-	    <option value="peaks">Peaks</option>
+	    <option value="peaks">Modules</option>
             <option value="peaks_selection">Selection</option>
             <option value="peaks_histmods">Histone Modification</option>
-            <option value="go_data">GO Enrichment</option>
-            <option value="peaks_gwas">Peaks_GWAS</option>
+            <option value="go_data">GO Term Enrichment</option>
+            <!--<option value="peaks_gwas">Peaks_GWAS</option>-->
             <option value="gwas">GWAS</option>
-            <option value="peaks_dnase">Peaks_DNase</option>
+            <option value="peaks_dnase">DNase Hypersensitivity</option>
         </select>
         Field: <select class="order_field" name="order_by_f">
             <option value="NULL"></option>
@@ -241,18 +241,18 @@
             <option selected value="NULL">Choose a Table</option>
     	    <option value="neurons">Patterns</option>
     	    <option value="factors">Transcription Factors</option>
-    	    <option value="peaks_factors">Peaks_Factors</option>
+    	    <!--<option value="peaks_factors">Peaks_Factors</option>-->
     	    <option value="peaks_genes">Target Genes</option>
             <option value="genes">Gene Expression (tpm)</option>
-            <option value="genes_qnorm">Gene Expression (quant norm tpm)</option>
+            <option value="genes_qnorm">Gene Expression (quantile norm tpm)</option>
             <option value="genes_bnorm">Gene Expression (batch norm tpm)</option>
     	    <option value="peaks">Peaks</option>
     	    <option value="peaks_selection">Selection</option>
     	    <option value="peaks_histmods">Histone Modification</option>
-    	    <option value="go_data">GO Enrichment</option>
-            <option value="peaks_gwas">Peaks_GWAS</option>
+    	    <option value="go_data">GO Term Enrichment</option>
+            <!--<option value="peaks_gwas">Peaks_GWAS</option>-->
             <option value="gwas">GWAS</option>
-            <option value="peaks_dnase">Peaks_DNase</option>
+            <option value="peaks_dnase">DNase Hypersensitivity</option>
     	</select>
     	Field: <select class="group_field" name="group_by_f">
             <option value="NULL"></option>
