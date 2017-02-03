@@ -518,7 +518,7 @@ sub get_search_res {
 	} else {
 	    if ($tbl eq "go_data") {	    
 		if ($qry !~ m/go_data\.name/) {
-		    $qry =~ s/\*/\*, go_data\.name AS GO Term/;
+		    $qry =~ s/\*/\*, go_data\.name AS "GO Term"/;
 		}
 	    }
 	    if ($cnd eq "LIKE") {
