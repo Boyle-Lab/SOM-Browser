@@ -70,14 +70,14 @@
     <p class="centeredbold">Search Results</p>
     <p>Base Table: [% results.base_table %]</p>
     <p>Query Parameters:</p>
-    <table class="peakdata">
+    <table id="params" class="peakdata">
         [% PROCESS table_row peak = results.q_header class = "header" nc = 0 link_col = 0 -%]
         [% FOREACH row = results.query -%]
             [% PROCESS table_row peak = row class = "shared" nc = 0 link_col = 0 -%]
         [% END -%]
     </table>
 
-[% IF results.base_table == "peaks" -%]
+[% IF results.base_table == "Modules" -%]
     <p>Found [% results.nrows %] peaks:</p>
     <p>Mouse Peaks<br/>
     <table id="table_2" class="peakdata tablesorter">
@@ -104,7 +104,7 @@
 	</tbody>
     </table>
     </p>
-[% ELSIF results.base_table == "neurons" -%]
+[% ELSIF results.base_table == "Patterns" -%]
     <p>Found [% results.nrows %] patterns:</p>
     <p>Patterns<br/>
     <table id="table_1" class="peakdata tablesorter">
