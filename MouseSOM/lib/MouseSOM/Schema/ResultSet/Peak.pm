@@ -279,6 +279,23 @@ sub get_search_res {
     my @header;
     my @out_rows;
 
+    # Transliteration of db table names to plain English names used in the
+    # search menus
+    my %tbl_names = (
+	"neurons" => "Patterns",
+	"factors" => "Transcription Factors",
+	"peaks_genes" => "Target Genes",
+	"genes" => "Gene Expression (tpm)",
+	"genes_bnorm" => "Gene Expression (batch norm tpm)",
+	"genes_qnorm" => "Gene Expression (quantile norm tpm)",
+	"peaks" => "Modules",
+	"peaks_selection" => "Selection",
+	"peaks_histmods" => "Histone Modifications",
+	"go_data" => "GO Term Enrichment",
+	"gwas" => "Gwas",
+	"peaks_dnase" => "DNase Hypersensitivity"	
+    );
+
     my $n_fields = $params->{n_fields};
     my $n_orders = $params->{n_orders};
     my $n_groups = $params->{n_groups};
@@ -469,7 +486,7 @@ sub get_search_res {
 
 	if ($i == 0) {
 	    $qry = $qry. " WHERE";
-	    push @query_params, ["", $tbl, $fld, $cnd, $val, $gwp];
+	    push @query_params, ["", $tbl_names{$tbl}, $fld, $cnd, $val, $gwp];
 	} else {
 	    my $chn = $params->{$chain};
 #	    print STDERR "$chn\n";
@@ -478,7 +495,7 @@ sub get_search_res {
 	    } else {
 		$qry .= " $chn";
 	    }
-	    push @query_params, [$chn, $tbl, $fld, $cnd, $val, $gwp];
+	    push @query_params, [$chn, $tbl_names{$tbl}, $fld, $cnd, $val, $gwp];
 	}
 
 	# Add the query terms
@@ -543,10 +560,10 @@ sub get_search_res {
 
 	if ($i == 0) {
 	    $qry .= " ORDER BY $tbl.$fld $ord";
-	    push @query_params, ["ORDER BY", $tbl, $fld, $ord, "", ""];
+	    push @query_params, ["ORDER BY", $tbl_names{$tbl}, $fld, $ord, "", ""];
 	} else {
 	    $qry .= ", $tbl.$fld $ord";
-	    push @query_params, ["then", $tbl, $fld, $ord, "", ""];
+	    push @query_params, ["then", $tbl_names{$tbl}, $fld, $ord, "", ""];
 	}
     }
 
@@ -573,10 +590,10 @@ sub get_search_res {
 
         if ($i == 0) {
             $qry .= " GROUP BY $tbl.$fld";
-            push @query_params, ["GROUP BY", $tbl, $fld, "", "", ""];
+            push @query_params, ["GROUP BY", $tbl_names{$tbl}, $fld, "", "", ""];
         } else {
             $qry .= ", $tbl.$fld";
-            push @query_params, ["then", $tbl, $fld, "", "", ""];
+            push @query_params, ["then", $tbl_names{$tbl}, $fld, "", "", ""];
         }
     }
 
@@ -602,13 +619,6 @@ sub get_search_res {
     if (!$gb_tbl_found) {
 	return -1;
     }
-
-#    if ($group_by_table ne "NULL") {
-#	$qry .= " GROUP BY $group_by_table.$group_by_field";
-#	@query_group_by = ("GROUP BY", $group_by_table, $group_by_field, "",
-#			   "", "");
-#	push @query_params, \@query_group_by;
-#    }
     
     $qry .= ";";
 
