@@ -246,7 +246,7 @@
             <option value="genes">Gene Expression (tpm)</option>
             <option value="genes_qnorm">Gene Expression (quantile norm tpm)</option>
             <option value="genes_bnorm">Gene Expression (batch norm tpm)</option>
-    	    <option value="peaks">Peaks</option>
+    	    <option value="peaks">Modules</option>
     	    <option value="peaks_selection">Selection</option>
     	    <option value="peaks_histmods">Histone Modification</option>
     	    <option value="go_data">GO Term Enrichment</option>
