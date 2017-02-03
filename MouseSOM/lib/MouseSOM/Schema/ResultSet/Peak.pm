@@ -493,7 +493,9 @@ sub get_search_res {
 		$qry .= ' "' . $val . '" NOT IN (SELECT pg.targetGene FROM peaks p INNER JOIN peaks_genes pg ON pg.id_peaks = p.id_peaks INNER JOIN neurons n ON n.id_neurons = p.id_neurons WHERE p.id_neurons = neurons.id_neurons)';
 	    }
 	} elsif ($tbl eq "factors") {
-	    $qry =~ s/\* /factors\.name AS TF, \* /;
+	    if ($qry !~ m/factors\.name/) {
+		$qry =~ s/\* /factors\.name AS TF, \* /;
+	    }
 	    if ($cnd eq "=" || $cnd eq "!=" || $cnd eq "LIKE") {
 		if ($base_table eq "peaks") {
 		    if ($cnd eq "=") {
@@ -514,7 +516,9 @@ sub get_search_res {
 		}
 	    }
 	} elsif ($tbl eq "go_data") {	    
-	    $qry =~ s/\* /go_data\.name AS GO Term, \* /;
+	    if ($qry !~ m/go_data\.name/) {
+		$qry =~ s/\* /go_data\.name AS GO Term, \* /;
+	    }
 	} else {
 	    if ($cnd eq "LIKE") {
 		$qry .= " $tbl.$fld $cnd" . ' "%' . $val. '%"';
