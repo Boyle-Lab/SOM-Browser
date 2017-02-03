@@ -161,7 +161,7 @@
 	var tabId = Number(activeTab) + 1;
         var targetUrl = "[% c.secure_uri_for('/maps/load_tab/') %]" + activeTab + '/' + this.id;
         targetUrl = targetUrl + '?' + urlParts[6];
-	$("#neuron_id").text("Pattern " + this.id + " Peak Data");
+	$("#neuron_id").text("Pattern " + this.id + " Module Data");
         loadTab(tabId, targetUrl);
 
 	$('#neuronsummary').html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + this.id + '<br/><img src="[% c.secure_uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
