@@ -666,14 +666,16 @@ sub get_search_res {
 		$key =~ m/^id_/ ||
 		$key =~ m/_id$/ ||
 		$key =~ m/q_/ ||
+		$key eq "name" ||
 		$key eq "species") {
 		next;
 	    } else {
-		$key =~ s/name_mm9/mouse gene/;
-		$key =~ s/name_hg19/human gene/;
+		my $col = $key;
+		$col =~ s/name_mm9/mouse gene/;
+		$col =~ s/name_hg19/human gene/;
 		if (!exists($in_header{$key})) {
 		    $in_header{$key} = "";
-		    push @header, $key;
+		    push @header, $col;
 		}
 		push @out_row, ${$row}{$key};
 	    }
