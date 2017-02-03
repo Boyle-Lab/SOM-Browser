@@ -12,7 +12,7 @@
     });
 
 </script>
-    <p id="neuron_id" class="centeredbold" name=[% neuron.id %]>Pattern [% neuron.id %] Peak Data</p>
+    <p id="neuron_id" class="centeredbold" name=[% neuron.id %]>Pattern [% neuron.id %] Module Data</p>
     <div id="tabs">
         <ul>
             [% FOREACH i = [0 .. 8] -%]
