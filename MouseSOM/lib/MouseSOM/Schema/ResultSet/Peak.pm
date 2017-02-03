@@ -492,24 +492,29 @@ sub get_search_res {
 	    } else {
 		$qry .= ' "' . $val . '" NOT IN (SELECT pg.targetGene FROM peaks p INNER JOIN peaks_genes pg ON pg.id_peaks = p.id_peaks INNER JOIN neurons n ON n.id_neurons = p.id_neurons WHERE p.id_neurons = neurons.id_neurons)';
 	    }
-	} elsif ($tbl eq "factors" && ($cnd eq "=" || $cnd eq "!=" || $cnd eq "LIKE")) {
-	    if ($base_table eq "peaks") {
-		if ($cnd eq "=") {
-		    $qry .= ' "' . $val . '" IN (SELECT f.name FROM factors f INNER JOIN peaks_factors pf ON pf.id_factors = f.id_factors WHERE pf.id_peaks = peaks.id_peaks AND pf.score = 1)';
-		} elsif ($cnd eq "LIKE") {			
-		    $qry .= ' EXISTS (SELECT 1 FROM factors f INNER JOIN peaks_factors pf ON pf.id_factors = f.id_factors WHERE pf.id_peaks = peaks.id_peaks AND pf.score = 1 AND f.name LIKE "%' . $val . '%")';
-		} else {
-		    $qry .= ' "' . $val . '" NOT IN (SELECT f.name FROM factors f INNER JOIN peaks_factors pf ON pf.id_factors = f.id_factors WHERE pf.id_peaks = peaks.id_peaks AND pf.score = 1)';
-		}
-	    } elsif ($base_table eq "neurons") {
-		if ($cnd eq "=") {
-		    $qry .= ' "' . $val . '" IN (SELECT f.name FROM factors f INNER JOIN neurons_factors nf ON nf.id_factors = f.id_factors WHERE nf.id_neurons = neurons.id_neurons)';
-		} elsif ($cnd eq "LIKE") {
-		    $qry .= ' EXISTS (SELECT 1 FROM factors f INNER JOIN neurons_factors nf ON nf.id_factors = f.id_factors WHERE nf.id_neurons = neurons.id_neurons AND f.name LIKE "%' . $val . '%")';
-		} else {
-		    $qry .= ' "' . $val . '" NOT IN (SELECT f.name FROM factors f INNER JOIN neurons_factors nf ON nf.id_factors = f.id_factors WHERE nf.id_neurons = neurons.id_neurons)';
+	} elsif ($tbl eq "factors") {
+	    $qry =~ s/\* FROM/factors\.name AS TF, \*/;
+	    if ($cnd eq "=" || $cnd eq "!=" || $cnd eq "LIKE") {
+		if ($base_table eq "peaks") {
+		    if ($cnd eq "=") {
+			$qry .= ' "' . $val . '" IN (SELECT f.name FROM factors f INNER JOIN peaks_factors pf ON pf.id_factors = f.id_factors WHERE pf.id_peaks = peaks.id_peaks AND pf.score = 1)';
+		    } elsif ($cnd eq "LIKE") {			
+			$qry .= ' EXISTS (SELECT 1 FROM factors f INNER JOIN peaks_factors pf ON pf.id_factors = f.id_factors WHERE pf.id_peaks = peaks.id_peaks AND pf.score = 1 AND f.name LIKE "%' . $val . '%")';
+		    } else {
+			$qry .= ' "' . $val . '" NOT IN (SELECT f.name FROM factors f INNER JOIN peaks_factors pf ON pf.id_factors = f.id_factors WHERE pf.id_peaks = peaks.id_peaks AND pf.score = 1)';
+		    }
+		} elsif ($base_table eq "neurons") {
+		    if ($cnd eq "=") {
+			$qry .= ' "' . $val . '" IN (SELECT f.name FROM factors f INNER JOIN neurons_factors nf ON nf.id_factors = f.id_factors WHERE nf.id_neurons = neurons.id_neurons)';
+		    } elsif ($cnd eq "LIKE") {
+			$qry .= ' EXISTS (SELECT 1 FROM factors f INNER JOIN neurons_factors nf ON nf.id_factors = f.id_factors WHERE nf.id_neurons = neurons.id_neurons AND f.name LIKE "%' . $val . '%")';
+		    } else {
+			$qry .= ' "' . $val . '" NOT IN (SELECT f.name FROM factors f INNER JOIN neurons_factors nf ON nf.id_factors = f.id_factors WHERE nf.id_neurons = neurons.id_neurons)';
+		    }
 		}
 	    }
+	} elsif ($tbl eq "go_data") {	    
+	    $qry =~ s/\* FROM/go_data\.name AS GO Term, \*/;
 	} else {
 	    if ($cnd eq "LIKE") {
 		$qry .= " $tbl.$fld $cnd" . ' "%' . $val. '%"';
@@ -656,9 +661,12 @@ sub get_search_res {
 		$key =~ m/^chrom/ ||
 		$key =~ m/^id_/ ||
 		$key =~ m/_id$/ ||
+		$key =~ m/q_/ ||
 		$key eq "species") {
 		next;
 	    } else {
+		$key =~ s/name_mm9/mouse gene/;
+		$key =~ s/name_hg19/human gene/;
 		if (!exists($in_header{$key})) {
 		    $in_header{$key} = "";
 		    push @header, $key;
