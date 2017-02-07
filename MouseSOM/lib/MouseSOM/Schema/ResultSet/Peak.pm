@@ -498,7 +498,7 @@ sub get_search_res {
 	}
 
 	if ($cgp && !$is_group){
-	    $qry .= '(';
+	    $qry .= ' (';
 	    $is_group = 1;
 	}
 	
@@ -549,12 +549,11 @@ sub get_search_res {
 	    }
 	}
 
-	if ($is_group && !$cgp) {
+	if ($is_group && (!$cgp || $i == $nfields-1)) {
 	    $is_group = 0;
 	    $qry .= ')';
-	} elsif ($is_group && $i == $n_fields-1) {
-	    $qry .= ')';
 	}
+	
     }
 
     for (my $i = 0; $i < $n_orders; $i++) {
