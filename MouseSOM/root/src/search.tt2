@@ -43,7 +43,7 @@
       if (len == 0) {
           $html.find('[name=chain_0]')[0].remove();
           $html.find('[name=remove]')[0].remove();
-	  $html.find('[name=group_cond]')[0].remove();
+	  //$html.find('[name=group_cond]')[0].remove();
       }
       return $html.html();
     }
