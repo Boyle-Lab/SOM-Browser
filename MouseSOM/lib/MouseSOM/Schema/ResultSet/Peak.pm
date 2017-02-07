@@ -549,7 +549,7 @@ sub get_search_res {
 	    }
 	}
 
-	if ($is_group && (!$cgp || $i == $n_fields-1)) {
+	if ($is_group && !$cgp) {
 	    $is_group = 0;
 	    $qry .= ')';
 	}	
