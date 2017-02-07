@@ -444,7 +444,14 @@ sub get_search_res {
                 if ($gwas_q) {
                     next;
                 }
-            }
+            } elsif ($table eq "peaks_genes" ||
+		     $table eq "genes" ||
+		     $table eq "genes_bnorm" ||
+		     $table eq "genes_qnorm") {
+		# Do not add any base-level joins for these tables because they have too large
+		# an impact on query efficiency for "like" comparisons!
+		next;
+	    }
 
 	    $qry .= " INNER JOIN $table ON $table.id_neurons = neurons.id_neurons";
 	}
