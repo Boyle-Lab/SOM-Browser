@@ -352,7 +352,9 @@ sub get_search_res {
 #	}
 #    }
 
-
+    my $base_qry = $qry;
+    
+    # Set up joins
     foreach my $table (keys(%tables)) {
 #	    print STDERR "$table\n";
 	if ($base_table eq "peaks") {
@@ -420,14 +422,15 @@ sub get_search_res {
 		$factors_q = 1;
 		$qry .= " INNER JOIN neurons_factors on neurons_factors.id_neurons = neurons.id_neurons INNER JOIN factors ON factors.id_factors = neurons_factors.id_factors";
 		next;
-	    } elsif ($table eq "peaks_factors" || $table eq "peaks_genes" ||
-		     $table eq "peaks_selection" || $table eq "peaks_histmods")
-	    {
+	    } elsif ($table eq "peaks_factors" ||
+#		     $table eq "peaks_genes" ||
+		     $table eq "peaks_selection"||
+		     $table eq "peaks_histmods") {
 		$qry .= " INNER JOIN peaks ON peaks.id_neurons = neurons.id_neurons INNER JOIN $table ON $table.id_peaks = peaks.id_peaks";
 		next;
-	    } elsif ($table eq "genes" || $table eq "genes_bnorm" || $table eq "genes_qnorm") {
-		$qry .= " INNER JOIN peaks ON peaks.id_neurons = neurons.id_neurons INNER JOIN peaks_genes ON peaks_genes.id_peaks = peaks.id_peaks INNER JOIN $table ON $table.id_genes = peaks_genes.id_genes";
-		next;
+#	    } elsif ($table eq "genes" || $table eq "genes_bnorm" || $table eq "genes_qnorm") {
+#		$qry .= " INNER JOIN peaks ON peaks.id_neurons = neurons.id_neurons INNER JOIN peaks_genes ON peaks_genes.id_peaks = peaks.id_peaks INNER JOIN $table ON $table.id_genes = peaks_genes.id_genes";
+#		next;
 	    } elsif ($table eq "gwas") {
                 $gwas_q = 1;
                 if ($peaks_gwas_q) {
