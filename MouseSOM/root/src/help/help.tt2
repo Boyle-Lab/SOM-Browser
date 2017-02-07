@@ -1,11 +1,11 @@
-[% META title = 'Boyle Lab Human-Mouse SOM Browser Help' %]
+[% META title = 'Human-Mouse Cis-Regulatory Module Browser Help' %]
 
 <div id="mapblock">
     <p class="centeredbold">Help Topics</p>
     <p>
         <ol type="I">
-            <li><a class="help_link" href="javascript:void(0)" name="about" id="about"">About the SOM Browser</a></li>
-       	    <li><a class="help_link" href="javascript:void(0)" name="som_data_prep" id="som_data_prep">SOM Data Preparation</a></li>
+            <li><a class="help_link" href="javascript:void(0)" name="about" id="about"">About the Browser</a></li>
+       	    <li><a class="help_link" href="javascript:void(0)" name="som_data_prep" id="som_data_prep">Self-Organizing Map Data Preparation</a></li>
        	    <li><a class="help_link" href="javascript:void(0)" name="annotations" id="annotations">Annotations</a>
 	        <ol type="i">
 		    <li><a class="help_sublink" href="javascript:void(0)" name="data_types">Data Types</a></li>

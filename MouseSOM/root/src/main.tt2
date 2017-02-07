@@ -1,4 +1,4 @@
-[% META title = 'Human-Mouse Gene Regulatory Module Browser Welcome' %]
+[% META title = 'Human-Mouse Cis-Regulatory Module Browser Welcome' %]
 
 [% BLOCK build_map_list -%]
     [% FOREACH map = maps -%]
@@ -52,7 +52,7 @@
    <svg id="som_map" class="mapmain" width="800px" height="460px"></svg>
 <!--    <img id="som_map" class="mapmain" width="800px" height="460px" src="" title="Random SOM Image"> -->
 </p>
-<p class="centeredbold" style="font-size: 18pt;">Welcome to the Human-Mouse Gene Regulatory Module Browser!</p>
+<p class="centeredbold" style="font-size: 18pt;">Welcome to the Human-Mouse Cis-Regulatory Module Browser!</p>
 <p class="centeredbody">This resource provides various views of the Self-Organizing Map (SOM) data presented in (reference). These data describe shared and species-specific gene regulatory grammar, in the form of transcription factor co-occupancy patterns discovered in a Self Organizing Map experiment involving ENCODE ChIP-Seq data from 27 factors in four cell types: Human GM12878 and Mouse CH12 lymphoblastoid, and Human K562 and Mouse MEL myeloid cells. Here we present these co-occupancy patterns projected onto a map topology representing the grammatical similarity of the patterns as discovered by the SOM algorithm. We project various properties and annotations related to each pattern onto this topology and a tabbed browsing section provides detailed annotations for individual modules in the dataset to help make sense of the regulatory propterties and relationships between each pattern. Search and side-by-side map comparison tools offer flexible ways to probe and compare annotations. See the <a href="[% c.secure_uri_for('/help') %]">Help</a> section for more details and feel free to <a href="[% c.secure_uri_for('/help') %]?topic=getting_help">contact us</a> with any questions.</p>
 <p class="centeredbody big_red_bold">Select a map from the menus to get started!</p>
 

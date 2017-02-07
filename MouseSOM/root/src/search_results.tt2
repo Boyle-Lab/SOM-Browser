@@ -78,8 +78,8 @@
     </table>
 
 [% IF results.base_table == "Modules" -%]
-    <p>Found [% results.nrows %] peaks:</p>
-    <p>Mouse Peaks<br/>
+    <p>Found [% results.nrows %] modules:</p>
+    <p>Mouse Modules<br/>
     <table id="table_2" class="peakdata tablesorter">
         <thead>
     	[% PROCESS table_row peak = results.header class = "header" nc = 0 link_col = 0 -%]
@@ -92,7 +92,7 @@
     </table>
     </p>
 
-    <p>Human Peaks<br/>
+    <p>Human Modules<br/>
     <table id="table_3" class="peakdata tablesorter">
         <thead>
     	[% PROCESS table_row peak = results.header class = "header" nc = 0 link_col = 0 -%]

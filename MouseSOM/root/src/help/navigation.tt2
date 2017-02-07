@@ -1,6 +1,6 @@
 <p class="centeredbold">Navigating the Browser</p>
 <p class="bold" id="intro">Getting Started</p>
-<p>The Human-Mouse Gene Regulatory Module Browser consists of three tools: the Data Browser, the Compare Maps tool, and the Search tool.</p>
+<p>The Human-Mouse Cis-Regulatory Module Browser consists of three tools: the Data Browser, the Compare Maps tool, and the Search tool.</p>
 <p><ol type="1">
     <li><a href="#browser">Data Browser</a>
         <p class="indented">The Data Browser offers an integrated display for grammatical patterns and annotations with three sections:</p>
