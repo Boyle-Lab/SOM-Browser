@@ -170,7 +170,7 @@
             <p class="indented">Search conditions can be removed by simply clicking the "Remove" button beside the term you would like to remove.</p>
         <li><p>Combining Conditions</p></li>
 	    <img src="[% c.secure_uri_for('/static/images/browser_search_combine-terms.png') %]" class="help_img">
-            <p class="indented">Search terms may be combined into parenthetical groups by checking the "Group with previous" box next to any term. This is equivalent to adding a set of parentheses surrounding the given term with the term in the row directly above it. You can include multiple groups of terms but nested groups are not currently supported.</p>
+            <p class="indented">Search terms may be combined into parenthetical groups by checking the "Group with next" box next to any term. This is equivalent to adding a set of parentheses surrounding the given term with the term in the row directly following it. You can include multiple groups of terms but nested groups are not currently supported.</p>
 	    <p class="indented">Equivalent SQL code to the example shown would be "WHERE (target_genes.targetGene = "brca1" OR target_genes.targetGene = "tp53") AND gene_expression_tpm.exp_g > 5".</p>
         <li><p>Adding "Order By" Conditions</p></li>
 	    <img src="[% c.secure_uri_for('/static/images/browser_search_order-by.png') %]" class="help_img">

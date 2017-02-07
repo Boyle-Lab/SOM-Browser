@@ -311,8 +311,6 @@ sub get_search_res {
 #    my $group_by_table = $params->{group_by_t};
 #    my $group_by_field = $params->{group_by_f};
 
-    my @q_header = ("", "Table", "Field", "Condition", "Value", "Group W/Prev");
-
     my $qry;
     if ($n_groups == 0) {
 	$qry = "SELECT * FROM $base_table";
@@ -468,18 +466,17 @@ sub get_search_res {
         my $val = $params->{$vname};
 	my $cgp = $params->{$group};
 
-	if ($cgp && !$is_group) {
-	    $is_group = 1;
-
-	    $qry =~ m/(\S+\s>*<*!*=*[XOR]*[NOT]*[LIKE]*\s\S+$)/;
+#	if ($cgp && !$is_group) {
+#	    $is_group = 1;
+#	    $qry =~ m/(\S+\s>*<*!*=*[XOR]*[NOT]*[LIKE]*\s\S+$)/;
 #	    print STDERR "$1\n"
-	    my $m = $1;;
-	    $qry =~ s/$m/\($m/;
-	}
-	if ($is_group && !$cgp) {
-	    $is_group = 0;
-	    $qry .= ')';  
-	}
+#	    my $m = $1;;
+#	    $qry =~ s/$m/\($m/;
+#	}
+#	if ($is_group && !$cgp) {
+#	    $is_group = 0;
+#	    $qry .= ')';  
+#	}
 
 	my $gwp = "";
 	if ($cgp) {
@@ -500,6 +497,11 @@ sub get_search_res {
 	    push @query_params, [$chn, $tbl_names{$tbl}, $fld, $cnd, $val, $gwp];
 	}
 
+	if ($cgp && !$is_group){
+	    $qry .= '(';
+	    $is_group = 1;
+	}
+	
 	# Add the query terms
 	if ($base_table eq "neurons" && $tbl =~ m/genes/ &&
 	    ($fld eq "targetGene" || $fld eq "name_hg19" || $fld eq "name_mm9") &&
@@ -547,7 +549,10 @@ sub get_search_res {
 	    }
 	}
 
-	if ($is_group && $i == $n_fields-1) {
+	if ($is_group && !$cgp) {
+	    $is_group = 0;
+	    $qry .= ')';
+	} elsif ($is_group && $i == $n_fields-1) {
 	    $qry .= ')';
 	}
     }
@@ -807,7 +812,7 @@ sub get_search_res {
 
     $res{show_map} = $show_map;
     $res{map_svg} = $map_svg;
-    $res{q_header} = \@q_header;
+    $res{q_header} = ["", "Table", "Field", "Condition", "Value", "Group W/Next"];;
     $res{query} = \@query_params;
     $res{base_table} = $tbl_names{$base_table};
     $res{header} = \@header;

@@ -194,7 +194,7 @@
             <option value="LIKE">LIKE</option>
         </select>
         <input class="span3" placeholder="Value" type="text" name="value">
-	<span name="group_cond">Group with previous<input type="checkbox" name="cond_group" value="1"></span>
+	<span name="group_cond">Group with next<input type="checkbox" name="cond_group" value="1"></span>
 	<input class="remove_field" type="submit" name="remove" value="Remove">
     </div>
 
@@ -287,7 +287,7 @@
 	 <p>Additional terms can be added by clicking the "Add More Search Terms" button. Terms can be combined with "AND", "OR", "XOR" or "NOT" by selecting the appropriate value from the menu.</p>
 	 <p>When all parameters have been entered, run the search by clicking the "Search" button.</p>
      <li><p class="bold">Parenthetical Groups</p></li>
-         <p>Search terms can be combined into parenthetical groups by clicking the "Group With Previous" box at the right of the row.</p>
+         <p>Search terms can be combined into parenthetical groups by clicking the "Group With Next" box at the right of the row to put a set of parentheses around the current and next terms.</p>
      <li><p class="bold">Removing Terms</p></li>
          <ol type="i">
              <li>Click the "Remove" button beside the term you want to remove.</li>
