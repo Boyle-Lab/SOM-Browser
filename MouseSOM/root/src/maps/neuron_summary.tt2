@@ -19,11 +19,11 @@
             <td class="cat">Mouse Modules</td>
             <td class="val">[% neuron.n_mouse %] ([% neuron.pct_mouse %]%)</td>
         <tr>
-            <td class="cat">% Human Patterns</td>
+            <td class="cat">% All Human Modules</td>
             <td class="val">[% neuron.frac_human %]%</td>
         </tr>
         <tr>
-            <td class="cat">% Mouse Patterns</td>
+            <td class="cat">% All Mouse Modules</td>
             <td class="val">[% neuron.frac_mouse %]%</td>
         </tr>
         <tr>
@@ -39,7 +39,7 @@
             <td class="val">[% genes.tss_dist_med_mm9 %]<br/>([% genes.tss_dist_med_CH12 %]) ([% genes.tss_dist_med_MEL %])</td>
         </tr>
         <tr>
-            <td class="cat">Classification</td>
+            <td class="cat">Grammatical Class</td>
             <td class="val">[% neuron.classification %]</td>
         </tr>
     </table>
