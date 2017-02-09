@@ -1035,9 +1035,8 @@ sub get_orthologs {
 	    }
 	    $row[$p+4] = $factor_str{$id};
 	}
+	print STDERR "@row\n";
     }
-
-    print STDERR "@row\n";
 
     $peaks{s_header} = ["Species/Cell", "N Peaks", "N Orth"];
     $peaks{p_header} = ["Cell", "Location", "TssDist", "Orth", "Orth Location",
