@@ -42,9 +42,9 @@
 
                 [% IF loop.count == 2 -%]
                     [% IF (col / n_peaks) >= 0.5 %]
-                        <td style="background: rgba(0,0,255,[% col / n_peaks %]); color: white">[% col %]</td>
+                        <td style="background: rgba(255,0,0,[% col / n_peaks %]); color: white">[% col %]</td>
                     [% ELSE %]
-                        <td style="background: rgba(0,0,255,[% col / n_peaks %])">[% col %]</td>
+                        <td style="background: rgba(255,0,0,[% col / n_peaks %])">[% col %]</td>
                     [% END %]
                 [% ELSIF loop.count >= 3 && loop.count <= 9 -%]
                     [% IF (col / peaks.global_max) >= 0.5 %]
