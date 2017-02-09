@@ -51,6 +51,7 @@
 	[% ELSE -%]
 	    [% IF class =="header" -%]
                 <th class="[% class %]">[% col %]</th>
+
             [% ELSIF class == "mouse" && loop.count > nc -%]
 	        [% IF loop.count == 5 -%]
 		    [% IF col == "." %]
@@ -61,7 +62,7 @@
                 [% ELSIF loop.count >= 8 -%]
 		    [% IF col == "." || col == "0" %]
                         <td class="[% class %]" style="background: rgba(255,0,0,0)">[% col %]</td>
-		    [% ELSIF loop.count > 8 %]
+		    [% ELSIF loop.count > 9 %]
 		   	 [%# Hidden Columns -- do nothing %]
 		    [% ELSE %]
 		        <td class="[% class %]" style="background: rgba(255,0,0,0.1)"><a class="pattern_link" href="javascript:void(0);" title="[% peak.$str_idx %]">[% col %]</a></td>
@@ -77,7 +78,8 @@
 			[% END %]
 		    [% END %]
 		[% END -%]
-            [% ELSIF class == "human" && loop.count > nc -%]
+
+	    [% ELSIF class == "human" && loop.count > nc -%]
 	        [% IF loop.count == 5 -%]
 		    [% IF col == "." %]
                         <td class="[% class %]" style="background: rgba(255,0,0,0)">[% col %]</td>
@@ -101,6 +103,7 @@
                         <td class="[% class %]" style="background: rgba(0,0,255,0.1)"><a class="pattern_link" href="javascript:void(0);" title="[% peak.$str_idx %]">[% col %]</a></td>
 		    [% END %]
 		[% END -%]
+		
             [% ELSE -%]
 	        [% IF loop.count == 2 %]
 		    [% IF class == "human" %]

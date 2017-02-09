@@ -845,23 +845,13 @@ sub get_orthologs {
     my @peaks_hg19;
     my @peaks_mm9;
 
-    my @total;
-    my @total_hg19;
-    my @total_mm9;
-    my @total_K562;
-    my @total_MEL;
-    my @total_GM12878;
-    my @total_CH12;
-
-    $total[0] = "Overall";
-    $total_hg19[0] = "Human";
-    $total_mm9[0] = "Mouse";
-    $total_K562[0] = "Human K562";
-    $total_MEL[0] = "Mouse MEL";
-    $total_GM12878[0] = "Human GM12878";
-    $total_CH12[0] = "Mouse CH12";
-
-    my %factor_str;
+    my @total = ("Overall", 0, 0);
+    my @total_hg19 = ("Human", 0, 0);
+    my @total_mm9 = ("Mouse", 0, 0);
+    my @total_K562 = ("Human K562", 0, 0);
+    my @total_MEL = ("Mouse MEL", 0, 0);
+    my @total_GM12878 = ("Human GM12878", 0, 0);
+    my @total_CH12 = ("Mouse CH12", 0, 0);
 
     my $peaks_rs;
     if ($show >= 0) {
@@ -925,8 +915,7 @@ sub get_orthologs {
 	    . $peak->get_column('chromend');
 	$row[1] = $loc;
 	$row[2] = $peak->get_column('targetgenedist');
-	my $is_orth = $peak->get_column('is_orth');
-	$row[3] = $is_orth;
+	my $is_orth = $row[3] = $peak->get_column('is_orth');
 	$row[4] = $peak->get_column('orth_coords');
 
 
@@ -971,7 +960,26 @@ sub get_orthologs {
 	$row[7] = $pats{CH12};
 	$row[8] = $pats{MEL};
 
-	# Count up totals for all, orthologs, species and cells
+	# Assign pattern factor strings
+	my %factor_str;
+	for (my $p = 5; $p <= 8; $p++) {
+	    my $id = $row[$p];
+	    if (!exists($factor_str{$id})) {
+		my @tmp;
+		my $factors_rs = $factors_db->search(
+		    { 'id_neurons' => $id },
+		    { join => 'neurons_factors' }
+		    );
+		while (my $f = $factors_rs->next) {
+		    push @tmp, $f->get_column('name');
+		}
+		my $str = join '-', @tmp;
+		$factor_str{$id} = $str;
+	    }
+	    $row[$p+4] = $factor_str{$id};
+	}	
+
+	# Count up stats for all, orthologs, species and cells
 	$n++;
 	$total[1]++;
 	if ($is_orth) {
@@ -1017,27 +1025,8 @@ sub get_orthologs {
 		}
             }
 	}
-	
-	# Assign pattern factor strings
-	for (my $p = 5; $p <= 8; $p++) {
-	    my $id = $row[$p];
-	    if (!exists($factor_str{$id})) {
-		my @tmp;
-		my $factors_rs = $factors_db->search(
-		    { 'id_neurons' => $id },
-		    { join => 'neurons_factors' }
-		    );
-		while (my $f = $factors_rs->next) {
-		    push @tmp, $f->get_column('name'); 
-		}
-		my $str = join '-', @tmp;
-		$factor_str{$id} = $str;
-	    }
-	    $row[$p+4] = $factor_str{$id};
-	}
-	print STDERR "@row\n";
     }
-
+    
     $peaks{s_header} = ["Species/Cell", "N Peaks", "N Orth"];
     $peaks{p_header} = ["Cell", "Location", "TssDist", "Orth", "Orth Location",
 			"GM12878 Pat", "K562 Pat", "CH12 Pat", "MEL Pat"];
