@@ -1037,6 +1037,8 @@ sub get_orthologs {
 	}
     }
 
+    print STDERR "@row\n";
+
     $peaks{s_header} = ["Species/Cell", "N Peaks", "N Orth"];
     $peaks{p_header} = ["Cell", "Location", "TssDist", "Orth", "Orth Location",
 			"GM12878 Pat", "K562 Pat", "CH12 Pat", "MEL Pat"];
