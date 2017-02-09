@@ -861,10 +861,6 @@ sub get_orthologs {
     $total_GM12878[0] = "Human GM12878";
     $total_CH12[0] = "Mouse CH12";
 
-    my @header = ("Species/Cell", "N Peaks", "N Orth");
-    my @header_1 = ("Cell", "Location", "TssDist", "Orth", "Orth Location",
-		    "GM12878 Pat", "K562 Pat", "CH12 Pat", "MEL Pat");
-
     my %factor_str;
 
     my $peaks_rs;
@@ -933,11 +929,30 @@ sub get_orthologs {
 	$row[3] = $is_orth;
 	$row[4] = $peak->get_column('orth_coords');
 
-	my $K562_pat = ".";
-	my $GM12878_pat = ".";
-	my $MEL_pat = ".";
-	my $CH12_pat = ".";
 
+	# Get the pattern id numbers for all the interrelated modules (self, pair and ortholog(s))
+	my %pats = (
+	    'K562' => '.',
+	    'GM12878' => '.',
+	    'MEL' => '.',
+	    'CH12' => '.'
+	    );
+
+	# Self
+	$pats{$peak->get_column('cell')} = $peak->get_column('id_neurons');
+
+	# Pair
+	my $pair_id = $peak->get_column('pair_id');
+	if (!defined($pair_id)) {
+	    $pair_id = ".";
+	} else {
+	    my $pair_peak = $self->find(
+		{ 'id_peaks' => $pair_id }
+		);
+	    $pats{$pair_peak->get_column('cell')} = $pair_peak->get_column('id_neurons');
+	}
+	
+	# Orthologs
 	my $orths_rs = $orths_db->search(
 	    { 'me.id_peaks' => $id_peaks },
 	    { join => 'peaks',
@@ -947,37 +962,20 @@ sub get_orthologs {
 	    );
 	
 	while (my $orth = $orths_rs->next()) {
-	    my $orth_cell = $orth->get_column('cell');
-	    if ($orth_cell eq "GM12878") {
-		$GM12878_pat = $orth->get_column('id_neurons');
-	    } elsif ($orth_cell eq "K562") {
-		$K562_pat = $orth->get_column('id_neurons');
-	    } elsif ($orth_cell eq "MEL") {
-		$MEL_pat = $orth->get_column('id_neurons');
-	    } else {
-		$CH12_pat = $orth->get_column('id_neurons');
-            }
+	    $pats{$orth->get_column('cell')} = $orth->get_column('id_neurons');
 	}
 
-	$row[5] = $GM12878_pat;
-	$row[6] = $K562_pat;
-	$row[7] = $CH12_pat;
-	$row[8] = $MEL_pat;
+	# Store the results in the results array
+	$row[5] = $pats{GM12878};
+	$row[6] = $pats{K562};
+	$row[7] = $pats{CH12};
+	$row[8] = $pats{MEL};
 
+	# Count up totals for all, orthologs, species and cells
 	$n++;
 	$total[1]++;
 	if ($is_orth) {
 	    $total[2]++;
-	}
-	
-	my $pair_id = $peak->get_column('pair_id');
-	if (!defined($pair_id)) {
-	    $pair_id = ".";
-	} else {
-	    my $pair_peak = $self->find(
-                { 'id_peaks' => $pair_id }
-                );
-	    $pair_id = $pair_peak->get_column('id_neurons');
 	}
 
         my $spp = $peak->get_column('species');
@@ -993,15 +991,11 @@ sub get_orthologs {
 		if ($is_orth) {
 		    $total_K562[2]++;
 		}
-		$row[6] = $peak->get_column('id_neurons');
-		$row[5] = $pair_id;
             } elsif ($cell eq "GM12878") {
                 $total_GM12878[1]++;
 		if ($is_orth) {
 		    $total_GM12878[2]++;
 		}
-		$row[5] = $peak->get_column('id_neurons');
-		$row[6] = $pair_id;
             }
 
 	} else {
@@ -1016,15 +1010,11 @@ sub get_orthologs {
 		if ($is_orth) {
 		    $total_MEL[2]++;
 		}
-		$row[8] = $peak->get_column('id_neurons');
-		$row[7] = $pair_id;
             } elsif ($cell eq "CH12") {
                 $total_CH12[1]++;
 		if ($is_orth) {
 		    $total_CH12[2]++;
 		}
-		$row[7] = $peak->get_column('id_neurons');
-		$row[8] = $pair_id;
             }
 	}
 	
@@ -1047,8 +1037,9 @@ sub get_orthologs {
 	}
     }
 
-    $peaks{s_header} = \@header;
-    $peaks{p_header} = \@header_1;
+    $peaks{s_header} = ["Species/Cell", "N Peaks", "N Orth"];
+    $peaks{p_header} = ["Cell", "Location", "TssDist", "Orth", "Orth Location",
+			"GM12878 Pat", "K562 Pat", "CH12 Pat", "MEL Pat"];
     $peaks{peaks_hg19} = \@peaks_hg19;
     $peaks{peaks_mm9} = \@peaks_mm9;
     $peaks{npeaks} = $n;
