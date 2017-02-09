@@ -96,24 +96,13 @@ sub get_genes_bnorm {
     my @peaks_hg19;
     my @peaks_mm9;
 
-    my @total;
-    my @total_hg19;
-    my @total_mm9;
-    my @total_K562;
-    my @total_MEL;
-    my @total_GM12878;
-    my @total_CH12;
-
-    $total[0] = "Overall";
-    $total_hg19[0] = "Human";
-    $total_mm9[0] = "Mouse";
-    $total_K562[0] = "Human K562";
-    $total_MEL[0] = "Mouse MEL";
-    $total_GM12878[0] = "Human GM12878";
-    $total_CH12[0] = "Mouse CH12";
-
-    $total[1] =  $total_K562[1] = $total_MEL[1] = $total_GM12878[1] =
-	$total_CH12[1] = $total_hg19[1] =$total_mm9[1] = 0;
+    my @total = ("Overall", 0, 0, 0);
+    my @total_hg19 = ("Human", 0, 0, 0);
+    my @total_mm9 = ("Mouse", 0, 0, 0);
+    my @total_K562 = ("Human K562", 0, 0, 0);
+    my @total_MEL = ("Mouse MEL", 0, 0, 0);
+    my @total_GM12878 = ("Human GM12878", 0, 0, 0);
+    my @total_CH12 = ("Mouse CH12", 0, 0, 0);
 
     my (@tss, @tss_hg19, @tss_mm9, @tss_K562, @tss_GM12878, @tss_MEL,
         @tss_CH12);
@@ -183,14 +172,6 @@ sub get_genes_bnorm {
             );
     }
     
-    my @header = ("Species/Cell", "N Peaks", "Med TSS Dist", "Med Norm Expr");
-
-    my @header_1 = ("Cell", "Location", "Target Gene",
-                    "TssDist", "GM12878 Expr", "K562 Expr", 
-		    "CH12 Expr", "MEL Expr",
-                    "log2 FC K562/GM12878", "Log2 FC MEL/CH12",
-		    "Log2 FC CH12/GM12878", "Log2 FC MEL/K562");
-
     my $fpkm_max = -9999;
     my $tss_max = -999999999999999999999999999999999;
     my $fc_max = -9999;
@@ -228,6 +209,13 @@ sub get_genes_bnorm {
 	$row[9] = $peak->get_column('fc_mc');
 	$row[10] = $peak->get_column('fc_cg');
 	$row[11] = $peak->get_column('fc_mk');
+
+	# Check for undefined values
+	for (my $i = 0; $i <= 11; $i++) {
+	    if (!defined($row[$i])) {
+		$row[$i] = "NA";
+	    }
+	}
 
         if (defined($row[4]) && $row[4] ne "NA" && $row[4] > $fpkm_max) {
             $fpkm_max = $row[4];
@@ -310,8 +298,11 @@ sub get_genes_bnorm {
 		}
                 $total_CH12[1]++;
             }
-        }
+        }	
         $n++;
+	if ($cell eq "CH12") {
+	    print STDERR "@row\n";
+	} 
     }
 
     if ($n == 0) {
@@ -394,18 +385,12 @@ sub get_genes_bnorm {
     $total_CH12[3] = $fpkm_med_CH12;
     $total_MEL[3] = $fpkm_med_MEL;
 
-#    if (@peaks_hg19) {
-#        @peaks_hg19 = sort { $a->[0] cmp $b->[0] || $a->[1] cmp $b->[1] ||
-#                                 $a->[2] <=> $b->[2] } @peaks_hg19;
-#    }
-#    if (@peaks_mm9) {
-#        @peaks_mm9 = sort { $a->[0] cmp $b->[0] || $a->[1] cmp $b->[1] ||
-#                                $a->[2] <=> $b->[2] } @peaks_mm9;
-#    }
-
-    $peaks{header} = \@header;
-    $peaks{header_1} = \@header_1;
-
+    $peaks{header} = ["Species/Cell", "N Peaks", "Med TSS Dist", "Med Norm Expr"];
+    $peaks{header_1} = ["Cell", "Location", "Target Gene",
+			"TssDist", "GM12878 Expr", "K562 Expr",
+			"CH12 Expr", "MEL Expr",
+			"log2 FC K562/GM12878", "Log2 FC MEL/CH12",
+			"Log2 FC CH12/GM12878", "Log2 FC MEL/K562"];
 
     $peaks{peaks_hg19} = \@peaks_hg19;
     $peaks{peaks_mm9} = \@peaks_mm9;
