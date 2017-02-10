@@ -35,7 +35,7 @@ sub index :Path :Args(0) {
     # The main display template
     $c->stash(template => 'main.tt2');
 
-    $c->stash(map_file => $c->model('DB::Map')->random_map());
+#    $c->stash(map_file => $c->model('DB::Map')->random_map());
     $c->stash(maps_list => [$c->model('DB::Map')->get_maps()]);
     
 }
