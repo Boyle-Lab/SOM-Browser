@@ -853,6 +853,10 @@ sub get_orthologs {
     my @total_GM12878 = ("Human GM12878", 0, 0);
     my @total_CH12 = ("Mouse CH12", 0, 0);
 
+    # Labels for ortholog classifications
+    my @orth_labels = ("Other Non-Orth", "1:1 Ortholog", "1:Many Ortholog",
+		       "Mouse Gain", "Mouse Loss", "Human Gain", "Human Loss");
+
     my $peaks_rs;
     if ($show >= 0) {
         if ($show == 0) {
@@ -915,7 +919,8 @@ sub get_orthologs {
 	    . $peak->get_column('chromend');
 	$row[1] = $loc;
 	$row[2] = $peak->get_column('targetgenedist');
-	my $is_orth = $row[3] = $peak->get_column('is_orth');
+	my $is_orth = $peak->get_column('is_orth');
+	$row[3] = $orth_labels[$is_orth];
 	$row[4] = $peak->get_column('orth_coords');
 
 
