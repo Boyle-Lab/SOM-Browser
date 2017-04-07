@@ -855,7 +855,7 @@ sub get_orthologs {
 
     # Labels for ortholog classifications
     my @orth_labels = ("Other Non-Orth", "1:1 Ortholog", "1:Many Ortholog",
-		       "Mouse Gain", "Mouse Loss", "Human Gain", "Human Loss");
+		       "Mouse Gain", "Human Gain", "Mouse Loss", "Human Loss");
 
     my $peaks_rs;
     if ($show >= 0) {
