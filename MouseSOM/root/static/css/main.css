@@ -306,6 +306,12 @@ ul#menu > li:hover > ul {
 .compBuild {
     float: left;
 }
+.compMap {
+    float: left;
+}
+.compMapSum {
+    float: left;
+}
 .vertical-text {
     transform: rotate(70deg);
     transform-origin: right bottom 0;

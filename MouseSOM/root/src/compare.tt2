@@ -1,5 +1,76 @@
 [% META title = 'Boyle Lab Human-Mouse SOM Browser Compare Maps' %]
 
+<div id="searchform">
+    <p class="bold">Compare Maps</p>
+
+    <p style="text-align: right">
+            <a id="compare_info" href="javascript:void(0);" name="25" title="Map Description"><img src="[% c.secure_uri_for('/static/images/info.png') %]" width=20 height=20><span style="position: absolute;">&nbsp;Help</span></a>
+	        </p>
+
+    <form method="post" name="map_form" action="javascript:void(0)") %]">
+        <input type="hidden" name="n_fields" value="0">
+	<input type="hidden" name="selected_neuron" value="0">	
+	<p><input id="link_maps" type="checkbox">Link Maps</p>	
+        <div class="searchTemplate">
+            Category: <select class="table_select" name="table">
+                <option selected value="base">Choose a map type</option>
+                <option value="1">Maps</option>
+                <option value="2">Transcription Factors</option>
+                <option value="3">Conservation and Selection</option>
+                <option value="4">Gene Expression (TPM)</option>
+                <option value="45">Gene Expression (Quantile Norm TPM)</option>
+                <option value="46">Gene Expression (Batch Norm TPM)</option>
+                <option value="6">Histone Modification</option>
+                <option value="7">GWAS</option>
+                <option value="8">DNase Sensitivity</option>
+            </select>
+            Map: <select class="db_field" name="field">
+                <option value="NULL"></option>
+            </select>
+            <input class="remove_field" type="submit" name="remove" value="Remove">
+
+            <object id="map" name="map" class="compMap" width=800 height=460></object>
+            <div id="neuronsummary" name="neuronsummary" class="compMapSum"></div>
+
+
+        </div>
+
+        <div id="container"></div>
+
+        <a class="field button" href="javascript:void(0)" id="addRow">Add Another Map</a>
+
+    </form>
+
+</div>
+
+<div id="map_info_block" title="Compare Maps">
+    <p>Compare Maps allows side by side comparison of multiple SOM maps by following the steps below:</p>
+    <ol type="1">
+    <li><p class="bold">Selecting a Map</p></li>
+        <ol type="i">
+            <li>Select a map type from the "Category" menu.</li>
+            <li>Select a map from the options within the "Map" menu. Your chosen map will appear below the menus.</li>
+        </ol>
+    <li><p class="bold">Adding Maps</p></li>
+        <ol type="i">
+            <li>Click the "Add Another Map" button.</li>
+            <li>Follow the steps in 1 to select the desired map.</li>
+            <li>Repeat until all desired maps are added</li>
+        </ol>
+    <li><p class="bold">Removing Maps</p></li>
+        <ol type="i">
+            <li>Click the "Remove" button beside the map you want to remove.</li>
+	</ol>
+    <li><p class="bold">Getting Pattern Data</p></li>
+        <ol type="i">
+            <li>Hover the mouse pointer over any hexagon to reveal the pattern number</li>
+            <li>Click a hexagon within any map to view summary data for the corresponding pattern.</li>
+            <li>Click the "Jump to Browser" button below the pattern summary table to view the selected map and pattern within the SOM Browser.</li>
+        </ol>
+    </ol>
+    <p><a href="[% c.secure_uri_for('/help') %]?topic=navigation#compare" class="dialog" style="color: #0000FF">View full help section</a></p>
+</div>
+																											   
 <script>
     [% PROCESS "highlight_neuron.js" -%]
     [% PROCESS "map_load.js" -%]
@@ -58,107 +129,56 @@
 
         $.when(loadSvgMap($(this).val())).done(function(mapUrl) {
             $.when(loadSvgContent(mapUrl, target)).done(function(a) {
+	        var svg = target.children()[0];
+		var map = svg.id;
 	        if (target.attr("name") != "map") {		
-                    var svg = target.children()[0];
-                    var map = svg.id;
                     highlightNeuron(target.attr("name"), map);
+		}
+		if ($("#link_maps")[0].checked &&
+		      document.map_form.n_fields.value > 0 &&
+		      document.map_form.selected_neuron.value > 0) {
+		    change_selected_node(field, map, document.map_form.selected_neuron.value);
 		}
             });
         });
     })
+    
 
     $(document).on("click", ".neuron_link", function(e){
-        var target = this.parentNode.parentNode;
-//	console.log(target);
-	var tmp = target.id.split("_");
+
+        var id = this.id;
+	document.map_form.selected_neuron.value = id;
+
+        if ($("#link_maps")[0].checked) {
+	    $(".compBuild").each(function( index ) {
+		change_selected_node($(this).children()[3].id, $($(this).children()[3]).children()[0].id, id);
+	    });
+	    
+	} else {
+	    change_selected_node(this.parentNode.parentNode.id, this.parentNode.id, this.id);
+	}
+
+    });
+
+    function change_selected_node(field, map, id) {
+        console.log(field);
+        var target = $(document.getElementById(field));
+	var tmp = target.attr("id").split("_");
 	var field = "neuronsummary_" + tmp[1];
 	var summary = $(document.getElementById(field));
-	var b_link = '<p class="centeredbody"><a href="[% c.secure_uri_for('/maps/neuron/') %]' + target.type + '/' + this.id + '" class="button" target="blank_">Jump to Browser</a></p>';
+	var b_link = '<p class="centeredbody"><a href="[% c.secure_uri_for('/maps/neuron/') %]' + target.attr("type") + '/' + id + '" class="button" target="blank_">Jump to Browser</a></p>';
 //	console.log(b_link);
-	summary.html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + this.id + '<br/><img src="[% c.secure_uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
-	$.when(loadSummary(this.id, summary)).done(function(a) {
+	summary.html('<p class="summary_load_msg">Retrieving data<br/>for pattern ' + id + '<br/><img src="[% c.secure_uri_for('/static/images/ajax-loader.gif') %]" id="ajaxSpinnerImage" title="working..."></p>');
+	$.when(loadSummary(id, summary)).done(function(a) {
 	     summary.append(b_link);
 	});
-	var map = this.parentNode.id;
-	highlightNeuron(this.id, map);
-	target.name = this.id;
-    });
+	highlightNeuron(id, map);
+	target.attr("name", id);
+    }
 
     $(document).on("click", "#compare_info", function() {
         $( "#map_info_block" ).dialog( "open" );
     });
 
-</script>
-
-<script>
     [% PROCESS "map_open.js" -%]
 </script>
-
-<div id="searchform">
-    <p class="bold">Compare Maps</p>
-
-    <p style="text-align: right">
-        <a id="compare_info" href="javascript:void(0);" name="25" title="Map Description"><img src="[% c.secure_uri_for('/static/images/info.png') %]" width=20 height=20><span style="position: absolute;">&nbsp;Help</span></a>	
-    </p>
-
-    <form method="post" name="map_form" action="javascript:void(0)") %]">
-        <input type="hidden" name="n_fields" value="0">
-        <div class="searchTemplate">
-            Category: <select class="table_select" name="table">
-                <option selected value="base">Choose a map type</option>
-                <option value="1">Maps</option>
-                <option value="2">Transcription Factors</option>
-	        <option value="3">Conservation and Selection</option>
-                <option value="4">Gene Expression (TPM)</option>
-		<option value="45">Gene Expression (Quantile Norm TPM)</option>
-		<option value="46">Gene Expression (Batch Norm TPM)</option>
-		<option value="6">Histone Modification</option>
-		<option value="7">GWAS</option>
-		<option value="8">DNase Sensitivity</option>
-            </select>
-            Map: <select class="db_field" name="field">
-                <option value="NULL"></option>
-            </select>
-	    <input class="remove_field" type="submit" name="remove" value="Remove">
-
-            <object id="map" name="map" class="compBuild" width=800 height=460></object>
-	    <div id="neuronsummary" name="neuronsummary" class="compBuild"></div>
-
-
-        </div>
-
-        <div id="container"></div>
-
-        <a class="field button" href="javascript:void(0)" id="addRow">Add Another Map</a>
-
-    </form>
-    
-</div>
-
-<div id="map_info_block" title="Compare Maps">
-     <p>Compare Maps allows side by side comparison of multiple SOM maps by following the steps below:</p>
-     <ol type="1">
-     <li><p class="bold">Selecting a Map</p></li>
-         <ol type="i">
-             <li>Select a map type from the "Category" menu.</li>
-             <li>Select a map from the options within the "Map" menu. Your chosen map will appear below the menus.</li>
-         </ol>
-     <li><p class="bold">Adding Maps</p></li>
-         <ol type="i">
-             <li>Click the "Add Another Map" button.</li>
-	     <li>Follow the steps in 1 to select the desired map.</li>
-	     <li>Repeat until all desired maps are added</li>
-	 </ol>
-     <li><p class="bold">Removing Maps</p></li>
-         <ol type="i">
-	     <li>Click the "Remove" button beside the map you want to remove.</li>
-	 </ol>
-     <li><p class="bold">Getting Pattern Data</p></li>
-         <ol type="i">
-	     <li>Hover the mouse pointer over any hexagon to reveal the pattern number</li>
-	     <li>Click a hexagon within any map to view summary data for the corresponding pattern.</li>
-             <li>Click the "Jump to Browser" button below the pattern summary table to view the selected map and pattern within the SOM Browser.</li>
-	 </ol>
-    </ol>
-    <p><a href="[% c.secure_uri_for('/help') %]?topic=navigation#compare" class="dialog" style="color: #0000FF">View full help section</a></p>
-</div>
