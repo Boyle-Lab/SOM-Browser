@@ -40,6 +40,11 @@ sub index :Path :Args(0) {
     
 }
 
+sub SOMbrowser :Path :Args(0) {
+    my ( $self, $c ) = @_;
+    return $c->res->redirect( $c->uri_for('/'));
+}
+
 =head2 default
 
 Standard 404 error page
