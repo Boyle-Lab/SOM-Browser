@@ -40,7 +40,7 @@ sub index :Path :Args(0) {
     
 }
 
-sub SOMbrowser :Path :Local :Args(0) {
+sub SOMbrowser :Path :Local :Args(1) {
     my ( $self, $c ) = @_;
     return $c->res->redirect( $c->uri_for('/'));
 }
