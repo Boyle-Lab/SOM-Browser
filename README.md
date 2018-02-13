@@ -1,7 +1,7 @@
 # SOM-Browser
 
 This repository contains a complete copy of the Boyle Lab Human-Mouse SOM Browser,
-described in (Reference Here).
+described in Conserved and species-specific transcription factor co-binding patterns drive divergent gene regulation in human and mouse. Diehl AG, Boyle AP. Nucleic Acids Research 2018, :gky018.
 
 The SOM Browser runs on two linked Docker containers: one containing the Catalyst
 web app and nginx web server and the second containing the mySQL database. To set
